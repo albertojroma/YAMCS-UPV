@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xtce:SpaceSystem name="dt" xmlns:xtce="http://www.omg.org/spec/XTCE/20180204" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.omg.org/spec/XTCE/20180204 https://www.omg.org/spec/XTCE/20180204/SpaceSystem.xsd" shortDescription="This is a bogus satellite telemetry and telecommand database." operationalStatus="unittest">
+
+<!--Contains all ParameterTypes for Telemetry and ArgumentTypes for Telecommanding.-->
+    <xtce:TelemetryMetaData>
+        <xtce:ParameterTypeSet>
+
+            <xtce:EnumeratedParameterType name="parameter_ID">
+                <xtce:IntegerDataEncoding sizeInBits="16"></xtce:IntegerDataEncoding>
+                <xtce:EnumerationList>
+                    <xtce:Enumeration value="6" label="ReportParametersUnusedStack" />
+                    <xtce:Enumeration value="7" label="AvailableHeap" />
+                    <xtce:Enumeration value="8" label="OBCuseRTT" />
+                    <xtce:Enumeration value="9" label="OBCuseUART" />
+                    <xtce:Enumeration value="10" label="OBCuseCAN" />
+                    <xtce:Enumeration value="11" label="ADCSuseRTT" />
+                    <xtce:Enumeration value="12" label="ADCSuseUART" />
+                    <xtce:Enumeration value="5000" label="OBDHBoardTemperature1" />
+                    <xtce:Enumeration value="5001" label="OBDHBoardTemperature2" />
+                    <xtce:Enumeration value="5002" label="OBCMCUTemperature" />
+                    <xtce:Enumeration value="5004" label="OBCBootCounter" />
+                    <xtce:Enumeration value="5012" label="OBCOnBoardTime" />
+                    <xtce:Enumeration value="5014" label="OBCNANDcurrentlyUsedPartition" />
+                    <xtce:Enumeration value="5017" label="OBCSystick" />
+                    <xtce:Enumeration value="5018" label="CANBusLoad1" />
+                    <xtce:Enumeration value="5019" label="CANBusLoad2" />
+                    <xtce:Enumeration value="5020" label="ActiveCAN" />
+                    <xtce:Enumeration value="5023" label="NANDLCLThreshold" />
+                    <xtce:Enumeration value="5024" label="MRAMLCLThreshold" />
+                    <xtce:Enumeration value="5025" label="OBCNANDOn" />
+                    <xtce:Enumeration value="5026" label="OBCMRAMOn" />
+                    <xtce:Enumeration value="1013" label="MagnetometerRawX" />
+                    <xtce:Enumeration value="1014" label="MagnetometerRawY" />
+                    <xtce:Enumeration value="1015" label="MagnetometerRawZ" />
+                    <xtce:Enumeration value="1016" label="MagnetometerFrequency" />
+                    <xtce:Enumeration value="1017" label="MagnetometerCycleCountX" />
+                    <xtce:Enumeration value="1018" label="MagnetometerCycleCountY" />
+                    <xtce:Enumeration value="1019" label="MagnetometerCycleCountZ" />
+                    <xtce:Enumeration value="1020" label="MagnetometerSelfTest" />
+                    <xtce:Enumeration value="1043" label="GyroscopeX" />
+                    <xtce:Enumeration value="1044" label="GyroscopeY" />
+                    <xtce:Enumeration value="1045" label="GyroscopeZ" />
+                    <xtce:Enumeration value="1089" label="GyroscopeXTemperature" />
+                    <xtce:Enumeration value="1090" label="GyroscopeYTemperature" />
+                    <xtce:Enumeration value="1091" label="GyroscopeZTemperature" />
+                    <xtce:Enumeration value="1092" label="ADCSBoardTemperature1" />
+                    <xtce:Enumeration value="1093" label="ADCSBoardTemperature2" />
+                    <xtce:Enumeration value="1158" label="MagnetometerSignX" />
+                    <xtce:Enumeration value="1159" label="MagnetometerSignY" />
+                    <xtce:Enumeration value="1160" label="MagnetometerSignZ" />
+                    <xtce:Enumeration value="1164" label="GyroSignX" />
+                    <xtce:Enumeration value="1165" label="GyroSignY" />
+                    <xtce:Enumeration value="1166" label="GyroSignZ" />
+                    <xtce:Enumeration value="1189" label="GyroBiasX" />
+                    <xtce:Enumeration value="1190" label="GyroBiasY" />
+                    <xtce:Enumeration value="1191" label="GyroBiasZ" />
+                    <xtce:Enumeration value="1218" label="ADCSMCUTemperature" />
+                    <xtce:Enumeration value="1220" label="ADCSMCUBootCounter" />
+                    <xtce:Enumeration value="1221" label="ADCSMCUOnBoardTime" />
+                    <xtce:Enumeration value="1224" label="ADCSSystick" />
+                </xtce:EnumerationList>
+            </xtce:EnumeratedParameterType>
+
+            <xtce:IntegerParameterType name="int8_t" signed="true">
+                <xtce:IntegerDataEncoding encoding="unsigned" sizeInBits="8" />
+            </xtce:IntegerParameterType>
+
+            <xtce:IntegerParameterType name="uint8_t" signed="false">
+                <xtce:IntegerDataEncoding encoding="unsigned" sizeInBits="8" />
+            </xtce:IntegerParameterType>
+
+            <xtce:IntegerParameterType name="uint16_t" signed="false">
+                <xtce:IntegerDataEncoding encoding="unsigned" sizeInBits="16" />
+            </xtce:IntegerParameterType>
+
+            <xtce:IntegerParameterType name="uint32_t" signed="false">
+                <xtce:IntegerDataEncoding encoding="unsigned" sizeInBits="32" />
+            </xtce:IntegerParameterType>
+
+            <xtce:IntegerParameterType name="uint64_t" signed="false">
+                <xtce:IntegerDataEncoding encoding="unsigned" sizeInBits="64" />
+            </xtce:IntegerParameterType>
+
+            <xtce:FloatParameterType name="float_t">
+                <xtce:FloatDataEncoding sizeInBits="32" />
+            </xtce:FloatParameterType>
+
+            <xtce:BooleanParameterType name="bool_t">
+                <xtce:IntegerDataEncoding sizeInBits="1" />
+            </xtce:BooleanParameterType>
+
+        </xtce:ParameterTypeSet>
+    </xtce:TelemetryMetaData>
+
+    <xtce:CommandMetaData>
+        <xtce:ArgumentTypeSet>
+            <xtce:FloatArgumentType name="float_t">
+                <xtce:FloatDataEncoding sizeInBits="32" />
+            </xtce:FloatArgumentType>
+
+            <xtce:BooleanArgumentType name="bool_t">
+                <xtce:IntegerDataEncoding sizeInBits="1" />
+            </xtce:BooleanArgumentType>
+
+            <xtce:IntegerArgumentType name="uint8_t" signed="false">
+                <xtce:IntegerDataEncoding encoding="unsigned" sizeInBits="8" />
+            </xtce:IntegerArgumentType>
+
+            <xtce:IntegerArgumentType name="int8_t" signed="true">
+                <xtce:IntegerDataEncoding encoding="unsigned" sizeInBits="8" />
+            </xtce:IntegerArgumentType>
+
+            <xtce:IntegerArgumentType name="uint16_t" signed="false">
+                <xtce:IntegerDataEncoding encoding="unsigned" sizeInBits="16" />
+            </xtce:IntegerArgumentType>
+
+            <xtce:IntegerArgumentType name="uint32_t" signed="false">
+                <xtce:IntegerDataEncoding encoding="unsigned" sizeInBits="32" />
+            </xtce:IntegerArgumentType>
+
+            <xtce:IntegerArgumentType name="uint64_t" signed="false">
+                <xtce:IntegerDataEncoding encoding="unsigned" sizeInBits="64" />
+            </xtce:IntegerArgumentType>
+
+        </xtce:ArgumentTypeSet>
+    </xtce:CommandMetaData>
+</xtce:SpaceSystem>
