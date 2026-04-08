@@ -26,5 +26,40 @@ Consta de [11 pasos](https://gitlab.com/acubesat/ops/yamcs-training/-/wikis/New-
 10. [(opcional) Crear un servicio sencillo](https://gitlab.com/acubesat/ops/yamcs-training/-/issues/10)
 11. [Cambiar el protocolo IP de UDP a TCP para el simulador](https://gitlab.com/acubesat/ops/yamcs-training/-/issues/11)
 
+### Paso 1:
 
+Crea dos tipos de datos enumerados en el archivo ```dt.xml```.
+
+1. Crea una [*Enumerated Parameter Type*](https://gitlab.com/acubesat/ops/yamcs-instance/-/wikis/1.-Parameters-and-Arguments#the-enumerated-parameter-type) que se utilizará como el *Data Type* del parámetro «*Packet Type*» del [*Packet Primary Header*](https://ccsds.org/Pubs/133x0b2e2.pdf#page=32).
+
+**Nota**: El documento del estándar **CCSDS 133.0-B-2** (de donde sale el «*Packet Type*» del *Packet Primary Header*) no es el del repositorio original. En el repositorio original se hacia referencia a **CCSDS 133.0-B-1**, actualmente desfasado.
+
+```
+<xtce:EnumeratedParameterType name="PacketType">
+    <xtce:IntegerDataEncoding sizeInBits="1"></xtce:IntegerDataEncoding>
+    <xtce:EnumerationList>
+        <xtce:Enumeration value="0" label="TM" />
+        <xtce:Enumeration value="1" label="TC" />
+    </xtce:EnumerationList>
+</xtce:EnumeratedParameterType>
+```
+
+2. Crea una [*Enumerated Parameter Type*](https://gitlab.com/acubesat/ops/yamcs-instance/-/wikis/1) que se utilizará como el *Data Type* del parámetro «*Application Process Identifier*» (APID) del [*Packet Primary Header*](https://ccsds.org/Pubs/133x0b2e2.pdf#page=32). Tenga en cuenta que, en este caso, las aplicaciones se refieren a los diferentes subsistemas del proyecto AcubeSAT (ordenador de a bordo, comunicaciones, ADCS, Science Union y estación terrestre) y que **puede elegir los valores que desee**.
+
+```
+<xtce:EnumeratedParameterType name="APID">
+    <xtce:IntegerDataEncoding sizeInBits="11"></xtce:IntegerDataEncoding>
+    <xtce:EnumerationList>
+        <xtce:Enumeration value="1" label="OBC" />
+        <xtce:Enumeration value="2" label="COMMS" />
+        <xtce:Enumeration value="3" label="ADCS" />
+        <xtce:Enumeration value="4" label="SU" />
+        <xtce:Enumeration value="5" label="GS" />
+        <!-- en IDLE tienen que estar todos los bits a 1-->
+        <xtce:Enumeration value="2047" label="IdlePacket" />
+    </xtce:EnumerationList>
+</xtce:EnumeratedParameterType>
+```
+
+**Nota**: Si no encuentra el tamaño en bits de los parámetros solicitados, consulte también la norma ECSS, ya que es posible que se mencione allí.
 

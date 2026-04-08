@@ -5,6 +5,27 @@
     <xtce:TelemetryMetaData>
         <xtce:ParameterTypeSet>
 
+            <xtce:EnumeratedParameterType name="PacketType">
+                <xtce:IntegerDataEncoding sizeInBits="1"></xtce:IntegerDataEncoding>
+                <xtce:EnumerationList>
+                    <xtce:Enumeration value="0" label="TM" />
+                    <xtce:Enumeration value="1" label="TC" />
+                </xtce:EnumerationList>
+            </xtce:EnumeratedParameterType>
+
+            <xtce:EnumeratedParameterType name="APID">
+                <xtce:IntegerDataEncoding sizeInBits="11"></xtce:IntegerDataEncoding>
+                <xtce:EnumerationList>
+                    <xtce:Enumeration value="1" label="OBC" />
+                    <xtce:Enumeration value="2" label="COMMS" />
+                    <xtce:Enumeration value="3" label="ADCS" />
+                    <xtce:Enumeration value="4" label="SU" />
+                    <xtce:Enumeration value="5" label="GS" />
+                    <!-- en IDLE tienen que estar todos los bits a 1-->
+                    <xtce:Enumeration value="2047" label="IdlePacket" />
+                </xtce:EnumerationList>
+            </xtce:EnumeratedParameterType>
+
             <xtce:EnumeratedParameterType name="parameter_ID">
                 <xtce:IntegerDataEncoding sizeInBits="16"></xtce:IntegerDataEncoding>
                 <xtce:EnumerationList>
