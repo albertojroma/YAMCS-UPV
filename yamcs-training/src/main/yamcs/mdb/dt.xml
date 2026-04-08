@@ -5,6 +5,17 @@
     <xtce:TelemetryMetaData>
         <xtce:ParameterTypeSet>
 
+            <xtce:AbsoluteTimeParameterType name="custom_time_encoding_parameter">
+                <!-- offset="1640995200" porque offset="0" implica 
+                    1/1/1970 00:00:00:000 (hh:mm:ss::ms) UTC-->
+                <xtce:Encoding scale="10E-1" offset="1640995200">
+                    <xtce:IntegerDataEncoding sizeInBits="32"></xtce:IntegerDataEncoding>
+                </xtce:Encoding>
+                <xtce:ReferenceTime>
+                    <xtce:Epoch>UNIX</xtce:Epoch>
+                </xtce:ReferenceTime>
+            </xtce:AbsoluteTimeParameterType>
+
             <xtce:AggregateParameterType name="sample_structure">
                 <xtce:MemberList>
                     <xtce:Member typeRef="parameter_ID" name="parameter_ID"></xtce:Member>
@@ -16,7 +27,6 @@
                     <xtce:Member typeRef="float_t" name="standard_deviation"></xtce:Member>
                 </xtce:MemberList>
             </xtce:AggregateParameterType>
-
 
             <xtce:EnumeratedParameterType name="PacketType">
                 <xtce:IntegerDataEncoding sizeInBits="1"></xtce:IntegerDataEncoding>

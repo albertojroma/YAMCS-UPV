@@ -94,3 +94,23 @@ donde ```parameter_ID``` ya está definido en ```dt.xml```
     </xtce:MemberList>
 </xtce:AggregateParameterType>
 ```
+
+### Paso 3:
+
+El ordenador del satélite no dispone de un reloj integrado. Mide el tiempo utilizando los relojes internos de la unidad microcontroladora (MCU) y lo hace mediante un parámetro de entero sin signo de 32 bits. Este reloj realiza un recuento cada 0,1 s y definimos como 0 la fecha 1/1/2022 00:00:00:000 (hh:mm:ss::ms). Un valor de 1 significaría 1/1/2022 00:00:00:100, un valor de 2 -> 1/1/2022 00:00:00:200, etc. Debe definir un parámetro que convierta esta codificación de tiempo personalizada (CUC) a UNIX. La hora UNIX es el formato de hora utilizado por la mayoría de los ordenadores modernos, sistemas Linux, etc., y el recuento comienza en la Época UNIX, el 1 de enero de 1970 a UTC.
+
+Puede utilizar un [4.3.2.4.9](https://public.ccsds.org/Pubs/660x1g2.pdf#page=146) con un elemento «[*AbsoluteTimeParameterType*](https://gitlab.com/acubesat/ops/yamcs-instance/-/wikis/1.-Parameters-and-Arguments#the-absolute-time-parameter-type)» o un simple entero con un elemento «[*IntegerDataEncoding*](https://gitlab.com/acubesat/ops/yamcs-instance/-/wikis/1.-Parameters-and-Arguments#the-integer-data-encoding-element)» utilizando un [4.3.2.2.6.3](https://public.ccsds.org/Pubs/660x1g2.pdf#page=86) *PolynomialCalibrator*.
+
+#### Solución con *IntegerDataEncoding*
+```
+<xtce:AbsoluteTimeParameterType name="custom_time_encoding_parameter">
+    <!-- offset="1640995200" porque offset="0" implica 
+        1/1/1970 00:00:00:000 (hh:mm:ss::ms) UTC-->
+    <xtce:Encoding scale="10E-1" offset="1640995200">
+        <xtce:IntegerDataEncoding sizeInBits="32"></xtce:IntegerDataEncoding>
+    </xtce:Encoding>
+    <xtce:ReferenceTime>
+        <xtce:Epoch>UNIX</xtce:Epoch>
+    </xtce:ReferenceTime>
+</xtce:AbsoluteTimeParameterType>
+```
