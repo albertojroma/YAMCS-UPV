@@ -1,0 +1,6 @@
+# Ignore all files in the myproject directory
+myproject
+# Ignore all files in the yamcs-training directory
+yamcs-training
+# Ignore all files in the yamcs-workshop directory
+yamcs-workshop
