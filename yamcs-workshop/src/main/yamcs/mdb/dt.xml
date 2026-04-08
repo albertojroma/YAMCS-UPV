@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SpaceSystem name="dt" xmlns:xtce="http://www.omg.org/spec/XTCE/20180204"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.omg.org/spec/XTCE/20180204 https://www.omg.org/spec/XTCE/20180204/SpaceSystem.xsd"
+    shortDescription="This is a bogus satellite telemetry and telecommand database."
+    operationalStatus="unittest">
+
+    <!--Contains all ParameterTypes for Telemetry and ArgumentTypes for Telecommanding.-->
+    <TelemetryMetaData>
+        <ParameterTypeSet>
+
+            <EnumeratedParameterType name="OperationalMode_t">
+                <IntegerDataEncoding encoding="unsigned" sizeInBits="8" />
+                <EnumerationList>
+                    <Enumeration value="1" label="NominalMode" />
+                    <Enumeration value="2" label="ScienceMode" />
+                    <Enumeration value="3" label="SafeMode" />
+                </EnumerationList>
+            </EnumeratedParameterType>
+
+        </ParameterTypeSet>
+    </TelemetryMetaData>
+
+    <CommandMetaData>
+        <ArgumentTypeSet>
+
+            <EnumeratedArgumentType name="OperationalMode_t">
+                <IntegerDataEncoding encoding="unsigned" sizeInBits="8" />
+                <EnumerationList>
+                    <Enumeration value="1" label="NominalMode" />
+                    <Enumeration value="2" label="ScienceMode" />
+                    <Enumeration value="3" label="SafeMode" />
+                </EnumerationList>
+            </EnumeratedArgumentType>
+
+        </ArgumentTypeSet>
+    </CommandMetaData>
+</SpaceSystem>

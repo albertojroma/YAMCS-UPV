@@ -1,0 +1,456 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SpaceSystem name="pus" xmlns:xtce="http://www.omg.org/spec/XTCE/20180204"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.omg.org/spec/XTCE/20180204 https://www.omg.org/spec/XTCE/20180204/SpaceSystem.xsd"
+    shortDescription="This is a bogus satellite telemetry and telecommand database."
+    operationalStatus="unittest">
+    <!--
+	Contains parameters, containers and commands ST(20] parameter management service, ST(03]
+    housekeeping service and  ST(04] parameter
+	statistics reporting service
+	-->
+    <TelemetryMetaData>
+        <ParameterSet>
+
+            <!-- Parameters used in the Packet Primary Header (TM) -->
+            <Parameter parameterTypeRef="/base/packet_version_number" name="packet_version_number"
+                initialValue="0">
+                <LongDescription>
+                    The packet version number is set to 0 and identifies it as a space packet defined
+                    by CCSDS 133. 0-B-1. A space packet is also referred to as a version 1 CCSDS packet.
+                </LongDescription>
+            </Parameter>
+
+            <Parameter parameterTypeRef="/base/packet_type" name="packet_type">
+                <LongDescription>
+                    The packet type bit distinguishes between telemetry packets,
+                    for which this bit is
+                    set to 0, and telecommand packets, for which this bit is set to 1.
+                </LongDescription>
+            </Parameter>
+
+
+            <Parameter parameterTypeRef="/base/application_process_ID" name="application_process_ID">
+                <LongDescription>
+                    The application process ID uniquely identifies the on-board application process
+                    that is source of the telemetry packet and destination of the telecommand
+                    packet. Some values of the application process ID field are reserved by the
+                    CCSDS standard, making them unavailable for use by PUS services.
+                </LongDescription>
+            </Parameter>
+
+            <Parameter parameterTypeRef="/base/packet_data_length" name="packet_data_length">
+                <LongDescription>
+                    The packet data length field specifies the length of the packet data field. The value
+                    of the unsigned integer in the packet data length field is one less than the
+                    number of octets contained within the packet data field. The length of the
+                    entire packet, including the packet primary header, is 6 octets more than the length of
+                    the packet data field.
+                </LongDescription>
+            </Parameter>
+
+            <Parameter parameterTypeRef="/base/uint4_t" name="PUS_version_number">
+                <LongDescription>
+                    The TM packet PUS version number reflects the different versions of this Standard.
+                </LongDescription>
+            </Parameter>
+
+            <Parameter parameterTypeRef="/base/uint4_t" name="spacecraft_time_reference_status">
+                <LongDescription>
+                    Each application process that provides the capability to report the
+                    spacecraft time reference status used when time tagging telemetry
+                    packets shall set the spacecraft time reference status field of each
+                    telemetry packet it generates to the status of the on-board time reference
+                    used when time tagging that telemetry packet.
+                </LongDescription>
+            </Parameter>
+
+            <Parameter parameterTypeRef="/base/uint4_t" name="service_type_ID_TM">
+                <LongDescription>
+                    The service type identifier of the service type that contains that message type.
+                </LongDescription>
+            </Parameter>
+
+            <Parameter parameterTypeRef="/base/uint4_t" name="message_subtype_ID_TM">
+                <LongDescription>
+                    A message subtype identifier that uniquely identifies that message type within that service type.
+                </LongDescription>
+            </Parameter>
+
+        </ParameterSet>
+        <ContainerSet>
+
+            <SequenceContainer name="packet_header_TM">
+                <EntryList>
+                    <ParameterRefEntry parameterRef="packet_version_number" />
+                    <ParameterRefEntry parameterRef="packet_type" />
+                    <ParameterRefEntry parameterRef="packet_data_length" />
+                    <ParameterRefEntry parameterRef="service_type_ID_TM" />
+                    <ParameterRefEntry parameterRef="message_subtype_ID_TM" />
+                </EntryList>
+            </SequenceContainer>
+
+
+            <!-- Service [01] Are you alive connection -->
+
+            <SequenceContainer name="TM(1,2)_are_you_alive_connection_test_report">
+                <EntryList />
+                <BaseContainer containerRef="packet_header_TM">
+                    <RestrictionCriteria>
+                        <ComparisonList>
+                            <Comparison value="1" parameterRef="service_type_ID_TM" />
+                            <Comparison value="2" parameterRef="message_subtype_ID_TM" />
+                        </ComparisonList>
+                    </RestrictionCriteria>
+                </BaseContainer>
+            </SequenceContainer>
+
+
+            <!-- Service [02] Parameters Values Request Report -->
+
+            <SequenceContainer name="TM(2,2)_report_battery_stats">
+                <EntryList>
+                    <ParameterRefEntry parameterRef="AcubeSAT/BatteryLevel" />
+                    <ParameterRefEntry parameterRef="AcubeSAT/BatteryChargingSpeed" />
+                </EntryList>
+                <BaseContainer containerRef="packet_header_TM">
+                    <RestrictionCriteria>
+                        <ComparisonList>
+                            <Comparison value="2" parameterRef="service_type_ID_TM" />
+                            <Comparison value="2" parameterRef="message_subtype_ID_TM" />
+                        </ComparisonList>
+                    </RestrictionCriteria>
+                </BaseContainer>
+            </SequenceContainer>
+
+            <SequenceContainer name="TM(2,4)_report_temperature_stats">
+                <EntryList>
+                    <ParameterRefEntry parameterRef="AcubeSAT/TemperatureLevel" />
+                    <ParameterRefEntry parameterRef="AcubeSAT/TemperatureChangingSpeed" />
+                </EntryList>
+                <BaseContainer containerRef="packet_header_TM">
+                    <RestrictionCriteria>
+                        <ComparisonList>
+                            <Comparison value="2" parameterRef="service_type_ID_TM" />
+                            <Comparison value="4" parameterRef="message_subtype_ID_TM" />
+                        </ComparisonList>
+                    </RestrictionCriteria>
+                </BaseContainer>
+            </SequenceContainer>
+
+            <SequenceContainer name="TM(2,6)_report_angle_stats">
+                <EntryList>
+                    <ParameterRefEntry parameterRef="AcubeSAT/AngleX" />
+                    <ParameterRefEntry parameterRef="AcubeSAT/AngleY" />
+                </EntryList>
+                <BaseContainer containerRef="packet_header_TM">
+                    <RestrictionCriteria>
+                        <ComparisonList>
+                            <Comparison value="2" parameterRef="service_type_ID_TM" />
+                            <Comparison value="6" parameterRef="message_subtype_ID_TM" />
+                        </ComparisonList>
+                    </RestrictionCriteria>
+                </BaseContainer>
+            </SequenceContainer>
+
+            <SequenceContainer name="TM(2,8)_report_solar_panel_stats">
+                <EntryList>
+                    <ParameterRefEntry parameterRef="AcubeSAT/SolarPanelOutput" />
+                </EntryList>
+                <BaseContainer containerRef="packet_header_TM">
+                    <RestrictionCriteria>
+                        <ComparisonList>
+                            <Comparison value="2" parameterRef="service_type_ID_TM" />
+                            <Comparison value="8" parameterRef="message_subtype_ID_TM" />
+                        </ComparisonList>
+                    </RestrictionCriteria>
+                </BaseContainer>
+            </SequenceContainer>
+
+            <!-- Service [03] Request Parameters Values -->
+
+            <SequenceContainer name="TM(3,2)_heater_percentage_report">
+                <EntryList>
+                    <ParameterRefEntry parameterRef="AcubeSAT/HeaterPercentage" />
+                </EntryList>
+                <BaseContainer containerRef="packet_header_TM">
+                    <RestrictionCriteria>
+                        <ComparisonList>
+                            <Comparison value="3" parameterRef="service_type_ID_TM" />
+                            <Comparison value="2" parameterRef="message_subtype_ID_TM" />
+                        </ComparisonList>
+                    </RestrictionCriteria>
+                </BaseContainer>
+            </SequenceContainer>
+
+            <!-- Service [04] Payload Operations  -->
+
+            <SequenceContainer name="TM(4,2)_photo_capture_report">
+                <EntryList>
+                </EntryList>
+                <BaseContainer containerRef="packet_header_TM">
+                    <RestrictionCriteria>
+                        <ComparisonList>
+                            <Comparison value="4" parameterRef="service_type_ID_TM" />
+                            <Comparison value="2" parameterRef="message_subtype_ID_TM" />
+                        </ComparisonList>
+                    </RestrictionCriteria>
+                </BaseContainer>
+            </SequenceContainer>
+
+            <SequenceContainer name="TM(4,4)_report_time_in_science_mode">
+                <EntryList>
+                    <ParameterRefEntry parameterRef="AcubeSAT/TimeInScienceMode" />
+                </EntryList>
+                <BaseContainer containerRef="packet_header_TM">
+                    <RestrictionCriteria>
+                        <ComparisonList>
+                            <Comparison value="4" parameterRef="service_type_ID_TM" />
+                            <Comparison value="4" parameterRef="message_subtype_ID_TM" />
+                        </ComparisonList>
+                    </RestrictionCriteria>
+                </BaseContainer>
+            </SequenceContainer>
+
+            <!-- Service [05] Mode Request Report -->
+
+            <SequenceContainer name="TM(5,2)_report_mode_status">
+                <EntryList>
+                    <ParameterRefEntry parameterRef="AcubeSAT/Mode" />
+                </EntryList>
+                <BaseContainer containerRef="packet_header_TM">
+                    <RestrictionCriteria>
+                        <ComparisonList>
+                            <Comparison value="5" parameterRef="service_type_ID_TM" />
+                            <Comparison value="2" parameterRef="message_subtype_ID_TM" />
+                        </ComparisonList>
+                    </RestrictionCriteria>
+                </BaseContainer>
+            </SequenceContainer>
+
+        </ContainerSet>
+    </TelemetryMetaData>
+    <CommandMetaData>
+        <MetaCommandSet>
+
+            <MetaCommand name="header" abstract="true">
+                <ArgumentList>
+                    <!-- Primary Header -->
+                    <Argument argumentTypeRef="/base/packet_version_number" name="packet_version_number" />
+                    <Argument argumentTypeRef="/base/packet_type" name="packet_type" />
+                    <!-- Secondary Header -->
+                    <Argument argumentTypeRef="/base/uint4_t" name="service_type_ID" />
+                    <Argument argumentTypeRef="/base/uint4_t" name="message_subtype_ID" />
+                </ArgumentList>
+                <CommandContainer name="packet_header_TC">
+                    <EntryList>
+                        <!-- Primary Header -->
+                        <ArgumentRefEntry argumentRef="packet_version_number" />
+                        <ArgumentRefEntry argumentRef="packet_type" />
+                        <ArgumentRefEntry argumentRef="service_type_ID" />
+                        <ArgumentRefEntry argumentRef="message_subtype_ID" />
+                    </EntryList>
+                </CommandContainer>
+            </MetaCommand>
+
+            <MetaCommand name="Header_TC" abstract="true">
+                <BaseMetaCommand metaCommandRef="header">
+                    <ArgumentAssignmentList>
+                        <ArgumentAssignment argumentName="packet_version_number" argumentValue="5" />
+                        <ArgumentAssignment argumentName="packet_type" argumentValue="TC" />
+                    </ArgumentAssignmentList>
+                </BaseMetaCommand>
+                <CommandContainer name="Header_TC">
+                    <EntryList />
+                    <BaseContainer containerRef="packet_header_TC" />
+                </CommandContainer>
+            </MetaCommand>
+
+            <!-- Service [01] Are you alive connection -->
+
+            <MetaCommand name="TC(1,1)_are_you_alive_connection">
+                <BaseMetaCommand metaCommandRef="Header_TC">
+                    <ArgumentAssignmentList>
+                        <ArgumentAssignment argumentName="service_type_ID" argumentValue="1" />
+                        <ArgumentAssignment argumentName="message_subtype_ID" argumentValue="1" />
+                    </ArgumentAssignmentList>
+                </BaseMetaCommand>
+                <CommandContainer name="TC(1,1)_container">
+                    <EntryList />
+                    <BaseContainer containerRef="Header_TC" />
+                </CommandContainer>
+            </MetaCommand>
+
+            <!-- Service [02] Parameters Values Request Report -->
+
+            <MetaCommand name="TC(2,1)_report_battery_stats_request">
+                <BaseMetaCommand metaCommandRef="Header_TC">
+                    <ArgumentAssignmentList>
+                        <ArgumentAssignment argumentName="service_type_ID" argumentValue="2" />
+                        <ArgumentAssignment argumentName="message_subtype_ID" argumentValue="1" />
+                    </ArgumentAssignmentList>
+                </BaseMetaCommand>
+                <CommandContainer name="TC(2,1)_battery_container">
+                    <EntryList />
+                    <BaseContainer containerRef="Header_TC" />
+                </CommandContainer>
+            </MetaCommand>
+
+            <MetaCommand name="TC(2,3)_report_temperature_stats_request">
+                <BaseMetaCommand metaCommandRef="Header_TC">
+                    <ArgumentAssignmentList>
+                        <ArgumentAssignment argumentName="service_type_ID" argumentValue="2" />
+                        <ArgumentAssignment argumentName="message_subtype_ID" argumentValue="3" />
+                    </ArgumentAssignmentList>
+                </BaseMetaCommand>
+                <CommandContainer name="TC(2,3)_temperature_container">
+                    <EntryList />
+                    <BaseContainer containerRef="Header_TC" />
+                </CommandContainer>
+            </MetaCommand>
+
+            <MetaCommand name="TC(2,5)_report_angle_stats_request">
+                <BaseMetaCommand metaCommandRef="Header_TC">
+                    <ArgumentAssignmentList>
+                        <ArgumentAssignment argumentName="service_type_ID" argumentValue="2" />
+                        <ArgumentAssignment argumentName="message_subtype_ID" argumentValue="5" />
+                    </ArgumentAssignmentList>
+                </BaseMetaCommand>
+                <CommandContainer name="TC(2,5)_angle_container">
+                    <EntryList />
+                    <BaseContainer containerRef="Header_TC" />
+                </CommandContainer>
+            </MetaCommand>
+
+            <MetaCommand name="TC(2,7)_report_solar_panel_stats_request">
+                <BaseMetaCommand metaCommandRef="Header_TC">
+                    <ArgumentAssignmentList>
+                        <ArgumentAssignment argumentName="service_type_ID" argumentValue="2" />
+                        <ArgumentAssignment argumentName="message_subtype_ID" argumentValue="7" />
+                    </ArgumentAssignmentList>
+                </BaseMetaCommand>
+                <CommandContainer name="TC(2,7)_solar_panel_container">
+                    <EntryList />
+                    <BaseContainer containerRef="Header_TC" />
+                </CommandContainer>
+            </MetaCommand>
+
+            <!-- Service [03] Set Parameters Values -->
+
+            <MetaCommand name="TC(3,1)_report_heaters_percentage">
+                <BaseMetaCommand metaCommandRef="Header_TC">
+                    <ArgumentAssignmentList>
+                        <ArgumentAssignment argumentName="service_type_ID" argumentValue="3" />
+                        <ArgumentAssignment argumentName="message_subtype_ID" argumentValue="1" />
+                    </ArgumentAssignmentList>
+                </BaseMetaCommand>
+                <CommandContainer name="TC(3,1)_heaters_percentage_container">
+                    <EntryList />
+                    <BaseContainer containerRef="Header_TC" />
+                </CommandContainer>
+            </MetaCommand>
+
+
+            <MetaCommand name="TC(3,3)_set_heater_percentage">
+                <BaseMetaCommand metaCommandRef="Header_TC">
+                    <ArgumentAssignmentList>
+                        <ArgumentAssignment argumentName="service_type_ID" argumentValue="3" />
+                        <ArgumentAssignment argumentName="message_subtype_ID" argumentValue="3" />
+                    </ArgumentAssignmentList>
+                </BaseMetaCommand>
+                <ArgumentList>
+                    <Argument argumentTypeRef="/base/float_t" name="heater_percentage"/>
+                </ArgumentList>
+                <CommandContainer name="TC(3,3)_heater_percentage_container">
+                    <EntryList>
+                        <ArgumentRefEntry argumentRef="heater_percentage" />
+                    </EntryList>
+                    <BaseContainer containerRef="Header_TC" />
+                </CommandContainer>
+            </MetaCommand>
+
+
+            <MetaCommand name="TC(3,4)_set_angles">
+                <BaseMetaCommand metaCommandRef="Header_TC">
+                    <ArgumentAssignmentList>
+                        <ArgumentAssignment argumentName="service_type_ID" argumentValue="3" />
+                        <ArgumentAssignment argumentName="message_subtype_ID" argumentValue="4" />
+                    </ArgumentAssignmentList>
+                </BaseMetaCommand>
+                <ArgumentList>
+                    <Argument argumentTypeRef="/base/float_t" name="new_value_angle_X"/>
+                    <Argument argumentTypeRef="/base/float_t" name="new_value_angle_Y"/>
+                </ArgumentList>
+                <CommandContainer name="TC(3,4)_angles_container">
+                    <EntryList>
+                        <ArgumentRefEntry argumentRef="new_value_angle_X" />
+                        <ArgumentRefEntry argumentRef="new_value_angle_Y" />
+                    </EntryList>
+                    <BaseContainer containerRef="Header_TC" />
+                </CommandContainer>
+            </MetaCommand>
+
+            <!-- Service [04] Payload Operations  -->
+
+            <MetaCommand name="TC(4,1)_capture_photo">
+                <BaseMetaCommand metaCommandRef="Header_TC">
+                    <ArgumentAssignmentList>
+                        <ArgumentAssignment argumentName="service_type_ID" argumentValue="4" />
+                        <ArgumentAssignment argumentName="message_subtype_ID" argumentValue="1" />
+                    </ArgumentAssignmentList>
+                </BaseMetaCommand>
+                <CommandContainer name="TC(4,1)_capture_photo_container">
+                    <EntryList />
+                    <BaseContainer containerRef="Header_TC" />
+                </CommandContainer>
+            </MetaCommand>
+
+            <MetaCommand name="TC(4,3)_report_time_in_science">
+                <BaseMetaCommand metaCommandRef="Header_TC">
+                    <ArgumentAssignmentList>
+                        <ArgumentAssignment argumentName="service_type_ID" argumentValue="4" />
+                        <ArgumentAssignment argumentName="message_subtype_ID" argumentValue="3" />
+                    </ArgumentAssignmentList>
+                </BaseMetaCommand>
+                <CommandContainer name="TC(4,3)_time_in_science_container">
+                    <EntryList />
+                    <BaseContainer containerRef="Header_TC" />
+                </CommandContainer>
+            </MetaCommand>
+
+            <!-- Service [05] Mode Request Report -->
+
+            <MetaCommand name="TC(5,1)_report_mode_status">
+                <BaseMetaCommand metaCommandRef="Header_TC">
+                    <ArgumentAssignmentList>
+                        <ArgumentAssignment argumentName="service_type_ID" argumentValue="5" />
+                        <ArgumentAssignment argumentName="message_subtype_ID" argumentValue="1" />
+                    </ArgumentAssignmentList>
+                </BaseMetaCommand>
+                <CommandContainer name="TC(5,1)_mode_container">
+                    <EntryList />
+                    <BaseContainer containerRef="Header_TC" />
+                </CommandContainer>
+            </MetaCommand>
+
+            <MetaCommand name="TC(5,3)_change_mode">
+                <BaseMetaCommand metaCommandRef="Header_TC">
+                    <ArgumentAssignmentList>
+                        <ArgumentAssignment argumentName="service_type_ID" argumentValue="5" />
+                        <ArgumentAssignment argumentName="message_subtype_ID" argumentValue="3" />
+                    </ArgumentAssignmentList>
+                </BaseMetaCommand>
+                <ArgumentList>
+                    <Argument argumentTypeRef="/dt/OperationalMode_t" name="new_mode"/>
+                </ArgumentList>
+                <CommandContainer name="TC(5,3)_change_mode_container">
+                    <EntryList>
+                        <ArgumentRefEntry argumentRef="new_mode" />
+                    </EntryList>
+                    <BaseContainer containerRef="Header_TC" />
+                </CommandContainer>
+            </MetaCommand>
+            
+        </MetaCommandSet>
+    </CommandMetaData>
+</SpaceSystem>
