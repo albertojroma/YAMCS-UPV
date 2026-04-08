@@ -1,7 +1,7 @@
 # YAMCS
 
 Este repositorio es una guía explicativa en español de los primeros pasos que se deben dar para usar **YAMCS**. Consta de 4 ramas huérfanas principales:
-* **master**: contiene archivos *.md* explicativos del repositorio
+* **main**: contiene archivos *.md* explicativos del repositorio
 * **myproject**: contiene el proyecto de ejemplo oficial creado por el equipo de desarrollo de **YAMCS**
 * **yamcs-training**: contiene el archivos para el *training* creados por el proyecto [AcubeSAT](https://gitlab.com/acubesat)
 * **yamcs-workshop**: contiene el archivos de un *workshop* creado por el proyecto [AcubeSAT](https://gitlab.com/acubesat)
