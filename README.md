@@ -63,3 +63,34 @@ Crea dos tipos de datos enumerados en el archivo ```dt.xml```.
 
 **Nota**: Si no encuentra el tamaño en bits de los parámetros solicitados, consulte también la norma ECSS, ya que es posible que se mencione allí.
 
+### Paso 2:
+
+Un parámetro agregado (*Aggregate*) es algo parecido a una estructura de C. Contiene una estructura de parámetros. Los contenedores (*Containers*) ofrecen una funcionalidad similar, aunque se utilizan para construir la secuencia de parámetros TC y TM. Se trata de una capa de abstracción superior. Consulte las secciones [4.3.2.4.11](https://public.ccsds.org/Pubs/660x1g2.pdf#page=151) y [5.4](https://public.ccsds.org/Pubs/660x1g2.pdf#page=151) de la descripción de elementos de XTCE. Consulte también la página wiki sobre el [tipo agregado](https://gitlab.com/acubesat/ops/yamcs-instance/-/wikis/1.-Parameters-and-Arguments#the-aggregate-parameter-type).
+Esta tarea consiste en crear una estructura «*AggregateParameterType*» que contenga los siguientes miembros:
+
+| Nombre del parámetro | Tipo |
+|--------------  |--------------|
+| parameter_ID | parameter_ID |
+| samples | uint16_t |
+| max_value | float | 
+| max_time | uint32_t |
+| min_value | float | 
+| min_time | uint32_t | 
+| standard_deviation | float |
+
+
+donde ```parameter_ID``` ya está definido en ```dt.xml```
+
+```
+<xtce:AggregateParameterType name="sample_structure">
+    <xtce:MemberList>
+        <xtce:Member typeRef="parameter_ID" name="parameter_ID"></xtce:Member>
+        <xtce:Member typeRef="uint16_t" name="samples"></xtce:Member>
+        <xtce:Member typeRef="float_t" name="max_value"></xtce:Member>
+        <xtce:Member typeRef="uint32_t" name="max_time"></xtce:Member>
+        <xtce:Member typeRef="float_t" name="min_value"></xtce:Member>
+        <xtce:Member typeRef="uint32_t" name="min_time"></xtce:Member>
+        <xtce:Member typeRef="float_t" name="standard_deviation"></xtce:Member>
+    </xtce:MemberList>
+</xtce:AggregateParameterType>
+```

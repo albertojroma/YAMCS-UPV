@@ -5,6 +5,19 @@
     <xtce:TelemetryMetaData>
         <xtce:ParameterTypeSet>
 
+            <xtce:AggregateParameterType name="sample_structure">
+                <xtce:MemberList>
+                    <xtce:Member typeRef="parameter_ID" name="parameter_ID"></xtce:Member>
+                    <xtce:Member typeRef="uint16_t" name="samples"></xtce:Member>
+                    <xtce:Member typeRef="float_t" name="max_value"></xtce:Member>
+                    <xtce:Member typeRef="uint32_t" name="max_time"></xtce:Member>
+                    <xtce:Member typeRef="float_t" name="min_value"></xtce:Member>
+                    <xtce:Member typeRef="uint32_t" name="min_time"></xtce:Member>
+                    <xtce:Member typeRef="float_t" name="standard_deviation"></xtce:Member>
+                </xtce:MemberList>
+            </xtce:AggregateParameterType>
+
+
             <xtce:EnumeratedParameterType name="PacketType">
                 <xtce:IntegerDataEncoding sizeInBits="1"></xtce:IntegerDataEncoding>
                 <xtce:EnumerationList>
