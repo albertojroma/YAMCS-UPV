@@ -137,6 +137,39 @@
                 <xtce:IntegerDataEncoding sizeInBits="1" />
             </xtce:BooleanParameterType>
 
+            <xtce:IntegerParameterType name="version">
+                <xtce:IntegerDataEncoding sizeInBits="3"></xtce:IntegerDataEncoding>
+            </xtce:IntegerParameterType>
+            
+            <!-- <xtce:IntegerParameterType name="packet_data_length" signed="false">
+                <xtce:IntegerDataEncoding encoding="unsigned" sizeInBits="16"></xtce:IntegerDataEncoding>
+            </xtce:IntegerParameterType>
+
+            <xtce:IntegerParameterType name="message_type_counter" signed="false">
+                <xtce:IntegerDataEncoding encoding="unsigned" sizeInBits="16"></xtce:IntegerDataEncoding>
+            </xtce:IntegerParameterType> -->
+
+            <!-- <xtce:IntegerParameterType name="packet_type">
+                <xtce:IntegerDataEncoding sizeInBits="1"></xtce:IntegerDataEncoding>
+            </xtce:IntegerParameterType> -->
+
+            <!-- <xtce:IntegerParameterType name="secondary_header_flag">
+                <xtce:IntegerDataEncoding sizeInBits="1"></xtce:IntegerDataEncoding>
+            </xtce:IntegerParameterType> -->
+
+            <xtce:IntegerParameterType name="sequence_flags">
+                <xtce:IntegerDataEncoding sizeInBits="2"></xtce:IntegerDataEncoding>
+            </xtce:IntegerParameterType>
+
+            <xtce:IntegerParameterType name="packet_sequence_count" signed="false">
+                <xtce:IntegerDataEncoding encoding="unsigned" sizeInBits="14"></xtce:IntegerDataEncoding>
+            </xtce:IntegerParameterType>
+
+            <xtce:IntegerParameterType name="spare" signed="false">
+                <xtce:IntegerDataEncoding encoding="unsigned"></xtce:IntegerDataEncoding>
+            </xtce:IntegerParameterType>
+
+
         </xtce:ParameterTypeSet>
     </xtce:TelemetryMetaData>
 
