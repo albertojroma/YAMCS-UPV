@@ -114,3 +114,76 @@ Puede utilizar un [4.3.2.4.9](https://public.ccsds.org/Pubs/660x1g2.pdf#page=146
     </xtce:ReferenceTime>
 </xtce:AbsoluteTimeParameterType>
 ```
+
+### Paso 4:
+Crea un contenedor [4.3.4](https://public.ccsds.org/Pubs/660x1g2.pdf#page=175) (o la sección 5.4 del [documento](https://public.ccsds.org/Pubs/660x1g2.pdf#page=237) «XTCE Element Description») en el archivo ```pus.xml``` que contenga todos los parámetros del *Primary TM Header* y otro contenedor para el *Secondary TM Header* (consulta la sección [7.4](https://ecss.nl/wp-content/uploads/2016/06/ECSS-E-ST-70-41C15April2016.pdf#page=438) de la norma ECSS y también el archivo [```README.md```](https://gitlab.com/acubesat/ops/yamcs-training/-/blob/main/README.md) para una mejor visualización).
+
+Un *container* es simplemente un grupo de parámetros (u otros contenedores) que se utiliza más de una vez en diferentes comandos o telemetría. Consulte también la página wiki sobre los [*container*](https://gitlab.com/acubesat/ops/yamcs-instance/-/wikis/2.-Containers).
+
+* Todos los parámetros deben definirse en el mismo archivo (archivo ```pus.xml```).
+* Añada nuevos tipos de datos para los parámetros del encabezado primario al archivo ```dt.xml```.
+
+
+#### *Primary TM Header*
+![Primary TM Header](yamcs-training/images/primary_header.png)
+
+##### packet primary header
+```
+<xtce:SequenceContainer name="PH">
+    <xtce:EntryList>
+        <xtce:ParameterRefEntry parameterRef="version"></xtce:ParameterRefEntry>
+        <xtce:ContainerRefEntry containerRef="packet_id"></xtce:ContainerRefEntry>
+        <xtce:ContainerRefEntry containerRef="packet_sequence_control"></xtce:ContainerRefEntry>
+        <xtce:ParameterRefEntry parameterRef="packet_data_length"></xtce:ParameterRefEntry>
+    </xtce:EntryList>
+</xtce:SequenceContainer>
+```
+
+##### packet ID container
+```
+<xtce:SequenceContainer name="packet_id">
+    <xtce:EntryList>
+        <xtce:ParameterRefEntry parameterRef="packet_type"></xtce:ParameterRefEntry>
+        <xtce:ParameterRefEntry parameterRef="secondary_header_flag"></xtce:ParameterRefEntry>
+        <xtce:ParameterRefEntry parameterRef="application_process_id"></xtce:ParameterRefEntry>
+    </xtce:EntryList>
+</xtce:SequenceContainer>
+```
+
+##### packet sequence control
+```
+<xtce:SequenceContainer name="packet_sequence_control">
+    <xtce:EntryList>
+        <xtce:ParameterRefEntry parameterRef="sequence_flags"></xtce:ParameterRefEntry>
+        <xtce:ParameterRefEntry parameterRef="packet_sequence_count"></xtce:ParameterRefEntry>
+    </xtce:EntryList>
+</xtce:SequenceContainer>
+```
+
+#### *Secondary TM Header*
+![Secondary TM Header](yamcs-training/images/secondary_header.png)
+
+##### packet secondary header
+```
+<xtce:SequenceContainer name="SH">
+    <xtce:EntryList>
+        <xtce:ParameterRefEntry parameterRef="tm_PUS_version"></xtce:ParameterRefEntry>
+        <xtce:ParameterRefEntry parameterRef="spacecraft_time_reference_status"></xtce:ParameterRefEntry>
+        <xtce:ContainerRefEntry containerRef="message_type_id"></xtce:ContainerRefEntry>
+        <xtce:ParameterRefEntry parameterRef="message_type_counter"></xtce:ParameterRefEntry>
+        <xtce:ParameterRefEntry parameterRef="destination_id"></xtce:ParameterRefEntry>
+        <xtce:ParameterRefEntry parameterRef="time"></xtce:ParameterRefEntry>
+    </xtce:EntryList>
+</xtce:SequenceContainer>
+```
+
+##### message type ID
+```
+<xtce:SequenceContainer name="message_type_id">
+    <xtce:EntryList>
+        <xtce:ParameterRefEntry parameterRef="service_type_id"></xtce:ParameterRefEntry>
+        <xtce:ParameterRefEntry parameterRef="message_subtype_id"></xtce:ParameterRefEntry>
+    </xtce:EntryList>
+</xtce:SequenceContainer>
+```
+

@@ -105,6 +105,10 @@
                 </xtce:EnumerationList>
             </xtce:EnumeratedParameterType>
 
+            <xtce:IntegerParameterType name="uint4_t" signed="true">
+                <xtce:IntegerDataEncoding encoding="unsigned" sizeInBits="4" />
+            </xtce:IntegerParameterType>
+
             <xtce:IntegerParameterType name="int8_t" signed="true">
                 <xtce:IntegerDataEncoding encoding="unsigned" sizeInBits="8" />
             </xtce:IntegerParameterType>
