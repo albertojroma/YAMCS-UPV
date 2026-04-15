@@ -1,29 +1,42 @@
-# YAMCS
+# Guía de Inicio para usar YAMCS 🛰️
 
-Este repositorio es una guía explicativa en español de los primeros pasos que se deben dar para usar **YAMCS**. Consta de 4 ramas huérfanas principales:
-* **main**: contiene archivos *.md* explicativos del repositorio
-* **myproject**: contiene el proyecto de ejemplo oficial creado por el equipo de desarrollo de **YAMCS**
-* **yamcs-training**: contiene el archivos para el *training* creados por el proyecto [AcubeSAT](https://gitlab.com/acubesat)
-* **yamcs-workshop**: contiene el archivos de un *workshop* creado por el proyecto [AcubeSAT](https://gitlab.com/acubesat)
+Bienvenido al repositorio central de aprendizaje de **YAMCS**. Este proyecto tiene como objetivo centralizar el conocimiento necesario para gestionar la telemetría y telecomandos de satélites.
 
-## Instalación
- 
-En este [repositorio](https://gitlab.com/acubesat/education/yamcs-workshop) está el archivo Prerequisites.md. En este es donde mejor se explican los requisitos de instalación y como realizar la instalación (Windows/Linux/macOS). 
+## ¿Qué es YAMCS?
+Es una plataforma de software libre diseñada para el control y monitorización de misiones espaciales. A diferencia de un simple panel de control, YAMCS es el cerebro intermedio: recibe los datos en bruto de la antena, los procesa, los archiva en una base de datos histórica y permite enviar comandos de vuelta al satélite.
 
-* La instalación de Java puede dar problemas en Linux, hay que asegurarse de que se instala la versión correcta → Solución sencilla usando IA
+## ¿Para qué sirve?
 
-## Primeros pasos
+1. Telemetría: Traducir ceros y unos en gráficas y tablas comprensibles.
+2. Telecomandos: Enviar órdenes seguras al satélite.
+3. Archivo: Guardar cada bit recibido para análisis posterior.
+4. Automatización: Permitir que scripts (Python) vigilen el satélite por nosotros.
 
-[Tutorial oficial](https://yamcs.org/getting-started) y más sencillo de todos para arrancar el programa.
+---
 
-## Training
+# 📂 Estructura de este Repositorio
+Este repositorio utiliza "ramas huérfanas" para separar los diferentes entornos de trabajo:
+* [`main`](https://github.com/albertojroma/YAMCS-UPV/tree/main): 📖 Documentación y guías en español (donde estás ahora).
+* [`myproject`](https://github.com/albertojroma/YAMCS-UPV/tree/myproject): 🚀 Proyecto base oficial de YAMCS (punto de partida limpio).
+* [`yamcs-training`](https://github.com/albertojroma/YAMCS-UPV/tree/training): 🎓 Rama dedicada a explicar la creación de satélites/misiones en YAMCS basado en material del proyecto AcubeSAT
+* [`yamcs-workshop`](https://github.com/albertojroma/YAMCS-UPV/tree/workshop): 🛠️ Entorno de taller basado en material del proyecto AcubeSAT
 
-[Información necesaria para el *training*](https://gitlab.com/acubesat/ops/yamcs-training). En el se explican los pasos previos antes de comenzar y todo lo relacionado con el *training*.
+---
 
-[Guía de desarrollo de YAMCS](https://gitlab.com/acubesat/ops/yamcs-instance/-/wikis/0.-Introduction-and-Contents). Esta guía se ha elaborado con el fin de explicar y ayudar a comprender algunos de los conceptos fundamentales de **YAMCS** como la implementación de diferentes tipos de datos en XML.
+# 🗺️ Hoja de Ruta de Aprendizaje (*Roadmap*)
 
-Tutorial de “[training](https://gitlab.com/acubesat/ops/yamcs-training/-/wikis/New-member-YAMCS-Training-Tasks)” de YAMCS en [AcubeSAT](https://gitlab.com/acubesat). Consta de 11 pasos y es importante hacerlos en orden.
+Para dominar YAMCS se recomienda seguir el siguiente orden:
 
-## Workshop
+## 1. Fundamentos Teóricos
+Antes de instalar nada, es vital entender qué vamos a usar y con qué objetivo:
+* [Conceptos Básicos de YAMCS](docs/01-conceptos.md)
 
-[Información necesaria para el *workshop*](https://gitlab.com/acubesat/education/yamcs-workshop).
+## 2. Preparación del Entorno
+En este [enlace](https://gitlab.com/acubesat/education/yamcs-workshop/-/blob/main/Prerequisites.md?ref_type=heads) se explican los requisitos y el procedimiento de instalación (Windows/Linux/macOS).
+
+## 3. Primeros pasos
+El [tutorial oficial](https://yamcs.org/getting-started) es la manera más fácil de comenzar.
+
+## 4. Entrenamiento Práctico (Training)
+La rama [`yamcs-training`](https://github.com/albertojroma/YAMCS-UPV/tree/training) contiene nociones básicas para poder crear una misión en YAMCS.
+
