@@ -34,8 +34,8 @@
             <xtce:Parameter parameterTypeRef="dt/uint4_t" name="spacecraft_time_reference_status"></xtce:Parameter>
             <xtce:Parameter parameterTypeRef="dt/uint8_t" name="service_type_id"></xtce:Parameter>
             <xtce:Parameter parameterTypeRef="dt/uint8_t" name="message_subtype_id"></xtce:Parameter>
-            <xtce:Parameter parameterTypeRef="dt/packet_type" name="packet_type"></xtce:Parameter>
-            <xtce:Parameter parameterTypeRef="dt/time" name="time"></xtce:Parameter>
+            <xtce:Parameter parameterTypeRef="dt/PacketType" name="packet_type"></xtce:Parameter>
+            <xtce:Parameter parameterTypeRef="dt/custom_time_encoding_parameter" name="time"></xtce:Parameter>
             <xtce:Parameter parameterTypeRef="dt/APID" name="application_process_id"></xtce:Parameter>
             
             <!-- DATA TYPES -->

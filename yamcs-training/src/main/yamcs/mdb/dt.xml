@@ -153,9 +153,9 @@
                 <xtce:IntegerDataEncoding sizeInBits="1"></xtce:IntegerDataEncoding>
             </xtce:IntegerParameterType> -->
 
-            <!-- <xtce:IntegerParameterType name="secondary_header_flag">
+            <xtce:IntegerParameterType name="secondary_header_flag">
                 <xtce:IntegerDataEncoding sizeInBits="1"></xtce:IntegerDataEncoding>
-            </xtce:IntegerParameterType> -->
+            </xtce:IntegerParameterType>
 
             <xtce:IntegerParameterType name="sequence_flags">
                 <xtce:IntegerDataEncoding sizeInBits="2"></xtce:IntegerDataEncoding>
