@@ -131,8 +131,6 @@ Un *container* es simplemente un grupo de parámetros (u otros contenedores) que
 #### *Primary TM Header*
 ![Primary TM Header](yamcs-training/images/primary_header.png)
 
-##### *packet primary header*
-
 El ***packet primary header*** se ha definido en este caso usando un contenedor compuesto de 2 parámetros y 2 contenedores. 
 * **Contenedores**: Están definidos todos juntos en el archivo `pus.xml` como se muestra en la siguiente sección de código
 
@@ -184,8 +182,6 @@ El ***packet primary header*** se ha definido en este caso usando un contenedor 
 #### *Secondary TM Header*
 ![Secondary TM Header](yamcs-training/images/secondary_header.png)
 
-##### *packet secondary header*
-
 El ***packet secondary header*** se ha definido en este caso usando un contenedor compuesto de 5 parámetros y 1 contenedor. Ocurre los mismo que antes con los contenedores y archivos en cuanto a la distribución de archivos se refiere.
 
 ```
@@ -208,4 +204,20 @@ El ***packet secondary header*** se ha definido en este caso usando un contenedo
 </xtce:SequenceContainer>
 ```
 
+#### Resultados
 
+Todas estas modificaciones de código han añadido cambios en la interfaz web. 
+
+| Antes de las modificaciones | Después de las modificaciones |
+|          --------------     |         --------------        |
+| ![PreCambios](yamcs-training/images/t4/PreCambios.png) | ![PostCambios](yamcs-training/images/t4/PostCambios.png) |
+
+Estos cambios han añadido:
+
+* 15 parámetros
+
+
+
+* 5 contenedores
+
+![PreCambios](yamcs-training/images/t4/Containers_nuevos.png)
