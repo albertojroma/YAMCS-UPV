@@ -216,7 +216,8 @@ Estos cambios han añadido:
 
 * 15 parámetros
 
-
+![Parametros_nuevos_1](yamcs-training/images/t4/Parametros_nuevos_1.png)
+![Parametros_nuevos_2](yamcs-training/images/t4/Parametros_nuevos_2.png)
 
 * 5 contenedores
 
