@@ -29,67 +29,73 @@
     <xtce:TelemetryMetaData>
         <xtce:ParameterSet>
             <!-- ENUMS -->
-            <xtce:Parameter parameterTypeRef="dt/APID" name="destination_id"></xtce:Parameter>
-            <xtce:Parameter parameterTypeRef="dt/uint4_t" name="tm_PUS_version"></xtce:Parameter>
-            <xtce:Parameter parameterTypeRef="dt/uint4_t" name="spacecraft_time_reference_status"></xtce:Parameter>
-            <xtce:Parameter parameterTypeRef="dt/uint8_t" name="service_type_id"></xtce:Parameter>
-            <xtce:Parameter parameterTypeRef="dt/uint8_t" name="message_subtype_id"></xtce:Parameter>
-            <xtce:Parameter parameterTypeRef="dt/PacketType" name="packet_type"></xtce:Parameter>
-            <xtce:Parameter parameterTypeRef="dt/custom_time_encoding_parameter" name="time"></xtce:Parameter>
-            <xtce:Parameter parameterTypeRef="dt/APID" name="application_process_id"></xtce:Parameter>
+            <xtce:Parameter parameterTypeRef="dt/APID" name="destination_id"/>
+            <xtce:Parameter parameterTypeRef="dt/uint4_t" name="tm_PUS_version"/>
+            <xtce:Parameter parameterTypeRef="dt/uint4_t" name="spacecraft_time_reference_status"/>
+            <xtce:Parameter parameterTypeRef="dt/uint8_t" name="service_type_id"/>
+            <xtce:Parameter parameterTypeRef="dt/uint8_t" name="message_subtype_id"/>
+            <xtce:Parameter parameterTypeRef="dt/PacketType" name="packet_type"/>
+            <xtce:Parameter parameterTypeRef="dt/custom_time_encoding_parameter" name="time"/>
+            <xtce:Parameter parameterTypeRef="dt/APID" name="application_process_id"/>
             
             <!-- DATA TYPES -->
-            <xtce:Parameter parameterTypeRef="dt/version" name="version"></xtce:Parameter>
-            <xtce:Parameter parameterTypeRef="dt/uint16_t" name="packet_data_length"></xtce:Parameter>
-            <xtce:Parameter parameterTypeRef="dt/uint16_t" name="message_type_counter"></xtce:Parameter>
-            <xtce:Parameter parameterTypeRef="dt/spare" name="spare"></xtce:Parameter>
-            <xtce:Parameter parameterTypeRef="dt/bool_t" name="secondary_header_flag"></xtce:Parameter>
-            <xtce:Parameter parameterTypeRef="dt/sequence_flags" name="sequence_flags"></xtce:Parameter>
-            <xtce:Parameter parameterTypeRef="dt/packet_sequence_count" name="packet_sequence_count"></xtce:Parameter>
+            <xtce:Parameter parameterTypeRef="dt/uint3_t" name="version"/>
+            <xtce:Parameter parameterTypeRef="dt/uint16_t" name="packet_data_length"/>
+            <xtce:Parameter parameterTypeRef="dt/uint16_t" name="message_type_counter"/>
+            <xtce:Parameter parameterTypeRef="dt/uint16_t" name="spare"/>
+            <xtce:Parameter parameterTypeRef="dt/bool_t" name="secondary_header_flag"/>
+            <xtce:Parameter parameterTypeRef="dt/uint2_t" name="sequence_flags"/>
+            <xtce:Parameter parameterTypeRef="dt/uint14_t" name="packet_sequence_count"/>
         </xtce:ParameterSet>
         
         <xtce:ContainerSet>
+            
+            <!-- ___________________________ PRIMARY HEADER CONTAINERS__________________________________-->
+
+            <xtce:SequenceContainer name="PH">
+                <xtce:EntryList>
+                    <xtce:ParameterRefEntry parameterRef="version"/>
+                    <xtce:ContainerRefEntry containerRef="packet_id"/>
+                    <xtce:ContainerRefEntry containerRef="packet_sequence_control"/>
+                    <xtce:ParameterRefEntry parameterRef="packet_data_length"/>
+                </xtce:EntryList>
+            </xtce:SequenceContainer>
+
             <xtce:SequenceContainer name="packet_id">
                 <xtce:EntryList>
-                    <xtce:ParameterRefEntry parameterRef="packet_type"></xtce:ParameterRefEntry>
-                    <xtce:ParameterRefEntry parameterRef="secondary_header_flag"></xtce:ParameterRefEntry>
-                    <xtce:ParameterRefEntry parameterRef="application_process_id"></xtce:ParameterRefEntry>
+                    <xtce:ParameterRefEntry parameterRef="packet_type"/>
+                    <xtce:ParameterRefEntry parameterRef="secondary_header_flag"/>
+                    <xtce:ParameterRefEntry parameterRef="application_process_id"/>
                 </xtce:EntryList>
             </xtce:SequenceContainer>
 
             <xtce:SequenceContainer name="packet_sequence_control">
                 <xtce:EntryList>
-                    <xtce:ParameterRefEntry parameterRef="sequence_flags"></xtce:ParameterRefEntry>
-                    <xtce:ParameterRefEntry parameterRef="packet_sequence_count"></xtce:ParameterRefEntry>
+                    <xtce:ParameterRefEntry parameterRef="sequence_flags"/>
+                    <xtce:ParameterRefEntry parameterRef="packet_sequence_count"/>
+                </xtce:EntryList>
+            </xtce:SequenceContainer>
+
+            <!-- ___________________________ SECONDARY HEADER CONTAINERS__________________________________-->
+
+            <xtce:SequenceContainer name="SH">
+                <xtce:EntryList>
+                    <xtce:ParameterRefEntry parameterRef="tm_PUS_version"/>
+                    <xtce:ParameterRefEntry parameterRef="spacecraft_time_reference_status"/>
+                    <xtce:ContainerRefEntry containerRef="message_type_id"/>
+                    <xtce:ParameterRefEntry parameterRef="message_type_counter"/>
+                    <xtce:ParameterRefEntry parameterRef="destination_id"/>
+                    <xtce:ParameterRefEntry parameterRef="time"/>
                 </xtce:EntryList>
             </xtce:SequenceContainer>
 
             <xtce:SequenceContainer name="message_type_id">
                 <xtce:EntryList>
-                    <xtce:ParameterRefEntry parameterRef="service_type_id"></xtce:ParameterRefEntry>
-                    <xtce:ParameterRefEntry parameterRef="message_subtype_id"></xtce:ParameterRefEntry>
+                    <xtce:ParameterRefEntry parameterRef="service_type_id" />
+                    <xtce:ParameterRefEntry parameterRef="message_subtype_id" />
                 </xtce:EntryList>
             </xtce:SequenceContainer>
 
-            <xtce:SequenceContainer name="PH">
-                <xtce:EntryList>
-                    <xtce:ParameterRefEntry parameterRef="version"></xtce:ParameterRefEntry>
-                    <xtce:ContainerRefEntry containerRef="packet_id"></xtce:ContainerRefEntry>
-                    <xtce:ContainerRefEntry containerRef="packet_sequence_control"></xtce:ContainerRefEntry>
-                    <xtce:ParameterRefEntry parameterRef="packet_data_length"></xtce:ParameterRefEntry>
-                </xtce:EntryList>
-            </xtce:SequenceContainer>
-
-            <xtce:SequenceContainer name="SH">
-                <xtce:EntryList>
-                    <xtce:ParameterRefEntry parameterRef="tm_PUS_version"></xtce:ParameterRefEntry>
-                    <xtce:ParameterRefEntry parameterRef="spacecraft_time_reference_status"></xtce:ParameterRefEntry>
-                    <xtce:ContainerRefEntry containerRef="message_type_id"></xtce:ContainerRefEntry>
-                    <xtce:ParameterRefEntry parameterRef="message_type_counter"></xtce:ParameterRefEntry>
-                    <xtce:ParameterRefEntry parameterRef="destination_id"></xtce:ParameterRefEntry>
-                    <xtce:ParameterRefEntry parameterRef="time"></xtce:ParameterRefEntry>
-                </xtce:EntryList>
-            </xtce:SequenceContainer>
         </xtce:ContainerSet>
 
     </xtce:TelemetryMetaData>
