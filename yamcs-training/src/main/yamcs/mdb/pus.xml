@@ -49,6 +49,8 @@
 
             <xtce:Parameter parameterTypeRef="dt/bool_t" name="flag"/>
             <xtce:Parameter parameterTypeRef="dt/uint16_t" name="parameter"/>
+
+            <xtce:Parameter parameterTypeRef="dt/housekeeping_structure_ID" name="structure_ID"/>
         </xtce:ParameterSet>
         
         <xtce:ContainerSet>
@@ -99,14 +101,16 @@
                 </xtce:EntryList>
             </xtce:SequenceContainer>
 
-            <!-- * ___________________________ TM HEADER CONTAINER __________________________________-->
+            <!-- * ___________________________ TM_200_100 CONTAINERS __________________________________-->
 
             <xtce:SequenceContainer name="TM_200_100">
+
                 <xtce:EntryList>
                     <xtce:ParameterRefEntry parameterRef="time"/>
                     <xtce:ParameterRefEntry parameterRef="flag"/>
                     <xtce:ParameterRefEntry parameterRef="parameter"/>
                 </xtce:EntryList>
+
                 <xtce:BaseContainer containerRef="TM_header">
                     <xtce:RestrictionCriteria>
                         <xtce:ComparisonList>
@@ -115,16 +119,85 @@
                         </xtce:ComparisonList>
                     </xtce:RestrictionCriteria>
                 </xtce:BaseContainer>
+
             </xtce:SequenceContainer>
-            
+
             <xtce:SequenceContainer name="TM_header" abstract="true">
+
                 <xtce:EntryList>
                     <xtce:ContainerRefEntry containerRef="PH"/>
                     <xtce:ContainerRefEntry containerRef="SH"/>
                 </xtce:EntryList>
+
             </xtce:SequenceContainer>
 
-            
+            <!-- *___________________________ TM_3_25 CONTAINERS __________________________________ -->
+            <xtce:SequenceContainer name="TM_3_25" abstract="true">
+
+                <xtce:EntryList>
+                    <xtce:ParameterRefEntry parameterRef="structure_ID"/>
+                </xtce:EntryList>
+
+                <xtce:BaseContainer containerRef="TM_header">
+                    <xtce:RestrictionCriteria>
+                        <xtce:ComparisonList>
+                            <xtce:Comparison value="3" parameterRef="service_type_id"/>
+                            <xtce:Comparison value="25" parameterRef="message_subtype_id"/>
+                        </xtce:ComparisonList>
+                    </xtce:RestrictionCriteria>
+                </xtce:BaseContainer>
+
+            </xtce:SequenceContainer>
+
+            <xtce:SequenceContainer name="TM_HK_OBC">
+
+                <xtce:EntryList>
+                    <xtce:ParameterRefEntry parameterRef="/AcubeSAT/obdhBoardTemperature1"/> 
+                    <xtce:ParameterRefEntry parameterRef="/AcubeSAT/obdhBoardTemperature2"/>
+                    <xtce:ParameterRefEntry parameterRef="/AcubeSAT/obcMCUTemperature"/>
+                    <xtce:ParameterRefEntry parameterRef="/AcubeSAT/obcBootCounter"/>
+                    <xtce:ParameterRefEntry parameterRef="/AcubeSAT/obcOnBoardTime"/>
+                    <xtce:ParameterRefEntry parameterRef="/AcubeSAT/obcNANDCurrentlyUsedMemoryPartition"/>
+                    <xtce:ParameterRefEntry parameterRef="/AcubeSAT/obcMCUSysTick"/>
+                    <xtce:ParameterRefEntry parameterRef="/AcubeSAT/CANbus1Load"/>
+                    <xtce:ParameterRefEntry parameterRef="/AcubeSAT/CANbus2Load"/>
+                    <xtce:ParameterRefEntry parameterRef="/AcubeSAT/activeCAN"/>
+                    <xtce:ParameterRefEntry parameterRef="/AcubeSAT/obcNANDFLASHLCLThreshold"/>
+                    <xtce:ParameterRefEntry parameterRef="/AcubeSAT/obcMRAMLCLThreshold"/>
+                    <xtce:ParameterRefEntry parameterRef="/AcubeSAT/obcNANDFLASHON"/>
+                    <xtce:ParameterRefEntry parameterRef="/AcubeSAT/obcMRAMON"/>
+                </xtce:EntryList>
+
+                <xtce:BaseContainer containerRef="TM_3_25">
+                    <xtce:RestrictionCriteria>
+                        <xtce:ComparisonList>
+                            <xtce:Comparison value="0" parameterRef="structure_ID"/>
+                        </xtce:ComparisonList>
+                    </xtce:RestrictionCriteria>
+                </xtce:BaseContainer>
+
+            </xtce:SequenceContainer>
+
+            <xtce:SequenceContainer name="TM_HK_ADCS">
+
+                <xtce:EntryList>
+                    <xtce:ParameterRefEntry parameterRef="/AcubeSAT/magnetometerRawX"/> 
+                    <xtce:ParameterRefEntry parameterRef="/AcubeSAT/magnetometerRawY"/>
+                    <xtce:ParameterRefEntry parameterRef="/AcubeSAT/magnetometerRawZ"/>
+                    <xtce:ParameterRefEntry parameterRef="/AcubeSAT/gyroscopeX"/>
+                    <xtce:ParameterRefEntry parameterRef="/AcubeSAT/gyroscopeY"/>
+                    <xtce:ParameterRefEntry parameterRef="/AcubeSAT/gyroscopeZ"/>
+                </xtce:EntryList>
+
+                <xtce:BaseContainer containerRef="TM_3_25">
+                    <xtce:RestrictionCriteria>
+                        <xtce:ComparisonList>
+                            <xtce:Comparison value="1" parameterRef="structure_ID"/>
+                        </xtce:ComparisonList>
+                    </xtce:RestrictionCriteria>
+                </xtce:BaseContainer>
+
+            </xtce:SequenceContainer>
 
         </xtce:ContainerSet>
 

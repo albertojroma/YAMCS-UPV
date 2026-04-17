@@ -5,6 +5,7 @@
     <xtce:TelemetryMetaData>
         <xtce:ParameterTypeSet>
 
+            <!-- * Parametros de tipo temporal -->
             <xtce:AbsoluteTimeParameterType name="custom_time_encoding_parameter">
                 <!-- offset="1640995200" porque offset="0" implica 
                     1/1/1970 00:00:00:000 (hh:mm:ss::ms) UTC-->
@@ -15,7 +16,8 @@
                     <xtce:Epoch>UNIX</xtce:Epoch>
                 </xtce:ReferenceTime>
             </xtce:AbsoluteTimeParameterType>
-
+            
+            <!-- * Parametros de tipo agregado -->
             <xtce:AggregateParameterType name="sample_structure">
                 <xtce:MemberList>
                     <xtce:Member typeRef="parameter_ID" name="parameter_ID"></xtce:Member>
@@ -28,6 +30,7 @@
                 </xtce:MemberList>
             </xtce:AggregateParameterType>
 
+            <!-- * Parametros de tipo enumerado -->
             <xtce:EnumeratedParameterType name="PacketType">
                 <xtce:IntegerDataEncoding sizeInBits="1"></xtce:IntegerDataEncoding>
                 <xtce:EnumerationList>
@@ -35,7 +38,6 @@
                     <xtce:Enumeration value="1" label="TC" />
                 </xtce:EnumerationList>
             </xtce:EnumeratedParameterType>
-
             <xtce:EnumeratedParameterType name="APID">
                 <xtce:IntegerDataEncoding sizeInBits="11"></xtce:IntegerDataEncoding>
                 <xtce:EnumerationList>
@@ -48,7 +50,6 @@
                     <xtce:Enumeration value="2047" label="IdlePacket" />
                 </xtce:EnumerationList>
             </xtce:EnumeratedParameterType>
-
             <xtce:EnumeratedParameterType name="parameter_ID">
                 <xtce:IntegerDataEncoding sizeInBits="16"></xtce:IntegerDataEncoding>
                 <xtce:EnumerationList>
@@ -104,50 +105,52 @@
                     <xtce:Enumeration value="1224" label="ADCSSystick" />
                 </xtce:EnumerationList>
             </xtce:EnumeratedParameterType>
+            <xtce:EnumeratedParameterType name="housekeeping_structure_ID">
+                <xtce:IntegerDataEncoding sizeInBits="8"/>
+                <xtce:EnumerationList>
+                    <xtce:Enumeration value="0" label="HK_OBC" />
+                    <xtce:Enumeration value="1" label="HK_ADCS" />
+                </xtce:EnumerationList>
+            </xtce:EnumeratedParameterType>
 
+            <!-- * Parametros de tipo entero -->
             <xtce:IntegerParameterType name="uint4_t" signed="true">
                 <xtce:IntegerDataEncoding encoding="unsigned" sizeInBits="4" />
             </xtce:IntegerParameterType>
-
             <xtce:IntegerParameterType name="int8_t" signed="true">
                 <xtce:IntegerDataEncoding encoding="unsigned" sizeInBits="8" />
             </xtce:IntegerParameterType>
-
             <xtce:IntegerParameterType name="uint8_t" signed="false">
                 <xtce:IntegerDataEncoding encoding="unsigned" sizeInBits="8" />
             </xtce:IntegerParameterType>
-
             <xtce:IntegerParameterType name="uint16_t" signed="false">
                 <xtce:IntegerDataEncoding encoding="unsigned" sizeInBits="16" />
             </xtce:IntegerParameterType>
-
             <xtce:IntegerParameterType name="uint32_t" signed="false">
                 <xtce:IntegerDataEncoding encoding="unsigned" sizeInBits="32" />
             </xtce:IntegerParameterType>
-
             <xtce:IntegerParameterType name="uint64_t" signed="false">
                 <xtce:IntegerDataEncoding encoding="unsigned" sizeInBits="64" />
             </xtce:IntegerParameterType>
+            <xtce:IntegerParameterType name="uint3_t" signed="false">
+                <xtce:IntegerDataEncoding encoding="unsigned" sizeInBits="3" />
+            </xtce:IntegerParameterType>
+            <xtce:IntegerParameterType name="uint2_t" signed="false">
+                <xtce:IntegerDataEncoding encoding="unsigned" sizeInBits="2"/>
+            </xtce:IntegerParameterType>
+            <xtce:IntegerParameterType name="uint14_t" signed="false">
+                <xtce:IntegerDataEncoding encoding="unsigned" sizeInBits="14"/>
+            </xtce:IntegerParameterType>
 
+            <!-- * Parametros de tipo flotante -->
             <xtce:FloatParameterType name="float_t">
                 <xtce:FloatDataEncoding sizeInBits="32" />
             </xtce:FloatParameterType>
 
+            <!-- * Parametros de tipo booleano -->
             <xtce:BooleanParameterType name="bool_t">
                 <xtce:IntegerDataEncoding sizeInBits="1" />
             </xtce:BooleanParameterType>
-
-            <xtce:IntegerParameterType name="uint3_t" signed="false">
-                <xtce:IntegerDataEncoding encoding="unsigned" sizeInBits="3" />
-            </xtce:IntegerParameterType>
-
-            <xtce:IntegerParameterType name="uint2_t" signed="false">
-                <xtce:IntegerDataEncoding encoding="unsigned" sizeInBits="2"/>
-            </xtce:IntegerParameterType>
-
-            <xtce:IntegerParameterType name="uint14_t" signed="false">
-                <xtce:IntegerDataEncoding encoding="unsigned" sizeInBits="14"/>
-            </xtce:IntegerParameterType>
 
         </xtce:ParameterTypeSet>
     </xtce:TelemetryMetaData>

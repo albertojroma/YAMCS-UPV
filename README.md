@@ -289,3 +289,166 @@ Estos cambios han añadido:
 * 2 contenedores
 
 ![Contenedores_nuevos_T5](yamcs-training/images/t5/Contenedores_nuevos_T5.png)
+
+### Paso 6:
+Durante la misión, la estación terrestre recibirá algunos parámetros de la nave espacial. Por este motivo, se implementa el TM[3,25], denominado «Informe de parámetros de mantenimiento». Contiene una serie de parámetros y sus valores, muestreados a intervalos de tiempo específicos (véase también el apartado 6.3.3.3 del [documento ECSS](https://cloud.spacedot.gr/index.php/apps/files/?dir=/AcubeSAT/Subsystems/OBC%20-%20On-board%20Computer/Standards&openfile=18872)).
+Los parámetros utilizados en la misión se dividen en grupos según diversos criterios, como el intervalo de tiempo de sus muestreos, para formar parte del TM[3,25]. Estos grupos se denominan estructuras de mantenimiento y cada uno tiene un identificador único.
+Los TM no solo contienen los datos de telemetría, sino también encabezados, que incluyen algunos datos importantes relativos a la identificación de cada paquete. Utilizando los contenedores que creaste en la tarea [n.º 4](https://gitlab.com/acubesat/ops/yamcs-training/-/issues/4), tu objetivo es crear la estructura del TM[3,25].
+
+* Para implementar el TM[3,25], al igual que en la tarea [n.º 5](https://gitlab.com/acubesat/ops/yamcs-training/-/issues/5), debes definir un `SequenceContainer` con el `BaseContainer` y los `RestrictionCriteria` adecuados. El único elemento `EntryList` del contenedor debe ser un parámetro para el structure_ID (consulta también el apartado 8.3.2.13 del [documento ECSS](https://cloud.spacedot.gr/index.php/apps/files/?dir=/AcubeSAT/Subsystems/OBC%20-%20On-board%20Computer/Standards&openfile=18872)).
+* A continuación, crearás un nuevo tipo de enumeración de 8 bits para el structure_ID. Los valores serán todos los ID de las estructuras de mantenimiento. A continuación se muestran los ID y los elementos de las estructuras de mantenimiento.
+* También se crearán dos estructuras de mantenimiento en `SequenceContainers` utilizando como `BaseContainer` el contenedor TM[3,25] y como `RestrictionCriteria` el valor del structure_ID. Las dos estructuras de mantenimiento son las siguientes:
+
+1. housekeeping_structure_ID = 0
+  * `/AcubeSAT/obdhBoardTemperature1`
+  * `/AcubeSAT/obdhBoardTemperature2`
+  * `/AcubeSAT/obcMCUTemperature`
+  * `/AcubeSAT/obcBootCounter`
+  * `/AcubeSAT/obcOnBoardTime`
+  * `/AcubeSAT/obcNANDCurrentlyUsedMemoryPartition`
+  * `/AcubeSAT/obcMCUSysTick`
+  * `/AcubeSAT/CANbus1Load`
+  * `/AcubeSAT/CANbus2Load`
+  * `/AcubeSAT/activeCAN`
+  * `/AcubeSAT/obcNANDFLASHLCLThreshold`
+  * `/AcubeSAT/obcMRAMLCLThreshold`
+  * `/AcubeSAT/obcNANDFLASHON`
+  * `/AcubeSAT/obcMRAMON`
+
+2. housekeeping_structure_ID = 1
+  * `/AcubeSAT/magnetometerRawX`
+  * `/AcubeSAT/magnetometerRawY`
+  * `/AcubeSAT/magnetometerRawZ`
+  * `/AcubeSAT/gyroscopeX`
+  * `/AcubeSAT/gyroscopeY`
+  * `/AcubeSAT/gyroscopeZ`
+
+**¡Ojo!** Algunos de los parámetros aún no están definidos en el archivo `xtce.xml`. Encontrarás toda la información sobre sus definiciones en el [código de OBC](https://gitlab.com/acubesat/obc/cross-platform-software/-/blob/main/inc/Parameters/AcubeSATParameters.hpp?ref_type=heads).
+Ya sabes [dónde](https://public.ccsds.org/Pubs/660x1g2.pdf) y [cómo](https://gitlab.com/acubesat/ops/yamcs-instance/-/wikis/2.-Containers) encontrar más información.
+
+#### Código añadido
+
+##### 1. Tipos de parámetros nuevos
+
+Es necesario crear el siguiente tipo de dato para el identificador de la estructura en el archivo `dt.xml`:
+
+```
+<xtce:EnumeratedParameterType name="housekeeping_structure_ID">
+    <xtce:IntegerDataEncoding sizeInBits="8"/>
+    <xtce:EnumerationList>
+        <xtce:Enumeration value="0" label="HK_OBC" />
+        <xtce:Enumeration value="1" label="HK_ADCS" />
+    </xtce:EnumerationList>
+</xtce:EnumeratedParameterType>
+```
+
+##### 2. Parámetros faltantes en `xtce.xml`
+
+Es necesario añadir los siguientes parámetros para la estructura de valor 0 en el archivo `xtce.xml`:
+
+```
+<xtce:Parameter parameterTypeRef="/dt/uint8_t" name="obcNANDCurrentlyUsedMemoryPartition"></xtce:Parameter>
+<xtce:Parameter parameterTypeRef="/dt/bool_t" name="activeCAN"></xtce:Parameter>
+```
+
+##### 3. Instanciar parámetros
+
+Es necesario instanciar el siguiente parámetros en el set de parámetros del archivo `pus.xml`:
+
+```
+<xtce:Parameter parameterTypeRef="dt/housekeeping_structure_ID" name="structure_ID"/>
+```
+
+##### 4. Creación de contenedores
+
+Se crea la siguiente jerarquía de contenedores en el archivo `pus.xml`:
+
+```
+            <xtce:SequenceContainer name="TM_3_25" abstract="true">
+
+                <xtce:EntryList>
+                    <xtce:ParameterRefEntry parameterRef="structure_ID"/>
+                </xtce:EntryList>
+
+                <xtce:BaseContainer containerRef="TM_header">
+                    <xtce:RestrictionCriteria>
+                        <xtce:ComparisonList>
+                            <xtce:Comparison value="3" parameterRef="service_type_id"/>
+                            <xtce:Comparison value="25" parameterRef="message_subtype_id"/>
+                        </xtce:ComparisonList>
+                    </xtce:RestrictionCriteria>
+                </xtce:BaseContainer>
+
+            </xtce:SequenceContainer>
+
+            <xtce:SequenceContainer name="TM_HK_OBC">
+
+                <xtce:EntryList>
+                    <xtce:ParameterRefEntry parameterRef="/AcubeSAT/obdhBoardTemperature1"/> 
+                    <xtce:ParameterRefEntry parameterRef="/AcubeSAT/obdhBoardTemperature2"/>
+                    <xtce:ParameterRefEntry parameterRef="/AcubeSAT/obcMCUTemperature"/>
+                    <xtce:ParameterRefEntry parameterRef="/AcubeSAT/obcBootCounter"/>
+                    <xtce:ParameterRefEntry parameterRef="/AcubeSAT/obcOnBoardTime"/>
+                    <xtce:ParameterRefEntry parameterRef="/AcubeSAT/obcNANDCurrentlyUsedMemoryPartition"/>
+                    <xtce:ParameterRefEntry parameterRef="/AcubeSAT/obcMCUSysTick"/>
+                    <xtce:ParameterRefEntry parameterRef="/AcubeSAT/CANbus1Load"/>
+                    <xtce:ParameterRefEntry parameterRef="/AcubeSAT/CANbus2Load"/>
+                    <xtce:ParameterRefEntry parameterRef="/AcubeSAT/activeCAN"/>
+                    <xtce:ParameterRefEntry parameterRef="/AcubeSAT/obcNANDFLASHLCLThreshold"/>
+                    <xtce:ParameterRefEntry parameterRef="/AcubeSAT/obcMRAMLCLThreshold"/>
+                    <xtce:ParameterRefEntry parameterRef="/AcubeSAT/obcNANDFLASHON"/>
+                    <xtce:ParameterRefEntry parameterRef="/AcubeSAT/obcMRAMON"/>
+                </xtce:EntryList>
+
+                <xtce:BaseContainer containerRef="TM_3_25">
+                    <xtce:RestrictionCriteria>
+                        <xtce:ComparisonList>
+                            <xtce:Comparison value="0" parameterRef="structure_ID"/>
+                        </xtce:ComparisonList>
+                    </xtce:RestrictionCriteria>
+                </xtce:BaseContainer>
+
+            </xtce:SequenceContainer>
+
+            <xtce:SequenceContainer name="TM_HK_ADCS">
+
+                <xtce:EntryList>
+                    <xtce:ParameterRefEntry parameterRef="/AcubeSAT/magnetometerRawX"/> 
+                    <xtce:ParameterRefEntry parameterRef="/AcubeSAT/magnetometerRawY"/>
+                    <xtce:ParameterRefEntry parameterRef="/AcubeSAT/magnetometerRawZ"/>
+                    <xtce:ParameterRefEntry parameterRef="/AcubeSAT/gyroscopeX"/>
+                    <xtce:ParameterRefEntry parameterRef="/AcubeSAT/gyroscopeY"/>
+                    <xtce:ParameterRefEntry parameterRef="/AcubeSAT/gyroscopeZ"/>
+                </xtce:EntryList>
+
+                <xtce:BaseContainer containerRef="TM_3_25">
+                    <xtce:RestrictionCriteria>
+                        <xtce:ComparisonList>
+                            <xtce:Comparison value="1" parameterRef="structure_ID"/>
+                        </xtce:ComparisonList>
+                    </xtce:RestrictionCriteria>
+                </xtce:BaseContainer>
+
+            </xtce:SequenceContainer>
+```
+
+#### Resultados:
+
+Todas estas modificaciones de código han añadido cambios en la interfaz web. 
+
+| Antes de las modificaciones | Después de las modificaciones |
+|          --------------     |         --------------        |
+| ![PreCambiosT6](yamcs-training/images/t5/PostCambiosT5.png) | ![PostCambiosT6](yamcs-training/images/t6/PostCambiosT6.png) |
+
+Estos cambios han añadido:
+
+* 3 parámetros (1 en `/pus` y los otros 2 en `/AcubeSAT`)
+
+![Parametro_nuevo_pus_T6](yamcs-training/images/t6/Parametro_nuevo_pus_T6.png)
+![Parametro_nuevo_AcubeSAT_1_T6](yamcs-training/images/t6/Parametro_nuevo_AcubeSAT_1_T6.png)
+![Parametro_nuevo_AcubeSAT_2_T6](yamcs-training/images/t6/Parametro_nuevo_AcubeSAT_2_T6.png)
+
+
+* 3 contenedores
+
+![Contenedores_nuevos_T6](yamcs-training/images/t6/Contenedores_nuevos_T6.png)
