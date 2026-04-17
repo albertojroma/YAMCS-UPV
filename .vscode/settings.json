@@ -1,6 +1,15 @@
 {
   "better-comments.tags": [
     {
+    "tag": "REVIEW:",
+    "color": "#FF2D00",
+    "strikethrough": false,
+    "underline": false,
+    "backgroundColor": "transparent",
+    "bold": false,
+    "italic": false
+    },
+    {
       "tag": "*",
       "color": "#8B008B",
       "strikethrough": false,

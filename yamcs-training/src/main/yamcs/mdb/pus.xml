@@ -203,10 +203,76 @@
 
     </xtce:TelemetryMetaData>
 
-    <!-- <xtce:CommandMetaData>
+    <!-- Anyadido para tarea 7-->
+    <xtce:CommandMetaData>
         <xtce:MetaCommandSet>
+            
+<!-- REVIEW: -->
+<xtce:MetaCommand name="TC_header" abstract="true">
+    <xtce:ArgumentList>
+        <xtce:Argument argumentTypeRef="dt/uint3_t" name="version"/>
+        <xtce:Argument argumentTypeRef="dt/uint1_t" name="packet_type"/>
+        <xtce:Argument argumentTypeRef="dt/uint1_t" name="secondary_header_flag"/>
+        <xtce:Argument argumentTypeRef="dt/uint11_t" name="application_process_ID"/>
+        <xtce:Argument argumentTypeRef="dt/uint2_t" name="sequence_flags"/>
+        <xtce:Argument argumentTypeRef="dt/uint4_t" name="ccsds_secondary_header_version"/>
+        <xtce:Argument argumentTypeRef="dt/uint4_t" name="acknowledgement_flags"/>
+        <xtce:Argument argumentTypeRef="dt/uint8_t" name="service_type_ID"/>
+        <xtce:Argument argumentTypeRef="dt/uint8_t" name="message_subtype_ID"/>
+        <xtce:Argument argumentTypeRef="dt/uint16_t" name="source_ID"/>
+    </xtce:ArgumentList>
+
+    <xtce:CommandContainer name="TC_header">
+        <xtce:EntryList>
+            <xtce:ArgumentRefEntry argumentRef="version"/>
+            <xtce:ArgumentRefEntry argumentRef="packet_type"/>
+            <xtce:ArgumentRefEntry argumentRef="secondary_header_flag"/>
+            <xtce:ArgumentRefEntry argumentRef="application_process_ID"/>
+            <xtce:ArgumentRefEntry argumentRef="sequence_flags"/>
+            <xtce:FixedValueEntry name="packet_sequence_count" binaryValue="0000" sizeInBits="14" />
+            <xtce:FixedValueEntry name="packet_data_length" binaryValue="0000" sizeInBits="16" />
+            
+            <xtce:ArgumentRefEntry argumentRef="ccsds_secondary_header_version"/>
+            <xtce:ArgumentRefEntry argumentRef="acknowledgement_flags"/>
+            <xtce:ArgumentRefEntry argumentRef="service_type_ID"/>
+            <xtce:ArgumentRefEntry argumentRef="message_subtype_ID"/>
+            <xtce:ArgumentRefEntry argumentRef="source_ID"/>
+        </xtce:EntryList>
+    </xtce:CommandContainer>
+</xtce:MetaCommand>
+
+<!-- REVIEW: -->
+<xtce:MetaCommand name="TC_3_27_GenerateReport">
+    
+    <xtce:BaseMetaCommand metaCommandRef="TC_header">
+        <xtce:ArgumentAssignmentList>
+            <xtce:ArgumentAssignment argumentName="acknowledgement_flags" argumentValue="0"/>
+            <xtce:ArgumentAssignment argumentName="source_ID" argumentValue="5"/>
+            <xtce:ArgumentAssignment argumentName="service_type_ID" argumentValue="3"/>
+            <xtce:ArgumentAssignment argumentName="message_subtype_ID" argumentValue="27"/>
+        </xtce:ArgumentAssignmentList>
+    </xtce:BaseMetaCommand>
+    
+    <xtce:ArgumentList>
+        <xtce:Argument argumentTypeRef="dt/housekeeping_structure_ID" name="structure_ID_1"/>
+        <xtce:Argument argumentTypeRef="dt/housekeeping_structure_ID" name="structure_ID_2"/>
+        <xtce:Argument argumentTypeRef="dt/housekeeping_structure_ID" name="structure_ID_3"/>
+    </xtce:ArgumentList>
+
+    <xtce:CommandContainer name="TC_3_27_GenerateReport">
+        <xtce:EntryList>
+            <xtce:ArgumentRefEntry argumentRef="structure_ID_1"/>
+            <xtce:ArgumentRefEntry argumentRef="structure_ID_2"/>
+            <xtce:ArgumentRefEntry argumentRef="structure_ID_3"/>
+        </xtce:EntryList>
+        <xtce:BaseContainer containerRef="TC_header"/>
+    </xtce:CommandContainer>
+    
+</xtce:MetaCommand>
+
+
         </xtce:MetaCommandSet> 
-    </xtce:CommandMetaData> -->
+    </xtce:CommandMetaData>
 
 
 </xtce:SpaceSystem>

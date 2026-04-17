@@ -38,6 +38,7 @@
                     <xtce:Enumeration value="1" label="TC" />
                 </xtce:EnumerationList>
             </xtce:EnumeratedParameterType>
+
             <xtce:EnumeratedParameterType name="APID">
                 <xtce:IntegerDataEncoding sizeInBits="11"></xtce:IntegerDataEncoding>
                 <xtce:EnumerationList>
@@ -50,6 +51,7 @@
                     <xtce:Enumeration value="2047" label="IdlePacket" />
                 </xtce:EnumerationList>
             </xtce:EnumeratedParameterType>
+
             <xtce:EnumeratedParameterType name="parameter_ID">
                 <xtce:IntegerDataEncoding sizeInBits="16"></xtce:IntegerDataEncoding>
                 <xtce:EnumerationList>
@@ -105,6 +107,7 @@
                     <xtce:Enumeration value="1224" label="ADCSSystick" />
                 </xtce:EnumerationList>
             </xtce:EnumeratedParameterType>
+
             <xtce:EnumeratedParameterType name="housekeeping_structure_ID">
                 <xtce:IntegerDataEncoding sizeInBits="8"/>
                 <xtce:EnumerationList>
@@ -117,27 +120,35 @@
             <xtce:IntegerParameterType name="uint4_t" signed="true">
                 <xtce:IntegerDataEncoding encoding="unsigned" sizeInBits="4" />
             </xtce:IntegerParameterType>
+
             <xtce:IntegerParameterType name="int8_t" signed="true">
                 <xtce:IntegerDataEncoding encoding="unsigned" sizeInBits="8" />
             </xtce:IntegerParameterType>
+
             <xtce:IntegerParameterType name="uint8_t" signed="false">
                 <xtce:IntegerDataEncoding encoding="unsigned" sizeInBits="8" />
             </xtce:IntegerParameterType>
+
             <xtce:IntegerParameterType name="uint16_t" signed="false">
                 <xtce:IntegerDataEncoding encoding="unsigned" sizeInBits="16" />
             </xtce:IntegerParameterType>
+
             <xtce:IntegerParameterType name="uint32_t" signed="false">
                 <xtce:IntegerDataEncoding encoding="unsigned" sizeInBits="32" />
             </xtce:IntegerParameterType>
+
             <xtce:IntegerParameterType name="uint64_t" signed="false">
                 <xtce:IntegerDataEncoding encoding="unsigned" sizeInBits="64" />
             </xtce:IntegerParameterType>
+
             <xtce:IntegerParameterType name="uint3_t" signed="false">
                 <xtce:IntegerDataEncoding encoding="unsigned" sizeInBits="3" />
             </xtce:IntegerParameterType>
+
             <xtce:IntegerParameterType name="uint2_t" signed="false">
                 <xtce:IntegerDataEncoding encoding="unsigned" sizeInBits="2"/>
             </xtce:IntegerParameterType>
+
             <xtce:IntegerParameterType name="uint14_t" signed="false">
                 <xtce:IntegerDataEncoding encoding="unsigned" sizeInBits="14"/>
             </xtce:IntegerParameterType>
@@ -157,20 +168,48 @@
 
     <xtce:CommandMetaData>
         <xtce:ArgumentTypeSet>
+
+            <!-- * Parametros de tipo flotante -->
+
             <xtce:FloatArgumentType name="float_t">
                 <xtce:FloatDataEncoding sizeInBits="32" />
             </xtce:FloatArgumentType>
+
+            <!-- * Parametros de tipo booleano -->
 
             <xtce:BooleanArgumentType name="bool_t">
                 <xtce:IntegerDataEncoding sizeInBits="1" />
             </xtce:BooleanArgumentType>
 
+            <!-- * Parametros de tipo entero sin signo -->
+            
+            <!-- Anyadido para tarea 7-->
+            <xtce:IntegerArgumentType name="uint1_t" signed="false">
+                <xtce:IntegerDataEncoding encoding="unsigned" sizeInBits="1" />
+            </xtce:IntegerArgumentType>
+
+            <!-- Anyadido para tarea 7-->
+            <xtce:IntegerArgumentType name="uint2_t" signed="false">
+                <xtce:IntegerDataEncoding encoding="unsigned" sizeInBits="2" />
+            </xtce:IntegerArgumentType>
+            
+            <!-- Anyadido para tarea 7-->
+            <xtce:IntegerArgumentType name="uint3_t" signed="false">
+                <xtce:IntegerDataEncoding encoding="unsigned" sizeInBits="3" />
+            </xtce:IntegerArgumentType>
+            
+            <!-- Anyadido para tarea 7-->
+            <xtce:IntegerArgumentType name="uint4_t" signed="false">
+                <xtce:IntegerDataEncoding encoding="unsigned" sizeInBits="4" />
+            </xtce:IntegerArgumentType>
+
             <xtce:IntegerArgumentType name="uint8_t" signed="false">
                 <xtce:IntegerDataEncoding encoding="unsigned" sizeInBits="8" />
             </xtce:IntegerArgumentType>
 
-            <xtce:IntegerArgumentType name="int8_t" signed="true">
-                <xtce:IntegerDataEncoding encoding="unsigned" sizeInBits="8" />
+            <!-- Anyadido para tarea 7-->
+            <xtce:IntegerArgumentType name="uint11_t" signed="false">
+                <xtce:IntegerDataEncoding encoding="unsigned" sizeInBits="11" />
             </xtce:IntegerArgumentType>
 
             <xtce:IntegerArgumentType name="uint16_t" signed="false">
@@ -184,6 +223,23 @@
             <xtce:IntegerArgumentType name="uint64_t" signed="false">
                 <xtce:IntegerDataEncoding encoding="unsigned" sizeInBits="64" />
             </xtce:IntegerArgumentType>
+
+            <!-- * Parametros de tipo entero con signo -->
+
+            <xtce:IntegerArgumentType name="int8_t" signed="true">
+                <xtce:IntegerDataEncoding encoding="unsigned" sizeInBits="8" />
+            </xtce:IntegerArgumentType>      
+
+            <!-- * Otros parametros -->
+
+            <!-- Anyadido para tarea 7-->
+            <xtce:EnumeratedArgumentType name="housekeeping_structure_ID">
+                <xtce:IntegerDataEncoding sizeInBits="8"/>
+                <xtce:EnumerationList>
+                    <xtce:Enumeration value="0" label="HK_OBC" />
+                    <xtce:Enumeration value="1" label="HK_ADCS" />
+                </xtce:EnumerationList>
+            </xtce:EnumeratedArgumentType>
 
         </xtce:ArgumentTypeSet>
     </xtce:CommandMetaData>

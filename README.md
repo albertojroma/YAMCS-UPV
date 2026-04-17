@@ -452,3 +452,22 @@ Estos cambios han añadido:
 * 3 contenedores
 
 ![Contenedores_nuevos_T6](yamcs-training/images/t6/Contenedores_nuevos_T6.png)
+
+### Paso 7:
+
+Debe crear el TC[3,27] para generar un informe único de las estructuras de los informes de parámetros de mantenimiento (consulte también el apartado 6.3.3.7 del [documento ECSS](https://cloud.spacedot.gr/index.php/apps/files/?dir=/AcubeSAT/Subsystems/OBC%20-%20On-board%20Computer/Standards&openfile=18872)).
+
+1. En primer lugar, debe crear los encabezados (primario y secundario) para los TC. En el caso de los TC, no puede crear dos contenedores separados para los dos encabezados, como hizo con los TM en la tarean [nº 4](https://gitlab.com/acubesat/ops/yamcs-training/-/issues/4). Tendrá que crear un único contenedor [MetaCommand 4.4.5.2](https://public.ccsds.org/Pubs/660x1g2.pdf#page=206) con todos los parámetros de las cabeceras de los TC primario y secundario tal y como se mencionan en la norma ECSS (ahora los argumentos tienen el mismo uso que tenían los parámetros en la sección de telemetría y los metacomandos como contenedores). Consulte la [página wiki](https://gitlab.com/acubesat/ops/yamcs-instance/-/wikis/2.-Containers#metacommands-and-commandcontainers) para obtener más detalles sobre la creación de comandos.
+
+    Debe tener en cuenta que algunos campos de los encabezados TC ya están configurados (su valor está determinado), tal y como se indica en el documento ECSS. Los valores constantes se asignarán a cada campo en una `ArgumentAssignmentList`. Notas importantes:
+
+    * en cuanto a `acknowledgement_flags`, tenga en cuenta que, según el apartado 7.4.4.1 del protocolo ECSS, no solicitamos ningún informe
+    * el valor de `source_ID` puede establecerse en 5
+    * los parámetros: `application_process_ID`, `service_type_ID` y `message_subtype_ID` no deben incluirse en la `ArgumentAssignmentList`
+    * los parámetros: `packet_sequence_count_or_packet_name` y `packet_data_length` dependen de cada paquete transmitido y son gestionados por el PostProcessor. Por ese motivo, deben definirse en la `EntryList` del contenedor utilizando el elemento `FixedValueEntry`.
+
+2. A continuación, crea un contenedor `MetaCommand` utilizando como `BaseMetaCommand` el contenedor de encabezado TC que acabas de crear. Este debe contener una `ArgumentAssignmentList` con los siguientes elementos:
+* `service_type_ID` = 3
+* `message_type_ID` = 27
+
+3. Consulte el apartado 8.3.2.15 de la [norma ECSS](https://cloud.spacedot.gr/index.php/apps/files/?dir=/AcubeSAT/Subsystems/OBC%20-%20On-board%20Computer/Standards&openfile=18872) para determinar `Arguments` necesarios para la `ArgumentList` del TC[3,27]. El número de estructuras de gestión interna que se incluirán en el contenedor será 3.
