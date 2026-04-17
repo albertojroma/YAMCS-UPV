@@ -1,0 +1,13 @@
+{
+  "better-comments.tags": [
+    {
+      "tag": "*",
+      "color": "#8B008B",
+      "strikethrough": false,
+      "underline": false,
+      "backgroundColor": "#transparent",
+      "bold": true,
+      "italic": false
+    }
+  ]
+}

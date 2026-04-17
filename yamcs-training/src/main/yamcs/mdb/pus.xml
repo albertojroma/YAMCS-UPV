@@ -2,27 +2,27 @@
 <xtce:SpaceSystem name="pus" xmlns:xtce="http://www.omg.org/spec/XTCE/20180204" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.omg.org/spec/XTCE/20180204 https://www.omg.org/spec/XTCE/20180204/SpaceSystem.xsd" shortDescription="This is a bogus satellite telemetry and telecommand database." operationalStatus="unittest">
 
 <!-- 
-    *tm primary: [48 bits] (16*3)
-        *version 3bits
-        *packet id: [13 bits]
-            *packet type 1bit
-            *secondary header flag 1bit
-            *application process id 11bits - task2
-        *packet sequence control: [16 bits]
-            *sequence falgs 2bits
-            *psc or packet name 14 bits
-        *packet data length 16bits
+    tm primary: [48 bits] (16*3)
+        version 3bits
+        packet id: [13 bits]
+            packet type 1bit
+            secondary header flag 1bit
+            application process id 11bits - task2
+        packet sequence control: [16 bits]
+            sequence falgs 2bits
+            psc or packet name 14 bits
+        packet data length 16bits
 
-    *tm secondary: [56 bits + time bits + spare bits]
-        *tm PUS version 4 bits (enum)
-        *spacecraft time reference status 4 bits (enum)
-        *message type id: [16 bits]
-            *service type id 8bits (enum)
-            *message subtype id 8bits (enum)
-        *message type counter 16bits (unsigned int)
-        *destination id 16bits (enum)
-        *time (abolute time) -task3
-        *spare (fixed size bit string)
+    tm secondary: [56 bits + time bits + spare bits]
+        tm PUS version 4 bits (enum)
+        spacecraft time reference status 4 bits (enum)
+        message type id: [16 bits]
+            service type id 8bits (enum)
+            message subtype id 8bits (enum)
+        message type counter 16bits (unsigned int)
+        destination id 16bits (enum)
+        time (abolute time) -task3
+        spare (fixed size bit string)
  -->
 
 
@@ -46,11 +46,14 @@
             <xtce:Parameter parameterTypeRef="dt/bool_t" name="secondary_header_flag"/>
             <xtce:Parameter parameterTypeRef="dt/uint2_t" name="sequence_flags"/>
             <xtce:Parameter parameterTypeRef="dt/uint14_t" name="packet_sequence_count"/>
+
+            <xtce:Parameter parameterTypeRef="dt/bool_t" name="flag"/>
+            <xtce:Parameter parameterTypeRef="dt/uint16_t" name="parameter"/>
         </xtce:ParameterSet>
         
         <xtce:ContainerSet>
             
-            <!-- ___________________________ PRIMARY HEADER CONTAINERS__________________________________-->
+            <!-- *  ___________________________ PRIMARY HEADER CONTAINERS __________________________________-->
 
             <xtce:SequenceContainer name="PH">
                 <xtce:EntryList>
@@ -76,7 +79,7 @@
                 </xtce:EntryList>
             </xtce:SequenceContainer>
 
-            <!-- ___________________________ SECONDARY HEADER CONTAINERS__________________________________-->
+            <!-- * ___________________________ SECONDARY HEADER CONTAINERS__________________________________-->
 
             <xtce:SequenceContainer name="SH">
                 <xtce:EntryList>
@@ -95,6 +98,33 @@
                     <xtce:ParameterRefEntry parameterRef="message_subtype_id" />
                 </xtce:EntryList>
             </xtce:SequenceContainer>
+
+            <!-- * ___________________________ TM HEADER CONTAINER __________________________________-->
+
+            <xtce:SequenceContainer name="TM_200_100">
+                <xtce:EntryList>
+                    <xtce:ParameterRefEntry parameterRef="time"/>
+                    <xtce:ParameterRefEntry parameterRef="flag"/>
+                    <xtce:ParameterRefEntry parameterRef="parameter"/>
+                </xtce:EntryList>
+                <xtce:BaseContainer containerRef="TM_header">
+                    <xtce:RestrictionCriteria>
+                        <xtce:ComparisonList>
+                            <xtce:Comparison value="200" parameterRef="service_type_id"/>
+                            <xtce:Comparison value="100" parameterRef="message_subtype_id"/>
+                        </xtce:ComparisonList>
+                    </xtce:RestrictionCriteria>
+                </xtce:BaseContainer>
+            </xtce:SequenceContainer>
+            
+            <xtce:SequenceContainer name="TM_header" abstract="true">
+                <xtce:EntryList>
+                    <xtce:ContainerRefEntry containerRef="PH"/>
+                    <xtce:ContainerRefEntry containerRef="SH"/>
+                </xtce:EntryList>
+            </xtce:SequenceContainer>
+
+            
 
         </xtce:ContainerSet>
 

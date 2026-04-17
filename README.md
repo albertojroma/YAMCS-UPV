@@ -10,7 +10,12 @@ Es recomendable tener a mano la [guía del desarrollador](https://gitlab.com/acu
 
 En este caso se va a trabajar principalmente con el lenguaje **XML** (principalmente para definir que significan los datos), por lo tanto, es recomendable seguir las indicaciones de instalación de software del repositorio del [*training* de AcubeSAT](https://gitlab.com/acubesat/ops/yamcs-training#overview-of-the-training)
 
-En un lenguaje de etiquetas como `XML` es importante tener en cuenta algunos detalles como el autocierre en etiquetas usando **/** --> `< ... />` 
+En un lenguaje de etiquetas como `XML` es importante tener en cuenta algunos detalles como el autocierre en etiquetas usando **/** --> `< ... />`
+
+También se recomiendan las siguientes extensiones de **vscode**:
+* XML Language Support by Red Hat
+* Git Graph
+* Better Comments
 
 ## Guía del *training*
 
@@ -222,3 +227,65 @@ Estos cambios han añadido:
 * 5 contenedores
 
 ![PreCambios](yamcs-training/images/t4/Containers_nuevos.png)
+
+### Paso 5:
+Crea un [*TM[200,100] container*](https://ccsds.org/Pubs/660x1g2.pdf#page=229) (apartado 5.2 del documento).
+
+Crea un contenedor «TM_header», que incluya los encabezados TM primario y secundario de la tarea [n.º4](https://gitlab.com/acubesat/ops/yamcs-training/-/issues/4), y utilízalo como ```BaseContainer```.
+
+El contenedor tendrá 3 parámetros:
+1. parameter (tipo uint16_t)
+2. flag (tipo booleano)
+3. time (tipo de parámetro de tiempo absoluto creado en la tarea [n.º3](https://gitlab.com/acubesat/ops/yamcs-training/-/issues/3))
+
+El código que crea el contenedor es el siguiente:
+
+```
+<xtce:SequenceContainer name="TM_200_100">
+    <xtce:EntryList>
+        <xtce:ParameterRefEntry parameterRef="time"/>
+        <xtce:ParameterRefEntry parameterRef="flag"/>
+        <xtce:ParameterRefEntry parameterRef="parameter"/>
+    </xtce:EntryList>
+    <xtce:BaseContainer containerRef="TM_header">
+        <xtce:RestrictionCriteria>
+            <xtce:ComparisonList>
+                <xtce:Comparison value="200" parameterRef="service_type_id"/>
+                <xtce:Comparison value="100" parameterRef="message_subtype_id"/>
+            </xtce:ComparisonList>
+        </xtce:RestrictionCriteria>
+    </xtce:BaseContainer>
+</xtce:SequenceContainer>
+
+<xtce:SequenceContainer name="TM_header" abstract="true">
+    <xtce:EntryList>
+        <xtce:ContainerRefEntry containerRef="PH"/>
+        <xtce:ContainerRefEntry containerRef="SH"/>
+    </xtce:EntryList>
+</xtce:SequenceContainer>
+```
+
+Se han tenido que añadir 2 parámetros al set de parámetros:
+
+```
+<xtce:Parameter parameterTypeRef="dt/bool_t" name="flag"/>
+<xtce:Parameter parameterTypeRef="dt/uint16_t" name="parameter"/>
+```
+
+#### Resultados
+
+Todas estas modificaciones de código han añadido cambios en la interfaz web. 
+
+| Antes de las modificaciones | Después de las modificaciones |
+|          --------------     |         --------------        |
+| ![PreCambiosT5](yamcs-training/images/t4/PostCambios.png) | ![PostCambiosT5](yamcs-training/images/t5/PostCambiosT5.png) |
+
+Estos cambios han añadido:
+
+* 2 parámetros
+
+![Parametros_nuevos_T5](yamcs-training/images/t5/Parametros_nuevos_T5.png)
+
+* 2 contenedores
+
+![Contenedores_nuevos_T5](yamcs-training/images/t5/Contenedores_nuevos_T5.png)
