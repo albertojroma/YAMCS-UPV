@@ -27,9 +27,31 @@
 
 
     <xtce:TelemetryMetaData>
+
+        <!-- $T-8 -->
+        <xtce:ParameterTypeSet>
+            <xtce:ArrayParameterType name="parameter_statistics_array_type" arrayTypeRef="dt/parameter_statistics_struct">
+                <xtce:DimensionList>
+                    <xtce:Dimension>
+                        <xtce:StartingIndex>
+                            <xtce:FixedValue>0</xtce:FixedValue>
+                        </xtce:StartingIndex>
+                        <xtce:EndingIndex>
+                            <xtce:DynamicValue>
+                                <xtce:ParameterInstanceRef parameterRef="number_of_statistic_structures" />
+                                <xtce:LinearAdjustment intercept="-1" />
+                            </xtce:DynamicValue>
+                        </xtce:EndingIndex>
+                    </xtce:Dimension>
+                </xtce:DimensionList>
+            </xtce:ArrayParameterType>
+        </xtce:ParameterTypeSet>
+
         <xtce:ParameterSet>
             <!-- ENUMS -->
-            <xtce:Parameter parameterTypeRef="dt/APID" name="destination_id"/>
+            <!-- $ T-8 modificacion del tipo de parametro para destination_id -->
+            <xtce:Parameter parameterTypeRef="dt/uint16_t" name="destination_id"/>
+            
             <xtce:Parameter parameterTypeRef="dt/uint4_t" name="tm_PUS_version"/>
             <xtce:Parameter parameterTypeRef="dt/uint4_t" name="spacecraft_time_reference_status"/>
             <xtce:Parameter parameterTypeRef="dt/uint8_t" name="service_type_id"/>
@@ -46,38 +68,31 @@
             <xtce:Parameter parameterTypeRef="dt/bool_t" name="secondary_header_flag"/>
             <xtce:Parameter parameterTypeRef="dt/uint2_t" name="sequence_flags"/>
             <xtce:Parameter parameterTypeRef="dt/uint14_t" name="packet_sequence_count"/>
-
             <xtce:Parameter parameterTypeRef="dt/bool_t" name="flag"/>
             <xtce:Parameter parameterTypeRef="dt/uint16_t" name="parameter"/>
-
             <xtce:Parameter parameterTypeRef="dt/housekeeping_structure_ID" name="structure_ID"/>
+
+            <!-- $ T-8-->
+            <xtce:Parameter parameterTypeRef="dt/uint32_t" name="start_time"/>
+            <xtce:Parameter parameterTypeRef="dt/uint32_t" name="end_time"/>
+            <xtce:Parameter parameterTypeRef="dt/uint16_t" name="number_of_statistic_structures"/>
+            <xtce:Parameter parameterTypeRef="parameter_statistics_array_type" name="parameter_statistics_array"/>
         </xtce:ParameterSet>
         
         <xtce:ContainerSet>
             
+            <!-- $ T-8 Se modifica el PH, SH y TM_header-->
             <!-- *  ___________________________ PRIMARY HEADER CONTAINERS __________________________________-->
 
             <xtce:SequenceContainer name="PH">
                 <xtce:EntryList>
                     <xtce:ParameterRefEntry parameterRef="version"/>
-                    <xtce:ContainerRefEntry containerRef="packet_id"/>
-                    <xtce:ContainerRefEntry containerRef="packet_sequence_control"/>
-                    <xtce:ParameterRefEntry parameterRef="packet_data_length"/>
-                </xtce:EntryList>
-            </xtce:SequenceContainer>
-
-            <xtce:SequenceContainer name="packet_id">
-                <xtce:EntryList>
                     <xtce:ParameterRefEntry parameterRef="packet_type"/>
                     <xtce:ParameterRefEntry parameterRef="secondary_header_flag"/>
                     <xtce:ParameterRefEntry parameterRef="application_process_id"/>
-                </xtce:EntryList>
-            </xtce:SequenceContainer>
-
-            <xtce:SequenceContainer name="packet_sequence_control">
-                <xtce:EntryList>
                     <xtce:ParameterRefEntry parameterRef="sequence_flags"/>
                     <xtce:ParameterRefEntry parameterRef="packet_sequence_count"/>
+                    <xtce:ParameterRefEntry parameterRef="packet_data_length"/>
                 </xtce:EntryList>
             </xtce:SequenceContainer>
 
@@ -87,18 +102,13 @@
                 <xtce:EntryList>
                     <xtce:ParameterRefEntry parameterRef="tm_PUS_version"/>
                     <xtce:ParameterRefEntry parameterRef="spacecraft_time_reference_status"/>
-                    <xtce:ContainerRefEntry containerRef="message_type_id"/>
+                    <xtce:ParameterRefEntry parameterRef="service_type_id"/>
+                    <xtce:ParameterRefEntry parameterRef="message_subtype_id"/>
                     <xtce:ParameterRefEntry parameterRef="message_type_counter"/>
                     <xtce:ParameterRefEntry parameterRef="destination_id"/>
                     <xtce:ParameterRefEntry parameterRef="time"/>
                 </xtce:EntryList>
-            </xtce:SequenceContainer>
-
-            <xtce:SequenceContainer name="message_type_id">
-                <xtce:EntryList>
-                    <xtce:ParameterRefEntry parameterRef="service_type_id" />
-                    <xtce:ParameterRefEntry parameterRef="message_subtype_id" />
-                </xtce:EntryList>
+                <xtce:BaseContainer containerRef="PH"/>
             </xtce:SequenceContainer>
 
             <!-- * ___________________________ TM_200_100 CONTAINERS __________________________________-->
@@ -123,12 +133,8 @@
             </xtce:SequenceContainer>
 
             <xtce:SequenceContainer name="TM_header" abstract="true">
-
-                <xtce:EntryList>
-                    <xtce:ContainerRefEntry containerRef="PH"/>
-                    <xtce:ContainerRefEntry containerRef="SH"/>
-                </xtce:EntryList>
-
+                <xtce:EntryList/> 
+                <xtce:BaseContainer containerRef="SH"/>
             </xtce:SequenceContainer>
 
             <!-- *___________________________ TM_3_25 CONTAINERS __________________________________ -->
@@ -199,15 +205,34 @@
 
             </xtce:SequenceContainer>
 
+            <!-- $ T-8 -->
+            <!-- *___________________________ TM_4_2 CONTAINERS __________________________________ -->
+            <xtce:SequenceContainer name="TM_4_2">
+                <xtce:EntryList>
+                    <xtce:ParameterRefEntry parameterRef="start_time"/>
+                    <xtce:ParameterRefEntry parameterRef="end_time"/>
+                    <xtce:ParameterRefEntry parameterRef="number_of_statistic_structures"/>
+                    <xtce:ParameterRefEntry parameterRef="parameter_statistics_array"/>
+                </xtce:EntryList>
+                <xtce:BaseContainer containerRef="TM_header">
+                    <xtce:RestrictionCriteria>
+                        <xtce:ComparisonList>
+                            <xtce:Comparison value="4" parameterRef="service_type_id"/>
+                            <xtce:Comparison value="2" parameterRef="message_subtype_id"/>
+                        </xtce:ComparisonList>
+                    </xtce:RestrictionCriteria>
+                </xtce:BaseContainer>
+            </xtce:SequenceContainer>
+
+
         </xtce:ContainerSet>
 
     </xtce:TelemetryMetaData>
 
-    <!-- $ T-7-->
+    
     <xtce:CommandMetaData>
         <xtce:MetaCommandSet>
             
-            <!-- $ T-7-->
             <xtce:MetaCommand name="TC_header" abstract="true">
                 <xtce:ArgumentList>
                     <xtce:Argument argumentTypeRef="dt/uint3_t" name="version"/>
@@ -241,7 +266,6 @@
                 </xtce:CommandContainer>
             </xtce:MetaCommand>
 
-            <!-- $ T-7-->
             <xtce:MetaCommand name="TC_3_27_GenerateReport">
 
                 <xtce:BaseMetaCommand metaCommandRef="TC_header">

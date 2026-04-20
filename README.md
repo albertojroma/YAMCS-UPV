@@ -48,7 +48,7 @@ Consta de [11 pasos](https://gitlab.com/acubesat/ops/yamcs-training/-/wikis/New-
 10. [(opcional) Crear un servicio sencillo](https://gitlab.com/acubesat/ops/yamcs-training/-/issues/10)
 11. [Cambiar el protocolo IP de UDP a TCP para el simulador](https://gitlab.com/acubesat/ops/yamcs-training/-/issues/11)
 
-### Paso 1:
+### Paso 1: Creación de datos de tipo enumerado
 
 Crea dos tipos de datos enumerados en el archivo ```dt.xml```.
 
@@ -85,7 +85,7 @@ Crea dos tipos de datos enumerados en el archivo ```dt.xml```.
 
 **Nota**: Si no encuentra el tamaño en bits de los parámetros solicitados, consulte también la norma ECSS, ya que es posible que se mencione allí.
 
-### Paso 2:
+### Paso 2: Creación de tipos de datos agregados
 
 Un parámetro agregado (*Aggregate*) es algo parecido a una estructura de C. Contiene una estructura de parámetros. Los contenedores (*Containers*) ofrecen una funcionalidad similar, aunque se utilizan para construir la secuencia de parámetros TC y TM. Se trata de una capa de abstracción superior. Consulte las secciones [4.3.2.4.11](https://public.ccsds.org/Pubs/660x1g2.pdf#page=151) y [5.4](https://public.ccsds.org/Pubs/660x1g2.pdf#page=151) de la descripción de elementos de XTCE. Consulte también la página wiki sobre el [tipo agregado](https://gitlab.com/acubesat/ops/yamcs-instance/-/wikis/1.-Parameters-and-Arguments#the-aggregate-parameter-type).
 Esta tarea consiste en crear una estructura «*AggregateParameterType*» que contenga los siguientes miembros:
@@ -117,7 +117,7 @@ donde ```parameter_ID``` ya está definido en ```dt.xml```
 </xtce:AggregateParameterType>
 ```
 
-### Paso 3:
+### Paso 3: Creación de dato de tipo temporal
 
 El ordenador del satélite no dispone de un reloj integrado. Mide el tiempo utilizando los relojes internos de la unidad microcontroladora (MCU) y lo hace mediante un parámetro de entero sin signo de 32 bits. Este reloj realiza un recuento cada 0,1 s y definimos como 0 la fecha 1/1/2022 00:00:00:000 (hh:mm:ss::ms). Un valor de 1 significaría 1/1/2022 00:00:00:100, un valor de 2 -> 1/1/2022 00:00:00:200, etc. Debe definir un parámetro que convierta esta codificación de tiempo personalizada (CUC) a UNIX. La hora UNIX es el formato de hora utilizado por la mayoría de los ordenadores modernos, sistemas Linux, etc., y el recuento comienza en la Época UNIX, el 1 de enero de 1970 a UTC.
 
@@ -139,7 +139,7 @@ Puede utilizar un [4.3.2.4.9](https://public.ccsds.org/Pubs/660x1g2.pdf#page=146
 
 👁️ Los pasos **1**, **2**, y **3** no se materializan en la interfaz web. A partir de ahora se comenzarán a observar cambios en la interfaz web.
 
-### Paso 4:
+### Paso 4: Creación de un contenedor
 Crea un contenedor [4.3.4](https://public.ccsds.org/Pubs/660x1g2.pdf#page=175) (o la sección 5.4 del [documento](https://public.ccsds.org/Pubs/660x1g2.pdf#page=237) «XTCE Element Description») en el archivo ```pus.xml``` que contenga todos los parámetros del *Primary TM Header* y otro contenedor para el *Secondary TM Header* (consulta la sección [7.4](https://ecss.nl/wp-content/uploads/2016/06/ECSS-E-ST-70-41C15April2016.pdf#page=438) de la norma ECSS y también el archivo [```README.md```](https://gitlab.com/acubesat/ops/yamcs-training/-/blob/main/README.md) para una mejor visualización).
 
 Un *container* es simplemente un grupo de parámetros (u otros contenedores) que se utiliza más de una vez en diferentes comandos o telemetría. Consulte también la página wiki sobre los [*container*](https://gitlab.com/acubesat/ops/yamcs-instance/-/wikis/2.-Containers).
@@ -243,7 +243,7 @@ Estos cambios han añadido:
 
 ![PreCambios](yamcs-training/images/t4/Containers_nuevos.png)
 
-### Paso 5:
+### Paso 5: Creación de un contenedor para telemetría
 Crea un [*TM[200,100] container*](https://ccsds.org/Pubs/660x1g2.pdf#page=229) (apartado 5.2 del documento).
 
 Crea un contenedor «TM_header», que incluya los encabezados TM primario y secundario de la tarea [n.º4](https://gitlab.com/acubesat/ops/yamcs-training/-/issues/4), y utilízalo como ```BaseContainer```.
@@ -305,7 +305,7 @@ Estos cambios han añadido:
 
 ![Contenedores_nuevos_T5](yamcs-training/images/t5/Contenedores_nuevos_T5.png)
 
-### Paso 6:
+### Paso 6: Creación de telemetría
 Durante la misión, la estación terrestre recibirá algunos parámetros de la nave espacial. Por este motivo, se implementa el TM[3,25], denominado «Informe de parámetros de mantenimiento». Contiene una serie de parámetros y sus valores, muestreados a intervalos de tiempo específicos (véase también el apartado 6.3.3.3 del [documento ECSS](https://cloud.spacedot.gr/index.php/apps/files/?dir=/AcubeSAT/Subsystems/OBC%20-%20On-board%20Computer/Standards&openfile=18872)).
 Los parámetros utilizados en la misión se dividen en grupos según diversos criterios, como el intervalo de tiempo de sus muestreos, para formar parte del TM[3,25]. Estos grupos se denominan estructuras de mantenimiento y cada uno tiene un identificador único.
 Los TM no solo contienen los datos de telemetría, sino también encabezados, que incluyen algunos datos importantes relativos a la identificación de cada paquete. Utilizando los contenedores que creaste en la tarea [n.º 4](https://gitlab.com/acubesat/ops/yamcs-training/-/issues/4), tu objetivo es crear la estructura del TM[3,25].
@@ -468,7 +468,7 @@ Estos cambios han añadido:
 
 ![Contenedores_nuevos_T6](yamcs-training/images/t6/Contenedores_nuevos_T6.png)
 
-### Paso 7:
+### Paso 7: Creación de telecomandos
 
 Debe crear el TC[3,27] para generar un informe único de las estructuras de los informes de parámetros de mantenimiento (consulte también el apartado 6.3.3.7 del [documento ECSS](https://cloud.spacedot.gr/index.php/apps/files/?dir=/AcubeSAT/Subsystems/OBC%20-%20On-board%20Computer/Standards&openfile=18872)).
 
@@ -549,7 +549,7 @@ Es necesario crear los siguientes tipos de datos para **comandos** (es decir den
 </xtce:EnumeratedArgumentType>
 ```
 
-##### 2. Comando nuevo
+##### 2. Telecomando añadido
 
 ```
 <xtce:MetaCommand name="TC_header" abstract="true">
@@ -619,7 +619,188 @@ Todas estas modificaciones de código han añadido cambios en la interfaz web.
 |          --------------     |         --------------        |
 | ![PreCambiosT6](yamcs-training/images/t5/PostCambiosT5.png) | ![PostCambiosT7](yamcs-training/images/t7/PostCambiosT7.png) |
 
-Como se observa en las imágenes se han añadido **2 comandos**:
+Como se observa en las imágenes se han añadido **2 comandos**, **3 contenedores** y **3 parámetros**:
 
 ![ComandosAnyadidos](yamcs-training/images/t7/ComandosAnyadidos.png)
 
+### Paso 8:
+
+Algunos servicios requieren el envío de estructuras de datos creadas dinámicamente, lo que significa que no podemos saber con certeza cuál es su tamaño. Un ejemplo es el informe de estadísticas de parámetros TM[4,2]. Para implementarlo, debemos definir una matriz de estructuras de estadísticas.
+
+Este TM consta del contenedor base «TM_header» que creaste en una tarea anterior (con ID de servicio = 4 e ID de tipo de mensaje = 2), además de:
+
+1. Hora de inicio del informe (`uint32_t`)
+2. Hora de finalización del informe (`uint32_t`)
+3. Número de estructuras de estadísticas (`uint16_t`)
+4. Matriz de las estructuras. Cada estructura contiene:
+    * ID del parámetro (tipo parameter_id, ya definido en dt.xml)
+    * Número de muestras (`uint16_t`)
+    * max_value (`float_t`)
+    * max_time (`uint32_t`)
+    * min_value (`float_t`)
+    * min_time (`uint32_t`)
+    * mean_value (`float_t`)
+    * standard_deviation (`float_t`)
+
+Debe definir la estructura del informe *parameter_statistics* utilizando el elemento `AggregateParameterType`. El TM contendrá los tres primeros valores y, a continuación, una matriz unidimensional de tipo `parameter_statistics` y tamaño igual al número total de parámetros. Esto se puede definir utilizando el elemento `DimentionList` y un `DynamicValue` para el `EndingIndex`. El valor del elemento `EndingIndex` debe establecerse en uno menos que la dimensión real de la estructura. El elemento `LinearAdjustment` te ayudará.
+
+Para probar tu implementación, envía este paquete a través de `simulator.py`:
+
+```
+array = [8, 1, 195, 39, 0, 76, 32, 4, 2, 1, 70, 0, 1, 37, 165, 61, 202, 14, 224, 184, 148, 14, 224, 185, 92, 0, 2, 19, 152, 0, 3, 64, 160, 0, 0, 14, 224, 185, 92, 63, 128, 0, 0, 14, 224, 185, 92, 64, 64, 0, 0, 63, 209, 5, 236, 19, 153, 0, 6, 65, 80, 0, 0, 14, 224, 185, 92, 64, 64, 0, 0, 14, 224, 185, 92, 65, 0, 0, 0, 0, 0, 0, 0]
+```
+
+#### Código añadido
+
+##### Parámetros:
+
+Se han añadido los siguientes parámetros en el archivo `dt.xml`
+
+* Parámetro **agregado** para telemetría: es importante la posición de este tipo de parámetro en el código. Debe estar antes de la declaración de los parámetros en su interior
+
+```
+<xtce:AggregateParameterType name="parameter_statistics_struct">
+    <xtce:MemberList>
+        <xtce:Member typeRef="parameter_ID" name="parameter_ID" />
+        <xtce:Member typeRef="uint16_t" name="samples" />
+        <xtce:Member typeRef="float_t" name="max_value" />
+        <xtce:Member typeRef="uint32_t" name="max_time" />
+        <xtce:Member typeRef="float_t" name="min_value" />
+        <xtce:Member typeRef="uint32_t" name="min_time" />
+        <xtce:Member typeRef="float_t" name="mean_value" />
+        <xtce:Member typeRef="float_t" name="standard_deviation" />
+    </xtce:MemberList>
+</xtce:AggregateParameterType>
+```
+
+* Parámetro **enumerado** para telecomandos
+```
+<xtce:EnumeratedArgumentType name="APID_16">
+    <xtce:IntegerDataEncoding sizeInBits="16">
+    </xtce:IntegerDataEncoding>
+    <xtce:EnumerationList>
+        <xtce:Enumeration value="0" label="ADCS" />
+        <xtce:Enumeration value="1" label="COMMS" />
+        <xtce:Enumeration value="2" label="GS" />
+        <xtce:Enumeration value="3" label="OBC" />
+        <xtce:Enumeration value="4" label="SU" />
+    </xtce:EnumerationList>
+</xtce:EnumeratedArgumentType> 
+```
+
+Además, se han realizado cambios en los parámetros en el archivo `pus.xml`
+
+* Se añade un nuevo set de parámetros, concretamente un array:
+
+```
+<xtce:ParameterTypeSet>
+    <xtce:ArrayParameterType name="parameter_statistics_array_type" arrayTypeRef="dt/parameter_statistics_struct">
+        <xtce:DimensionList>
+            <xtce:Dimension>
+                <xtce:StartingIndex>
+                    <xtce:FixedValue>0</xtce:FixedValue>
+                </xtce:StartingIndex>
+                <xtce:EndingIndex>
+                    <xtce:DynamicValue>
+                        <xtce:ParameterInstanceRef parameterRef="number_of_statistic_structures" />
+                        <xtce:LinearAdjustment intercept="-1" />
+                    </xtce:DynamicValue>
+                </xtce:EndingIndex>
+            </xtce:Dimension>
+        </xtce:DimensionList>
+    </xtce:ArrayParameterType>
+</xtce:ParameterTypeSet>
+```
+
+* Se modifca el tipo de parámetro para el `destination_id`:
+
+```
+<xtce:Parameter parameterTypeRef="dt/uint16_t" name="destination_id"/>
+```
+
+* Se añaden los siguientes parámetros al set de parámetros definido desde el principio:
+
+```
+<xtce:Parameter parameterTypeRef="dt/uint32_t" name="start_time"/>
+<xtce:Parameter parameterTypeRef="dt/uint32_t" name="end_time"/>
+<xtce:Parameter parameterTypeRef="dt/uint16_t" name="number_of_statistic_structures"/>
+<xtce:Parameter parameterTypeRef="parameter_statistics_array_type" name="parameter_statistics_array"/>
+```
+
+##### Contenedores
+
+* Se han modificado los siguientes `SequenceContainer` :
+
+*Primary Header*
+
+```
+<xtce:SequenceContainer name="PH">
+    <xtce:EntryList>
+        <xtce:ParameterRefEntry parameterRef="version"/>
+        <xtce:ParameterRefEntry parameterRef="packet_type"/>
+        <xtce:ParameterRefEntry parameterRef="secondary_header_flag"/>
+        <xtce:ParameterRefEntry parameterRef="application_process_id"/>
+        <xtce:ParameterRefEntry parameterRef="sequence_flags"/>
+        <xtce:ParameterRefEntry parameterRef="packet_sequence_count"/>
+        <xtce:ParameterRefEntry parameterRef="packet_data_length"/>
+    </xtce:EntryList>
+</xtce:SequenceContainer>
+```
+    
+*Secondary Header*
+
+```
+<xtce:SequenceContainer name="SH">
+    <xtce:EntryList>
+        <xtce:ParameterRefEntry parameterRef="tm_PUS_version"/>
+        <xtce:ParameterRefEntry parameterRef="spacecraft_time_reference_status"/>
+        <xtce:ParameterRefEntry parameterRef="service_type_id"/>
+        <xtce:ParameterRefEntry parameterRef="message_subtype_id"/>
+        <xtce:ParameterRefEntry parameterRef="message_type_counter"/>
+        <xtce:ParameterRefEntry parameterRef="destination_id"/>
+        <xtce:ParameterRefEntry parameterRef="time"/>
+    </xtce:EntryList>
+    <xtce:BaseContainer containerRef="PH"/>
+</xtce:SequenceContainer>
+```
+
+*TM_header*
+```
+<xtce:SequenceContainer name="TM_header" abstract="true">
+    <xtce:EntryList/> 
+    <xtce:BaseContainer containerRef="SH"/>
+</xtce:SequenceContainer>
+```
+
+* Además, se ha creado el siguiente contenedor
+
+```
+<xtce:SequenceContainer name="TM_4_2">
+    <xtce:EntryList>
+        <xtce:ParameterRefEntry parameterRef="start_time"/>
+        <xtce:ParameterRefEntry parameterRef="end_time"/>
+        <xtce:ParameterRefEntry parameterRef="number_of_statistic_structures"/>
+        <xtce:ParameterRefEntry parameterRef="parameter_statistics_array"/>
+    </xtce:EntryList>
+    <xtce:BaseContainer containerRef="TM_header">
+        <xtce:RestrictionCriteria>
+            <xtce:ComparisonList>
+                <xtce:Comparison value="4" parameterRef="service_type_id"/>
+                <xtce:Comparison value="2" parameterRef="message_subtype_id"/>
+            </xtce:ComparisonList>
+        </xtce:RestrictionCriteria>
+    </xtce:BaseContainer>
+</xtce:SequenceContainer>
+```
+
+##### Resultados:
+
+Todas estas modificaciones de código han añadido cambios en la interfaz web. 
+
+| Antes de las modificaciones | Después de las modificaciones |
+|          --------------     |         --------------        |
+| ![PreCambiosT8](yamcs-training/images/t7/PostCambiosT7.png) | ![PostCambiosT8](yamcs-training/images/t8/PostCambiosT8.png) | 
+
+Como se observa en las imágenes se han añadido **4 parámetros** y se han eliminado **2 contenedores**:
+
+![ComandosAnyadidos](yamcs-training/images/t7/ComandosAnyadidos.png)

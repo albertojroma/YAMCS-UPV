@@ -30,6 +30,20 @@
                 </xtce:MemberList>
             </xtce:AggregateParameterType>
 
+            <!-- $ T-8_-->
+            <xtce:AggregateParameterType name="parameter_statistics_struct">
+                <xtce:MemberList>
+                    <xtce:Member typeRef="parameter_ID" name="parameter_ID" />
+                    <xtce:Member typeRef="uint16_t" name="samples" />
+                    <xtce:Member typeRef="float_t" name="max_value" />
+                    <xtce:Member typeRef="uint32_t" name="max_time" />
+                    <xtce:Member typeRef="float_t" name="min_value" />
+                    <xtce:Member typeRef="uint32_t" name="min_time" />
+                    <xtce:Member typeRef="float_t" name="mean_value" />
+                    <xtce:Member typeRef="float_t" name="standard_deviation" />
+                </xtce:MemberList>
+            </xtce:AggregateParameterType>
+
             <!-- * Parametros de tipo enumerado -->
             <xtce:EnumeratedParameterType name="PacketType">
                 <xtce:IntegerDataEncoding sizeInBits="1"></xtce:IntegerDataEncoding>
@@ -183,22 +197,18 @@
 
             <!-- * Parametros de tipo entero sin signo -->
             
-            <!-- $ T-7-->
             <xtce:IntegerArgumentType name="uint1_t" signed="false">
                 <xtce:IntegerDataEncoding encoding="unsigned" sizeInBits="1" />
             </xtce:IntegerArgumentType>
 
-            <!-- $ T-7-->
             <xtce:IntegerArgumentType name="uint2_t" signed="false">
                 <xtce:IntegerDataEncoding encoding="unsigned" sizeInBits="2" />
             </xtce:IntegerArgumentType>
             
-            <!-- $ T-7-->
             <xtce:IntegerArgumentType name="uint3_t" signed="false">
                 <xtce:IntegerDataEncoding encoding="unsigned" sizeInBits="3" />
             </xtce:IntegerArgumentType>
             
-            <!-- $ T-7-->
             <xtce:IntegerArgumentType name="uint4_t" signed="false">
                 <xtce:IntegerDataEncoding encoding="unsigned" sizeInBits="4" />
             </xtce:IntegerArgumentType>
@@ -227,7 +237,6 @@
 
             <!-- * Parametros enumerados -->
 
-            <!-- $ T-7-->
             <xtce:EnumeratedArgumentType name="housekeeping_structure_ID">
                 <xtce:IntegerDataEncoding sizeInBits="8"/>
                 <xtce:EnumerationList>
@@ -236,7 +245,6 @@
                 </xtce:EnumerationList>
             </xtce:EnumeratedArgumentType>
 
-            <!-- $ T-7-->
             <xtce:EnumeratedArgumentType name="APID">
                 <xtce:IntegerDataEncoding sizeInBits="11"/>
                 <xtce:EnumerationList>
@@ -250,7 +258,19 @@
                 </xtce:EnumerationList>
             </xtce:EnumeratedArgumentType>
 
-            <!-- $ T-7-->
+            <!-- $ T-8 -->
+            <xtce:EnumeratedArgumentType name="APID_16">
+                <xtce:IntegerDataEncoding sizeInBits="16">
+                </xtce:IntegerDataEncoding>
+                <xtce:EnumerationList>
+                    <xtce:Enumeration value="0" label="ADCS" />
+                    <xtce:Enumeration value="1" label="COMMS" />
+                    <xtce:Enumeration value="2" label="GS" />
+                    <xtce:Enumeration value="3" label="OBC" />
+                    <xtce:Enumeration value="4" label="SU" />
+                </xtce:EnumerationList>
+            </xtce:EnumeratedArgumentType> 
+
             <xtce:EnumeratedArgumentType name="PacketType">
                 <xtce:IntegerDataEncoding sizeInBits="1"></xtce:IntegerDataEncoding>
                 <xtce:EnumerationList>
