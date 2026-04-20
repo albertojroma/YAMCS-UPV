@@ -12,10 +12,10 @@ En este caso se va a trabajar principalmente con el lenguaje **XML** (principalm
 
 En un lenguaje de etiquetas como `XML` es importante tener en cuenta algunos detalles como el autocierre en etiquetas usando **/** --> `< ... />`
 
-También se recomiendan las siguientes extensiones de **vscode**:
-* XML Language Support by Red Hat
-* Git Graph
-* Better Comments
+Además, se recomiendan las siguientes extensiones de **vscode**:
+* XML Language Support by Red Hat: Permite trabajar cómodamente con archivos de tipo `.xml`.
+* Git Graph: Genera un árbol de las ramas de git bastante más intuitivo que el terminal.
+* Better Comments: Permite identificar en el código los tipos de comentarios según su color a través del archivo de configuración `settings.json`
 
 ## Guía del *training*
 
@@ -55,13 +55,13 @@ Crea dos tipos de datos enumerados en el archivo ```dt.xml```.
 
 ```
 <xtce:EnumeratedParameterType name="APID">
-    <xtce:IntegerDataEncoding sizeInBits="11"></xtce:IntegerDataEncoding>
+    <xtce:IntegerDataEncoding sizeInBits="11"/>
     <xtce:EnumerationList>
-        <xtce:Enumeration value="1" label="OBC" />
-        <xtce:Enumeration value="2" label="COMMS" />
-        <xtce:Enumeration value="3" label="ADCS" />
+        <xtce:Enumeration value="0" label="ADCS" />
+        <xtce:Enumeration value="1" label="COMMS" />
+        <xtce:Enumeration value="2" label="Gs" />
+        <xtce:Enumeration value="3" label="OBC" />
         <xtce:Enumeration value="4" label="SU" />
-        <xtce:Enumeration value="5" label="GS" />
         <!-- en IDLE tienen que estar todos los bits a 1-->
         <xtce:Enumeration value="2047" label="IdlePacket" />
     </xtce:EnumerationList>
@@ -342,7 +342,7 @@ Es necesario crear el siguiente tipo de dato para el identificador de la estruct
 </xtce:EnumeratedParameterType>
 ```
 
-##### 2. Parámetros faltantes en `xtce.xml`
+##### 2. Parámetros a añadir en `xtce.xml`
 
 Es necesario añadir los siguientes parámetros para la estructura de valor 0 en el archivo `xtce.xml`:
 
@@ -471,3 +471,9 @@ Debe crear el TC[3,27] para generar un informe único de las estructuras de los 
 * `message_type_ID` = 27
 
 3. Consulte el apartado 8.3.2.15 de la [norma ECSS](https://cloud.spacedot.gr/index.php/apps/files/?dir=/AcubeSAT/Subsystems/OBC%20-%20On-board%20Computer/Standards&openfile=18872) para determinar `Arguments` necesarios para la `ArgumentList` del TC[3,27]. El número de estructuras de gestión interna que se incluirán en el contenedor será 3.
+
+#### Código añadido
+
+##### 1. Tipos de parámetros nuevos
+
+Es necesario crear el siguiente tipo de dato para el identificador de la estructura en el archivo `dt.xml`:

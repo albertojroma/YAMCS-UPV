@@ -17,6 +17,15 @@
       "backgroundColor": "#transparent",
       "bold": true,
       "italic": false
+    },
+    {
+      "tag": "$",
+      "color": "#FF8C00",
+      "strikethrough": false,
+      "underline": true,
+      "backgroundColor": "#transparent",
+      "bold": false,
+      "italic": false
     }
   ]
 }

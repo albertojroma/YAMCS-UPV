@@ -40,13 +40,13 @@
             </xtce:EnumeratedParameterType>
 
             <xtce:EnumeratedParameterType name="APID">
-                <xtce:IntegerDataEncoding sizeInBits="11"></xtce:IntegerDataEncoding>
+                <xtce:IntegerDataEncoding sizeInBits="11"/>
                 <xtce:EnumerationList>
-                    <xtce:Enumeration value="1" label="OBC" />
-                    <xtce:Enumeration value="2" label="COMMS" />
-                    <xtce:Enumeration value="3" label="ADCS" />
+                    <xtce:Enumeration value="0" label="ADCS" />
+                    <xtce:Enumeration value="1" label="COMMS" />
+                    <xtce:Enumeration value="2" label="Gs" />
+                    <xtce:Enumeration value="3" label="OBC" />
                     <xtce:Enumeration value="4" label="SU" />
-                    <xtce:Enumeration value="5" label="GS" />
                     <!-- en IDLE tienen que estar todos los bits a 1-->
                     <xtce:Enumeration value="2047" label="IdlePacket" />
                 </xtce:EnumerationList>
@@ -183,33 +183,28 @@
 
             <!-- * Parametros de tipo entero sin signo -->
             
-            <!-- Anyadido para tarea 7-->
+            <!-- $ T-7-->
             <xtce:IntegerArgumentType name="uint1_t" signed="false">
                 <xtce:IntegerDataEncoding encoding="unsigned" sizeInBits="1" />
             </xtce:IntegerArgumentType>
 
-            <!-- Anyadido para tarea 7-->
+            <!-- $ T-7-->
             <xtce:IntegerArgumentType name="uint2_t" signed="false">
                 <xtce:IntegerDataEncoding encoding="unsigned" sizeInBits="2" />
             </xtce:IntegerArgumentType>
             
-            <!-- Anyadido para tarea 7-->
+            <!-- $ T-7-->
             <xtce:IntegerArgumentType name="uint3_t" signed="false">
                 <xtce:IntegerDataEncoding encoding="unsigned" sizeInBits="3" />
             </xtce:IntegerArgumentType>
             
-            <!-- Anyadido para tarea 7-->
+            <!-- $ T-7-->
             <xtce:IntegerArgumentType name="uint4_t" signed="false">
                 <xtce:IntegerDataEncoding encoding="unsigned" sizeInBits="4" />
             </xtce:IntegerArgumentType>
 
             <xtce:IntegerArgumentType name="uint8_t" signed="false">
                 <xtce:IntegerDataEncoding encoding="unsigned" sizeInBits="8" />
-            </xtce:IntegerArgumentType>
-
-            <!-- Anyadido para tarea 7-->
-            <xtce:IntegerArgumentType name="uint11_t" signed="false">
-                <xtce:IntegerDataEncoding encoding="unsigned" sizeInBits="11" />
             </xtce:IntegerArgumentType>
 
             <xtce:IntegerArgumentType name="uint16_t" signed="false">
@@ -230,14 +225,28 @@
                 <xtce:IntegerDataEncoding encoding="unsigned" sizeInBits="8" />
             </xtce:IntegerArgumentType>      
 
-            <!-- * Otros parametros -->
+            <!-- * Parametros enumerados -->
 
-            <!-- Anyadido para tarea 7-->
+            <!-- $ T-7-->
             <xtce:EnumeratedArgumentType name="housekeeping_structure_ID">
                 <xtce:IntegerDataEncoding sizeInBits="8"/>
                 <xtce:EnumerationList>
                     <xtce:Enumeration value="0" label="HK_OBC" />
                     <xtce:Enumeration value="1" label="HK_ADCS" />
+                </xtce:EnumerationList>
+            </xtce:EnumeratedArgumentType>
+
+            <!-- $ T-7-->
+            <xtce:EnumeratedArgumentType name="APID">
+                <xtce:IntegerDataEncoding sizeInBits="11"/>
+                <xtce:EnumerationList>
+                    <xtce:Enumeration value="0" label="ADCS" />
+                    <xtce:Enumeration value="1" label="COMMS" />
+                    <xtce:Enumeration value="2" label="Gs" />
+                    <xtce:Enumeration value="3" label="OBC" />
+                    <xtce:Enumeration value="4" label="SU" />
+                    <!-- en IDLE tienen que estar todos los bits a 1-->
+                    <xtce:Enumeration value="2047" label="IdlePacket" />
                 </xtce:EnumerationList>
             </xtce:EnumeratedArgumentType>
 
