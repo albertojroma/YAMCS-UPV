@@ -10,12 +10,27 @@ Es recomendable tener a mano la [guía del desarrollador](https://gitlab.com/acu
 
 En este caso se va a trabajar principalmente con el lenguaje **XML** (principalmente para definir que significan los datos), por lo tanto, es recomendable seguir las indicaciones de instalación de software del repositorio del [*training* de AcubeSAT](https://gitlab.com/acubesat/ops/yamcs-training#overview-of-the-training)
 
+### Sobre la programación de archivos `XML`
 En un lenguaje de etiquetas como `XML` es importante tener en cuenta algunos detalles como el autocierre en etiquetas usando **/** --> `< ... />`
 
 Además, se recomiendan las siguientes extensiones de **vscode**:
 * XML Language Support by Red Hat: Permite trabajar cómodamente con archivos de tipo `.xml`.
 * Git Graph: Genera un árbol de las ramas de git bastante más intuitivo que el terminal.
 * Better Comments: Permite identificar en el código los tipos de comentarios según su color a través del archivo de configuración `settings.json`
+
+### Sobre los directorios y archivos del proyecto
+
+#### Directorios:
+En este proyecto existen principalmente los siguientes directorios:
+* `src/main/java`: Contiene el código fuente personalizado en Java para extender las funcionalidades base de YAMCS. Aquí se encuentran archivos como `MyPacketPreprocessor.java` (encargado de preprocesar y extraer información básica de los paquetes de telemetría entrantes, como la longitud o el *timestamp*) y `MyCommandPostprocessor.java` (que se ejecuta justo antes de enviar un telecomando para calcular automáticamente campos dinámicos, como el contador de secuencia o el checksum).
+* `src/main/yamcs`: Es el núcleo de la configuración del servidor YAMCS. Se divide internamente en el directorio `etc` (que contiene los archivos `.yaml` donde se configuran los enlaces de datos, los procesadores y la instancia general del servidor) y el directorio `mdb` (*Mission Database*), que es donde reside la arquitectura de datos del satélite.
+
+#### Archivos:
+Principalmente vamos a mencionar los archivos XML (ubicados dentro de `src/main/yamcs/mdb/`) donde se realizan las modificaciones de la base de datos de la misión utilizando el estándar XTCE:
+* `default.xml`: Es un archivo base proporcionado por la plantilla del proyecto. Contiene definiciones genéricas de paquetes CCSDS y algunos comandos de ejemplo. Sirve como referencia estructural, aunque el trabajo principal de la misión se realiza en los otros archivos.
+* `dt.xml`: Actúa como la "fábrica de moldes" (*Data Types*). En este archivo se definen de forma abstracta y pura todos los tipos de datos básicos (enteros, booleanos, flotantes), estructuras complejas (*Aggregates*) y enumeraciones, tanto para la telemetría (`ParameterType`) como para los telecomandos (`ArgumentType`).
+* `pus.xml`: Define el esqueleto lógico y jerárquico de los paquetes basándose en el estándar espacial PUS (*Packet Utilization Standard*). Aquí se construyen las cabeceras primarias y secundarias, y se establecen las reglas de herencia de los contenedores para filtrar los paquetes según su Servicio y Subtipo.
+* `xtce.xml`: Es el archivo de instanciación física del satélite. Aquí se declaran los parámetros reales (sensores de temperatura, giroscopios, estados de memoria, etc.) de los distintos subsistemas (OBC, ADCS, COMMS) utilizando los moldes previamente definidos en `dt.xml`.
 
 ## Guía del *training*
 
@@ -602,6 +617,9 @@ Todas estas modificaciones de código han añadido cambios en la interfaz web.
 
 | Antes de las modificaciones | Después de las modificaciones |
 |          --------------     |         --------------        |
-| ![PreCambiosT6](yamcs-training/images/t5/PostCambiosT5.png) | ![PostCambiosT6](yamcs-training/images/t6/PostCambiosT6.png) |
+| ![PreCambiosT6](yamcs-training/images/t5/PostCambiosT5.png) | ![PostCambiosT7](yamcs-training/images/t7/PostCambiosT7.png) |
 
-Estos cambios han añadido:
+Como se observa en las imágenes se han añadido **2 comandos**:
+
+![ComandosAnyadidos](yamcs-training/images/t7/ComandosAnyadidos.png)
+
