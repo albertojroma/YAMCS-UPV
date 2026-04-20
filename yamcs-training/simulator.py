@@ -8,7 +8,7 @@ from struct import unpack_from
 from threading import Thread
 from time import sleep
 
-# $ T-7
+# $ T-8
 PACKET = bytes([
     8, 1, 195, 39, 0, 76, 32, 4, 2, 1, 70, 0, 1, 37, 165,
     61, 202, 14, 224, 184, 148, 14, 224, 185, 92, 0, 2,
@@ -23,7 +23,7 @@ PACKET = bytes([
 def send_tm(simulator):
     tm_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
-    # $ T-7
+    # $ T-8
     while True:
         tm_socket.sendto(PACKET, ('127.0.0.1', 10015))
         simulator.tm_counter += 1
@@ -31,7 +31,7 @@ def send_tm(simulator):
         sleep(1)
 
 
-    # $ T-7
+    # $ T-8
     # with io.open('testdata.ccsds', 'rb') as f:
     #     simulator.tm_counter = 1
     #     header = bytearray(6)
