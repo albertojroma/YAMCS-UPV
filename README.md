@@ -348,7 +348,7 @@ Es necesario añadir los siguientes parámetros para la estructura de valor 0 en
 
 ```
 <xtce:Parameter parameterTypeRef="/dt/uint8_t" name="obcNANDCurrentlyUsedMemoryPartition"></xtce:Parameter>
-<xtce:Parameter parameterTypeRef="/dt/bool_t" name="activeCAN"></xtce:Parameter>
+<xtce:Parameter parameterTypeRef="/dt/uint8_t" name="activeCAN"></xtce:Parameter>
 ```
 
 ##### 3. Instanciar parámetros
