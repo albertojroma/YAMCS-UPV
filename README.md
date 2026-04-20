@@ -156,28 +156,28 @@ El ***packet primary header*** se ha definido en este caso usando un contenedor 
 
 ```
 <xtce:SequenceContainer name="PH">
-     <xtce:EntryList>
-         <xtce:ParameterRefEntry parameterRef="version"/>
-         <xtce:ContainerRefEntry containerRef="packet_id"/>
-         <xtce:ContainerRefEntry containerRef="packet_sequence_control"/>
-         <xtce:ParameterRefEntry parameterRef="packet_data_length"/>
-     </xtce:EntryList>
- </xtce:SequenceContainer>
+    <xtce:EntryList>
+        <xtce:ParameterRefEntry parameterRef="version"/>
+        <xtce:ContainerRefEntry containerRef="packet_id"/>
+        <xtce:ContainerRefEntry containerRef="packet_sequence_control"/>
+        <xtce:ParameterRefEntry parameterRef="packet_data_length"/>
+    </xtce:EntryList>
+</xtce:SequenceContainer>
 
- <xtce:SequenceContainer name="packet_id">
-     <xtce:EntryList>
-         <xtce:ParameterRefEntry parameterRef="packet_type"/>
-         <xtce:ParameterRefEntry parameterRef="secondary_header_flag"/>
-         <xtce:ParameterRefEntry parameterRef="application_process_id"/>
-     </xtce:EntryList>
- </xtce:SequenceContainer>
- 
- <xtce:SequenceContainer name="packet_sequence_control">
-     <xtce:EntryList>
-         <xtce:ParameterRefEntry parameterRef="sequence_flags"/>
-         <xtce:ParameterRefEntry parameterRef="packet_sequence_count"/>
-     </xtce:EntryList>
- </xtce:SequenceContainer>
+<xtce:SequenceContainer name="packet_id">
+    <xtce:EntryList>
+        <xtce:ParameterRefEntry parameterRef="packet_type"/>
+        <xtce:ParameterRefEntry parameterRef="secondary_header_flag"/>
+        <xtce:ParameterRefEntry parameterRef="application_process_id"/>
+    </xtce:EntryList>
+</xtce:SequenceContainer>
+
+<xtce:SequenceContainer name="packet_sequence_control">
+    <xtce:EntryList>
+        <xtce:ParameterRefEntry parameterRef="sequence_flags"/>
+        <xtce:ParameterRefEntry parameterRef="packet_sequence_count"/>
+    </xtce:EntryList>
+</xtce:SequenceContainer>
 ```
 
 * **Parámetros** definidos en el **set de parámetros** de `pus.xml`. Notar que los tipos de parámetros (`uint3_t` y `uint16_t`) están definidos en el archivo `dt.xml`
@@ -617,7 +617,7 @@ Todas estas modificaciones de código han añadido cambios en la interfaz web.
 
 | Antes de las modificaciones | Después de las modificaciones |
 |          --------------     |         --------------        |
-| ![PreCambiosT6](yamcs-training/images/t5/PostCambiosT5.png) | ![PostCambiosT7](yamcs-training/images/t7/PostCambiosT7.png) |
+| ![PreCambiosT7](yamcs-training/images/t6/PostCambiosT6.png) | ![PostCambiosT7](yamcs-training/images/t7/PostCambiosT7.png) |
 
 Como se observa en las imágenes se han añadido **2 comandos**, **3 contenedores** y **3 parámetros**:
 
@@ -801,6 +801,94 @@ Todas estas modificaciones de código han añadido cambios en la interfaz web.
 |          --------------     |         --------------        |
 | ![PreCambiosT8](yamcs-training/images/t7/PostCambiosT7.png) | ![PostCambiosT8](yamcs-training/images/t8/PostCambiosT8.png) | 
 
-Como se observa en las imágenes se han añadido **4 parámetros** y se han eliminado **2 contenedores**:
+Como se observa en las imágenes siguientes se han añadido:
+* **4 parámetros**:
 
-![ComandosAnyadidos](yamcs-training/images/t7/ComandosAnyadidos.png)
+![ParametrosAnyadidosT8](yamcs-training/images/t8/ParametrosAnyadidosT8.png)
+
+* Se han eliminado **3 contenedores** y se ha añadido **1 nuevo**. Para ello se han eliminado las siguientes secciones de código y se han realizado las modificación mencionada arriba:
+
+```
+<xtce:SequenceContainer name="message_type_id">
+    <xtce:EntryList>
+        <xtce:ParameterRefEntry parameterRef="service_type_id" />
+        <xtce:ParameterRefEntry parameterRef="message_subtype_id" />
+    </xtce:EntryList>
+</xtce:SequenceContainer>
+```
+
+```
+<xtce:SequenceContainer name="packet_id">
+    <xtce:EntryList>
+        <xtce:ParameterRefEntry parameterRef="packet_type"/>
+        <xtce:ParameterRefEntry parameterRef="secondary_header_flag"/>
+        <xtce:ParameterRefEntry parameterRef="application_process_id"/>
+    </xtce:EntryList>
+</xtce:SequenceContainer>
+
+<xtce:SequenceContainer name="packet_sequence_control">
+    <xtce:EntryList>
+        <xtce:ParameterRefEntry parameterRef="sequence_flags"/>
+        <xtce:ParameterRefEntry parameterRef="packet_sequence_count"/>
+    </xtce:EntryList>
+</xtce:SequenceContainer>
+```
+
+###### Prueba con el simulador:
+
+Para realizar la prueba mencionada en el enunciado, se necesita modificar el archivo `simulator.py`. Se realizan 2 cambios: 
+
+* Se modifica la función `send_tm(simulator)` de la siguiente manera:
+
+```
+def send_tm(simulator):
+    tm_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+
+    # $ T-7
+    while True:
+        tm_socket.sendto(PACKET, ('127.0.0.1', 10015))
+        simulator.tm_counter += 1
+
+        sleep(1)
+
+
+    # $ T-7
+    # with io.open('testdata.ccsds', 'rb') as f:
+    #     simulator.tm_counter = 1
+    #     header = bytearray(6)
+    #     while f.readinto(header) == 6:
+    #         (len,) = unpack_from('>H', header, 4)
+
+    #         packet = bytearray(len + 7)
+    #         f.seek(-6, io.SEEK_CUR)
+    #         f.readinto(packet)
+ 
+    #         tm_socket.sendto(packet, ('127.0.0.1', 10015))
+    #         simulator.tm_counter += 1
+ 
+    #         sleep(1)
+```
+
+* Se añade el array que se menciona en el enunciado de la tarea
+
+```
+PACKET = bytes([
+    8, 1, 195, 39, 0, 76, 32, 4, 2, 1, 70, 0, 1, 37, 165,
+    61, 202, 14, 224, 184, 148, 14, 224, 185, 92, 0, 2,
+    19, 152, 0, 3, 64, 160, 0, 0, 14, 224, 185, 92, 63,
+    128, 0, 0, 14, 224, 185, 92, 64, 64, 0, 0, 63, 209,
+    5, 236, 19, 153, 0, 6, 65, 80, 0, 0, 14, 224, 185,
+    92, 64, 64, 0, 0, 14, 224, 185, 92, 65, 0, 0, 0, 0,
+    0, 0, 0
+])
+```
+
+Para asegurarnos que vemos el resultado correcto, cerramos el servidor si lo teníamos abierto, y ejecutamos `mvn clean` para limpiar el servidor y volvemos a arrancarlo con `mvn yamcs:run`. De esta forma nos evitamos, posibles contaminaciones por haber ejecutado la simulación previamente.
+
+A continuación se muestran el antes y el después de ejecutar la simulación:
+
+| Antes de la simulación | Después de la simulación |
+|          --------------     |         --------------        |
+| ![PreSimT8](yamcs-training/images/t8/PreSimT8.png) | ![PostSimT8](yamcs-training/images/t8/PostSimT8.png)  | 
+
+Como se observa, están apareciendo paquetes y estos paquetes encajan con el TM[4,2] que se acaba de crear, por lo tanto, la tarea se ha completado con éxito ✅​.
