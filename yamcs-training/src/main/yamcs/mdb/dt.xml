@@ -250,6 +250,15 @@
                 </xtce:EnumerationList>
             </xtce:EnumeratedArgumentType>
 
+            <!-- $ T-7-->
+            <xtce:EnumeratedArgumentType name="PacketType">
+                <xtce:IntegerDataEncoding sizeInBits="1"></xtce:IntegerDataEncoding>
+                <xtce:EnumerationList>
+                    <xtce:Enumeration value="0" label="TM" />
+                    <xtce:Enumeration value="1" label="TC" />
+                </xtce:EnumerationList>
+            </xtce:EnumeratedArgumentType>
+
         </xtce:ArgumentTypeSet>
     </xtce:CommandMetaData>
 </xtce:SpaceSystem>

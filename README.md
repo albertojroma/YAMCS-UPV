@@ -464,7 +464,7 @@ Debe crear el TC[3,27] para generar un informe único de las estructuras de los 
     * en cuanto a `acknowledgement_flags`, tenga en cuenta que, según el apartado 7.4.4.1 del protocolo ECSS, no solicitamos ningún informe
     * el valor de `source_ID` puede establecerse en 5
     * los parámetros: `application_process_ID`, `service_type_ID` y `message_subtype_ID` no deben incluirse en la `ArgumentAssignmentList`
-    * los parámetros: `packet_sequence_count_or_packet_name` y `packet_data_length` dependen de cada paquete transmitido y son gestionados por el PostProcessor. Por ese motivo, deben definirse en la `EntryList` del contenedor utilizando el elemento `FixedValueEntry`.
+    * los parámetros: `packet_sequence_count` o `packet_name` y `packet_data_length` dependen de cada paquete transmitido y son gestionados por el PostProcessor. Por ese motivo, deben definirse en la `EntryList` del contenedor utilizando el elemento `FixedValueEntry`.
 
 2. A continuación, crea un contenedor `MetaCommand` utilizando como `BaseMetaCommand` el contenedor de encabezado TC que acabas de crear. Este debe contener una `ArgumentAssignmentList` con los siguientes elementos:
 * `service_type_ID` = 3
@@ -476,4 +476,132 @@ Debe crear el TC[3,27] para generar un informe único de las estructuras de los 
 
 ##### 1. Tipos de parámetros nuevos
 
-Es necesario crear el siguiente tipo de dato para el identificador de la estructura en el archivo `dt.xml`:
+Es necesario crear los siguientes tipos de datos para **comandos** (es decir dentro de las etiquetas `<xtce:CommandMetaData>` y su vez `xtce:ArgumentTypeSet`) en el archivo `dt.xml`:
+
+* Parámetros enteros sin signo:
+```
+<xtce:IntegerArgumentType name="uint1_t" signed="false">
+    <xtce:IntegerDataEncoding encoding="unsigned" sizeInBits="1" />
+</xtce:IntegerArgumentType>
+```
+```
+<xtce:IntegerArgumentType name="uint2_t" signed="false">
+    <xtce:IntegerDataEncoding encoding="unsigned" sizeInBits="2" />
+</xtce:IntegerArgumentType>
+```
+```
+<xtce:IntegerArgumentType name="uint3_t" signed="false">
+    <xtce:IntegerDataEncoding encoding="unsigned" sizeInBits="3" />
+</xtce:IntegerArgumentType>
+```
+```         
+<xtce:IntegerArgumentType name="uint4_t" signed="false">
+    <xtce:IntegerDataEncoding encoding="unsigned" sizeInBits="4" />
+</xtce:IntegerArgumentType>
+```
+
+* Parámetros enumerados:
+```
+<xtce:EnumeratedArgumentType name="housekeeping_structure_ID">
+    <xtce:IntegerDataEncoding sizeInBits="8"/>
+    <xtce:EnumerationList>
+        <xtce:Enumeration value="0" label="HK_OBC" />
+        <xtce:Enumeration value="1" label="HK_ADCS" />
+    </xtce:EnumerationList>
+</xtce:EnumeratedArgumentType>
+```
+```
+<xtce:EnumeratedArgumentType name="APID">
+    <xtce:IntegerDataEncoding sizeInBits="11"/>
+    <xtce:EnumerationList>
+        <xtce:Enumeration value="0" label="ADCS" />
+        <xtce:Enumeration value="1" label="COMMS" />
+        <xtce:Enumeration value="2" label="Gs" />
+        <xtce:Enumeration value="3" label="OBC" />
+        <xtce:Enumeration value="4" label="SU" />
+        <!-- en IDLE tienen que estar todos los bits a 1-->
+        <xtce:Enumeration value="2047" label="IdlePacket" />
+    </xtce:EnumerationList>
+</xtce:EnumeratedArgumentType>
+```
+```
+<xtce:EnumeratedArgumentType name="PacketType">
+    <xtce:IntegerDataEncoding sizeInBits="1"></xtce:IntegerDataEncoding>
+    <xtce:EnumerationList>
+        <xtce:Enumeration value="0" label="TM" />
+        <xtce:Enumeration value="1" label="TC" />
+    </xtce:EnumerationList>
+</xtce:EnumeratedArgumentType>
+```
+
+##### 2. Comando nuevo
+
+```
+<xtce:MetaCommand name="TC_header" abstract="true">
+    <xtce:ArgumentList>
+        <xtce:Argument argumentTypeRef="dt/uint3_t" name="version"/>
+        <xtce:Argument argumentTypeRef="dt/PacketType" name="packet_type"/>
+        <xtce:Argument argumentTypeRef="dt/uint1_t" name="secondary_header_flag"/>
+        <xtce:Argument argumentTypeRef="dt/APID" name="application_process_ID"/>
+        <xtce:Argument argumentTypeRef="dt/uint2_t" name="sequence_flags"/>
+        <xtce:Argument argumentTypeRef="dt/uint4_t" name="ccsds_secondary_header_version"/>
+        <xtce:Argument argumentTypeRef="dt/uint4_t" name="acknowledgement_flags"/>
+        <xtce:Argument argumentTypeRef="dt/uint8_t" name="service_type_ID"/>
+        <xtce:Argument argumentTypeRef="dt/uint8_t" name="message_subtype_ID"/>
+        <xtce:Argument argumentTypeRef="dt/uint16_t" name="source_ID"/>
+    </xtce:ArgumentList>
+
+    <xtce:CommandContainer name="TC_header">
+        <xtce:EntryList>
+            <xtce:ArgumentRefEntry argumentRef="version"/>
+            <xtce:ArgumentRefEntry argumentRef="packet_type"/>
+            <xtce:ArgumentRefEntry argumentRef="secondary_header_flag"/>
+            <xtce:ArgumentRefEntry argumentRef="application_process_ID"/>
+            <xtce:ArgumentRefEntry argumentRef="sequence_flags"/>
+            <xtce:FixedValueEntry name="packet_sequence_count" binaryValue="00000000000000" sizeInBits="14" />
+            <xtce:FixedValueEntry name="packet_data_length" binaryValue="0000000000000000" sizeInBits="16" />
+            <xtce:ArgumentRefEntry argumentRef="ccsds_secondary_header_version"/>
+            <xtce:ArgumentRefEntry argumentRef="acknowledgement_flags"/>
+            <xtce:ArgumentRefEntry argumentRef="service_type_ID"/>
+            <xtce:ArgumentRefEntry argumentRef="message_subtype_ID"/>
+            <xtce:ArgumentRefEntry argumentRef="source_ID"/>
+        </xtce:EntryList>
+    </xtce:CommandContainer>
+</xtce:MetaCommand>
+```
+```
+<xtce:MetaCommand name="TC_3_27_GenerateReport">
+    <xtce:BaseMetaCommand metaCommandRef="TC_header">
+        <xtce:ArgumentAssignmentList>
+            <xtce:ArgumentAssignment argumentName="acknowledgement_flags" argumentValue="0"/>
+            <xtce:ArgumentAssignment argumentName="source_ID" argumentValue="5"/>
+            <xtce:ArgumentAssignment argumentName="service_type_ID" argumentValue="3"/>
+            <xtce:ArgumentAssignment argumentName="message_subtype_ID" argumentValue="27"/>
+        </xtce:ArgumentAssignmentList>
+    </xtce:BaseMetaCommand>
+    <xtce:ArgumentList>
+        <xtce:Argument argumentTypeRef="dt/housekeeping_structure_ID" name="structure_ID_1"/>
+        <xtce:Argument argumentTypeRef="dt/housekeeping_structure_ID" name="structure_ID_2"/>
+        <xtce:Argument argumentTypeRef="dt/housekeeping_structure_ID" name="structure_ID_3"/>
+    </xtce:ArgumentList>
+
+    <xtce:CommandContainer name="TC_3_27_GenerateReport">
+        <xtce:EntryList>
+            <xtce:ArgumentRefEntry argumentRef="structure_ID_1"/>
+            <xtce:ArgumentRefEntry argumentRef="structure_ID_2"/>
+            <xtce:ArgumentRefEntry argumentRef="structure_ID_3"/>
+        </xtce:EntryList>
+        <xtce:BaseContainer containerRef="TC_header"/>
+    </xtce:CommandContainer>
+</xtce:MetaCommand>
+```
+
+#### Resultados:
+
+Todas estas modificaciones de código han añadido cambios en la interfaz web. 
+
+| Antes de las modificaciones | Después de las modificaciones |
+|          --------------     |         --------------        |
+| ![PreCambiosT6](yamcs-training/images/t5/PostCambiosT5.png) | ![PostCambiosT6](yamcs-training/images/t6/PostCambiosT6.png) |
+
+Estos cambios han añadido:
