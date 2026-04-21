@@ -793,7 +793,7 @@ Además, se han realizado cambios en los parámetros en el archivo `pus.xml`
 </xtce:SequenceContainer>
 ```
 
-##### Resultados:
+#### Resultados:
 
 Todas estas modificaciones de código han añadido cambios en la interfaz web. 
 
@@ -834,7 +834,7 @@ Como se observa en las imágenes siguientes se han añadido:
 </xtce:SequenceContainer>
 ```
 
-###### Prueba con el simulador:
+##### Prueba con el simulador:
 
 Para realizar la prueba mencionada en el enunciado, se necesita modificar el archivo `simulator.py`. Se realizan 2 cambios: 
 
@@ -892,3 +892,54 @@ A continuación se muestran el antes y el después de ejecutar la simulación:
 | ![PreSimT8](yamcs-training/images/t8/PreSimT8.png) | ![PostSimT8](yamcs-training/images/t8/PostSimT8.png)  | 
 
 Como se observa, están apareciendo paquetes y estos paquetes encajan con el TM[4,2] que se acaba de crear, por lo tanto, la tarea se ha completado con éxito ✅​.
+
+### Paso 9:
+
+Crea dos enlaces de datos TM:
+
+El primer enlace de datos será [UDP](https://docs.yamcs.org/yamcs-server-manual/links/udp-tm-data-link/) para la comunicación con OBC, que escucha en el puerto 10015.
+El segundo enlace de datos será [TCP](https://docs.yamcs.org/yamcs-server-manual/links/tcp-tm-data-link/) para la comunicación con COMMS, que escucha en el puerto 10014.
+
+Encontrarás más detalles sobre los enlaces de datos en la [página wiki](https://gitlab.com/acubesat/ops/yamcs-instance/-/wikis/4.-Yamcs-Configuration#data-links).
+
+#### Código añadido
+
+Los cambios en el código se han realizado en el archivo `yamcs.AcubeSAT.yaml` situado en el directorio `src/main/yamcs/etc/`. Concretamente se ha:
+
+* Añadido el puerto TCP:
+```
+  - name: COMMS-TM-DataLink
+    enableAtStartup: true
+    class: org.yamcs.tctm.TcpTmDataLink
+    stream: tm_realtime
+    host: localhost
+    port: 10014
+```
+
+* Modificado el nombre de puerto UDP de entrada que existía previamente:
+```
+  - name: udp-in
+```
+
+se ha sustituido por
+
+```
+  - name: OBC-TM-DataLink
+```
+
+#### Resultados:
+
+Todas estas modificaciones de código han añadido cambios en la interfaz web. 
+
+| Antes de las modificaciones | Después de las modificaciones |
+|          --------------     |         --------------        |
+| ![PreCambiosT9](yamcs-training/images/t9/PreCambiosT9.png) | ![PostCambiosT9](yamcs-training/images/t9/PostCambiosT9.png) | 
+
+Como se observa en las imágenes siguientes se ha añadido un puerto TCP para la comunicación con COMMS y se ha modificado el nombre del puerto que antes se llamaba `udp-in` por `OBC-TM-DataLink` para que haya una concordancia con el enunciado.
+
+**Nota**: en la consola donde se lanza el servidor deberían aparecer unos mensajes como estos:
+```
+10:53:15.171 AcubeSAT [23] TcpTmDataLink [COMMS-TM-DataLink] Cannot open or read TM socket localhost: 10014: Connection refused. Retrying in 10 seconds.
+```
+
+Esto no es un error del código, es debido al funcionamiento del protocolo TCP. Como no se produce un *handshake* el protocolo no está funcionando correctamente y sale ese error.
