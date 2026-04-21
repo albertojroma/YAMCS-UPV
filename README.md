@@ -943,3 +943,135 @@ Como se observa en las imágenes siguientes se ha añadido un puerto TCP para la
 ```
 
 Esto no es un error del código, es debido al funcionamiento del protocolo TCP. Como no se produce un *handshake* el protocolo no está funcionando correctamente y sale ese error.
+
+
+### Paso 10:
+
+Crea el «[Replication Server Service](https://docs.yamcs.org/yamcs-server-manual/services/global/replication-server/)», que facilita la comunicación entre el «[Replication Master](https://docs.yamcs.org/yamcs-server-manual/services/instance/replication-master/)» y el «[Replication Slave](https://docs.yamcs.org/yamcs-server-manual/services/instance/replication-slave/)». Debes crear dos instancias diferentes para el maestro y el esclavo de replicación en el mismo servidor Yamcs.
+La instancia maestra será la principal y debes asegurarte de que en la instancia esclava se produzcan los mismos procesos.
+
+#### ¿Qué estamos haciendo?
+
+En misiones espaciales reales, si el servidor principal falla, pierdes el satélite. Para evitar esto, se usan sistemas de Replicación.
+Vas a configurar tu instancia actual (AcubeSAT) como el Maestro (quien recibe los datos reales del simulador por UDP/TCP). Luego, vas a crear una segunda instancia "clon" llamada Esclavo (ReplicationSlaveInstance), que no escucha al satélite, sino que se conecta internamente al Maestro para copiar ("replicar") exactamente todo lo que este recibe.
+
+#### Código añadido
+
+Los cambios en el código se han realizado en archivos del directorio `src/main/yamcs/etc/`:
+
+* `yamcs.yaml`
+
+    * Se añade el servicio de replicación
+
+```
+  - class: org.yamcs.replication.ReplicationServer
+    args:
+      port: 8099
+```
+
+    * Se registra la instacia de replicación
+
+```
+  - ReplicationSlaveInstance
+```
+
+* `yamcs.AcubeSAT.yaml`
+
+Se añade el servicio de replicación que creamos previamente. Aquí indicamos además el nº de puerto entre otros parámetros
+
+```
+  - class: org.yamcs.replication.ReplicationMaster
+    args:
+      tcpRole: server
+      streams: ["tm_realtime"]
+      slaves:
+        - host: "localhost"
+          port: 8099
+          instance: "ReplicationSlaveInstance"
+          enableTls: false
+```
+
+* Se crea el archivo `yamcs.ReplicationSlaveInstance.yaml` con el siguiente código:
+
+```
+services:
+  - class: org.yamcs.archive.XtceTmRecorder
+  - class: org.yamcs.archive.ParameterRecorder
+  - class: org.yamcs.archive.AlarmRecorder
+  - class: org.yamcs.archive.EventRecorder
+  - class: org.yamcs.archive.ReplayServer
+  - class: org.yamcs.parameter.SystemParametersService
+    args:
+      provideJvmVariables: true
+      provideFsVariables: true
+  - class: org.yamcs.ProcessorCreatorService
+    args:
+      name: realtime
+      type: realtime
+  - class: org.yamcs.archive.CommandHistoryRecorder
+  - class: org.yamcs.parameterarchive.ParameterArchive
+    args:
+      realtimeFiller:
+        enabled: true
+      backFiller:
+        enabled: false
+        warmupTime: 60
+        
+  # --- SERVICIO CLAVE: Se conecta al Maestro ---
+  - class: org.yamcs.replication.ReplicationSlave
+    args:
+      tcpRole: client
+      masterHost: localhost
+      masterPort: 8099
+      masterInstance: AcubeSAT
+      enableTls: false
+      reconnectionIntervalSec: 30
+      streams: ["tm_realtime", "sys_param"]
+      lastTxFile: "slave-lastid.txt"
+  # ---------------------------------------------
+
+mdb:
+  # Configuration of the active loaders
+  # Valid loaders are: sheet, xtce or fully qualified name of the class
+  - type: "xtce"
+    spec: "mdb/dt.xml"
+  - type: "xtce"
+    spec: "mdb/xtce.xml"
+  - type: "xtce"
+    spec: "mdb/pus.xml"
+  - type: "xtce"
+    spec: "mdb/default.xml"
+
+# Configuration for streams created at server startup
+streamConfig:
+  tm:
+    - name: "tm_realtime"
+    - name: "tm_dump"
+  cmdHist: ["cmdhist_realtime", "cmdhist_dump"]
+  event: ["events_realtime", "events_dump"]
+  param: ["pp_realtime", "sys_param", "proc_param"]
+  parameterAlarm: ["alarms_realtime"]
+  tc:
+    - name: "tc_realtime"
+      processor: "realtime"
+```
+
+#### Resultados
+
+El resultado es exitoso si ocurre lo siguiente:
+
+1. En el terminal donde se ejecuta el código aparece la siguiente línea:
+```
+11:41:11.300 _global [1] YamcsServer Yamcs started in 1396ms. Started 2 of 2 instances and 22 services
+```
+Este mensaje indica que ahora hay 2 instancias. Esto tiene sentido porque hemos creado una instancia que replica a la instancia **AcubeSAT**.
+
+2. En la interfaz web aparecen 2 instancias en la página de inicio como se observa en la siguiente imagen:
+
+![InstanciasT10](yamcs-training/images/t10/InstanciasT10.png)
+
+3. Ahora aparece un menú desplegable cuando estamos dentro de una instancia y queremos cambiar a otra
+
+![InstanciaAcubeSAT_desplegableT10](yamcs-training/images/t10/InstanciaAcubeSAT_desplegableT10.png)
+
+![InstanciaAcubeSAT_desplegable_2_T10](yamcs-training/images/t10/InstanciaAcubeSAT_desplegable_2_T10.png)

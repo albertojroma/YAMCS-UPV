@@ -20,42 +20,19 @@ services:
       backFiller:
         enabled: false
         warmupTime: 60
-
-  # $ T-10: Configurar esta instancia como Maestro ---
-  - class: org.yamcs.replication.ReplicationMaster
+        
+  # --- SERVICIO CLAVE: Se conecta al Maestro ---
+  - class: org.yamcs.replication.ReplicationSlave
     args:
-      tcpRole: server
-      streams: ["tm_realtime"]
-      slaves:
-        - host: "localhost"
-          port: 8099
-          instance: "ReplicationSlaveInstance"
-          enableTls: false
-  # $ T-10--------------------------------------------
-
-dataLinks:
-  - name: OBC-TM-DataLink
-    enableAtStartup: true
-    class: org.yamcs.tctm.UdpTmDataLink
-    stream: tm_realtime
-    host: localhost
-    port: 10015
-    packetPreprocessorClassName: com.example.myproject.MyPacketPreprocessor
-
-  - name: COMMS-TM-DataLink
-    enableAtStartup: true
-    class: org.yamcs.tctm.TcpTmDataLink
-    stream: tm_realtime
-    host: localhost
-    port: 10014
-
-  - name: udp-out
-    enableAtStartup: true
-    class: org.yamcs.tctm.UdpTcDataLink
-    stream: tc_realtime
-    host: localhost
-    port: 10025
-    commandPostprocessorClassName: com.example.myproject.MyCommandPostprocessor
+      tcpRole: client
+      masterHost: localhost
+      masterPort: 8099
+      masterInstance: AcubeSAT
+      enableTls: false
+      reconnectionIntervalSec: 30
+      streams: ["tm_realtime", "sys_param"]
+      lastTxFile: "slave-lastid.txt"
+  # ---------------------------------------------
 
 mdb:
   # Configuration of the active loaders
