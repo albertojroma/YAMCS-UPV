@@ -30,7 +30,6 @@
                 </xtce:MemberList>
             </xtce:AggregateParameterType>
 
-            <!-- $ T-8_-->
             <xtce:AggregateParameterType name="parameter_statistics_struct">
                 <xtce:MemberList>
                     <xtce:Member typeRef="parameter_ID" name="parameter_ID" />
@@ -258,7 +257,6 @@
                 </xtce:EnumerationList>
             </xtce:EnumeratedArgumentType>
 
-            <!-- $ T-8 -->
             <xtce:EnumeratedArgumentType name="APID_16">
                 <xtce:IntegerDataEncoding sizeInBits="16">
                 </xtce:IntegerDataEncoding>

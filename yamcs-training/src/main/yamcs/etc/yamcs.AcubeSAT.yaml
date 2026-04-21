@@ -20,8 +20,6 @@ services:
       backFiller:
         enabled: false
         warmupTime: 60
-
-  # $ T-10: Configurar esta instancia como Maestro ---
   - class: org.yamcs.replication.ReplicationMaster
     args:
       tcpRole: server
@@ -31,31 +29,25 @@ services:
           port: 8099
           instance: "ReplicationSlaveInstance"
           enableTls: false
-  # $ T-10--------------------------------------------
 
 dataLinks:
-  - name: OBC-TM-DataLink
-    enableAtStartup: true
-    class: org.yamcs.tctm.UdpTmDataLink
-    stream: tm_realtime
-    host: localhost
-    port: 10015
-    packetPreprocessorClassName: com.example.myproject.MyPacketPreprocessor
-
-  - name: COMMS-TM-DataLink
+  # $ T-11: Modificamos el enlace TM de OBC a TCP
+  - name: DataLink-TM
     enableAtStartup: true
     class: org.yamcs.tctm.TcpTmDataLink
     stream: tm_realtime
     host: localhost
-    port: 10014
-
-  - name: udp-out
+    port: 10015
+    packetPreprocessorClassName: com.example.myproject.MyPacketPreprocessor
+  
+  - name: DataLink-TC
     enableAtStartup: true
-    class: org.yamcs.tctm.UdpTcDataLink
+    class: org.yamcs.tctm.TcpTcDataLink
     stream: tc_realtime
     host: localhost
     port: 10025
     commandPostprocessorClassName: com.example.myproject.MyCommandPostprocessor
+  # $ T-11 ---------------------------------------
 
 mdb:
   # Configuration of the active loaders

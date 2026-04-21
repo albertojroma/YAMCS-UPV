@@ -1075,3 +1075,48 @@ Este mensaje indica que ahora hay 2 instancias. Esto tiene sentido porque hemos 
 ![InstanciaAcubeSAT_desplegableT10](yamcs-training/images/t10/InstanciaAcubeSAT_desplegableT10.png)
 
 ![InstanciaAcubeSAT_desplegable_2_T10](yamcs-training/images/t10/InstanciaAcubeSAT_desplegable_2_T10.png)
+
+
+### Paso 11: Cambiar el protocolo IP de UDP a TCP para el simulador
+
+* Modifica los dos DataLinks existentes por otros nuevos que utilicen TCP:
+
+    1. El DataLink TM estará a la escucha en el puerto 10015 mediante [TCP](https://docs.yamcs.org/yamcs-server-manual/links/tcp-tm-data-link/).
+    2. El enlace de datos TC será [TCP](https://docs.yamcs.org/yamcs-server-manual/links/tcp-tc-data-link/) y escuchará en el puerto 10025.
+
+* Modifica el archivo `simulator.py` para recibir y enviar paquetes desde y hacia los nuevos enlaces de datos utilizando el [protocolo TCP](https://docs.python.org/3/howto/sockets.html).
+
+(Sustituye el archivo `testdata.ccsds` por el archivo `packet-1.raw` para simular los paquetes). [Aquí](https://gitlab.com/acubesat/ops/yamcs-instance/-/wikis/5.-Yamcs-Utilities#simulator) se incluyen algunos detalles sobre el simulador.
+
+#### Código añadido
+
+Para llevar a cabo esta tarea es necesario realizar modificaciones en el archivo `yamcs.AcubeSAT.yaml` y `simulator.py`
+
+* `yamcs.AcubeSAT.yaml`: En este archivo modificamos los **datalinks** existentes
+
+```
+  - name: DataLink-TM
+    enableAtStartup: true
+    class: org.yamcs.tctm.TcpTmDataLink
+    stream: tm_realtime
+    host: localhost
+    port: 10015
+    packetPreprocessorClassName: com.example.myproject.MyPacketPreprocessor
+  
+  - name: DataLink-TC
+    enableAtStartup: true
+    class: org.yamcs.tctm.TcpTcDataLink
+    stream: tc_realtime
+    host: localhost
+    port: 10025
+    commandPostprocessorClassName: com.example.myproject.MyCommandPostprocessor
+```
+
+* `simulator.py`: se sustituye el archivo `testdata.ccsds` por el archivo `packet-1.raw` entre otros cambios. Se recomienda comparar el archivo con versiones anteriores del mismo
+
+#### Resultados:
+
+Ahora hay 2 *links* llamados como se ha definido en el código: **DataLink-TC** y **DataLink-TM**.
+
+Cuando se lanza el simulador, se inicia la actividad de telemetría, es decir, se reciben 5 **DataLink-TM** (su "luz" parpadeará hasta que se reciban todos los paquetes). Además, se puede enviar comandos, como el que creamos en pasos anteriores (TC_3_27_GenerateReport).
+

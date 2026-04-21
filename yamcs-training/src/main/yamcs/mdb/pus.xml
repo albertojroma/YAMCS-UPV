@@ -28,7 +28,6 @@
 
     <xtce:TelemetryMetaData>
 
-        <!-- $T-8 -->
         <xtce:ParameterTypeSet>
             <xtce:ArrayParameterType name="parameter_statistics_array_type" arrayTypeRef="dt/parameter_statistics_struct">
                 <xtce:DimensionList>
@@ -49,7 +48,6 @@
 
         <xtce:ParameterSet>
             <!-- ENUMS -->
-            <!-- $ T-8 modificacion del tipo de parametro para destination_id -->
             <xtce:Parameter parameterTypeRef="dt/uint16_t" name="destination_id"/>
             
             <xtce:Parameter parameterTypeRef="dt/uint4_t" name="tm_PUS_version"/>
@@ -72,7 +70,6 @@
             <xtce:Parameter parameterTypeRef="dt/uint16_t" name="parameter"/>
             <xtce:Parameter parameterTypeRef="dt/housekeeping_structure_ID" name="structure_ID"/>
 
-            <!-- $ T-8-->
             <xtce:Parameter parameterTypeRef="dt/uint32_t" name="start_time"/>
             <xtce:Parameter parameterTypeRef="dt/uint32_t" name="end_time"/>
             <xtce:Parameter parameterTypeRef="dt/uint16_t" name="number_of_statistic_structures"/>
@@ -81,7 +78,6 @@
         
         <xtce:ContainerSet>
             
-            <!-- $ T-8 Se modifica el PH, SH y TM_header-->
             <!-- *  ___________________________ PRIMARY HEADER CONTAINERS __________________________________-->
 
             <xtce:SequenceContainer name="PH">
@@ -205,7 +201,6 @@
 
             </xtce:SequenceContainer>
 
-            <!-- $ T-8 -->
             <!-- *___________________________ TM_4_2 CONTAINERS __________________________________ -->
             <xtce:SequenceContainer name="TM_4_2">
                 <xtce:EntryList>

@@ -1,5 +1,3 @@
-
-
 import binascii
 import io
 import socket
@@ -8,51 +6,39 @@ from struct import unpack_from
 from threading import Thread
 from time import sleep
 
-# $ T-8
-PACKET = bytes([
-    8, 1, 195, 39, 0, 76, 32, 4, 2, 1, 70, 0, 1, 37, 165,
-    61, 202, 14, 224, 184, 148, 14, 224, 185, 92, 0, 2,
-    19, 152, 0, 3, 64, 160, 0, 0, 14, 224, 185, 92, 63,
-    128, 0, 0, 14, 224, 185, 92, 64, 64, 0, 0, 63, 209,
-    5, 236, 19, 153, 0, 6, 65, 80, 0, 0, 14, 224, 185,
-    92, 64, 64, 0, 0, 14, 224, 185, 92, 65, 0, 0, 0, 0,
-    0, 0, 0
-])
-
 
 def send_tm(simulator):
-    tm_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    tm_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    tm_socket.bind(('127.0.0.1', 10015))
+    tm_socket.listen()
+    client, _ = tm_socket.accept()
 
-    # $ T-8
-    while True:
-        tm_socket.sendto(PACKET, ('127.0.0.1', 10015))
-        simulator.tm_counter += 1
+    with io.open('packets-1.raw', 'rb') as f:
+        simulator.tm_counter = 1
+        header = bytearray(6)
+        while f.readinto(header) == 6:
+            (len,) = unpack_from('>H', header, 4)
 
-        sleep(1)
+            packet = bytearray(len + 7)
+            f.seek(-6, io.SEEK_CUR)
+            f.readinto(packet)
+            
 
+            client.send(packet)
 
-    # $ T-8
-    # with io.open('testdata.ccsds', 'rb') as f:
-    #     simulator.tm_counter = 1
-    #     header = bytearray(6)
-    #     while f.readinto(header) == 6:
-    #         (len,) = unpack_from('>H', header, 4)
+            simulator.tm_counter += 1
 
-    #         packet = bytearray(len + 7)
-    #         f.seek(-6, io.SEEK_CUR)
-    #         f.readinto(packet)
- 
-    #         tm_socket.sendto(packet, ('127.0.0.1', 10015))
-    #         simulator.tm_counter += 1
- 
-    #         sleep(1)
+            sleep(1)
 
 
 def receive_tc(simulator):
-    tc_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    tc_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     tc_socket.bind(('127.0.0.1', 10025))
+    tc_socket.listen()
+    client, _ = tc_socket.accept()
     while True:
-        data, _ = tc_socket.recvfrom(4096)
+        # data, _ = tc_socket.recvfrom(4096)
+        data, _ = client.recvfrom(4096)
         simulator.last_tc = data
         simulator.tc_counter += 1
 

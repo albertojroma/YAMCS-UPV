@@ -10,11 +10,10 @@ services:
 # from (by default: target/yamcs). This means that `mvn clean` will remove also persisted data.
 # Change this property to an absolute path in case you want to persist your data.
 
-  # $ T-10: Servicio global de replicación ---
   - class: org.yamcs.replication.ReplicationServer
     args:
       port: 8099
-  # $ ----------------------------
+
 dataDir: yamcs-data
 
 instances:
@@ -22,7 +21,7 @@ instances:
 
 # Secret key unique to a particular Yamcs installation.
 # This is used to provide cryptographic signing.
-  # $ T-10
+
   - ReplicationSlaveInstance
-  # $ ----
+
 secretKey: changeme
