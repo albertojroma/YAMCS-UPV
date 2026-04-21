@@ -937,7 +937,7 @@ Todas estas modificaciones de código han añadido cambios en la interfaz web.
 
 Como se observa en las imágenes siguientes se ha añadido un puerto TCP para la comunicación con COMMS y se ha modificado el nombre del puerto que antes se llamaba `udp-in` por `OBC-TM-DataLink` para que haya una concordancia con el enunciado.
 
-**Nota**: en la consola donde se lanza el servidor deberían aparecer unos mensajes como estos:
+**Nota**: en la consola donde se lanza el servidor deberían aparecer mensajes como este:
 ```
 10:53:15.171 AcubeSAT [23] TcpTmDataLink [COMMS-TM-DataLink] Cannot open or read TM socket localhost: 10014: Connection refused. Retrying in 10 seconds.
 ```
