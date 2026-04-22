@@ -4,3 +4,5 @@ myproject
 yamcs-training
 # Ignore all files in the yamcs-workshop directory
 yamcs-workshop
+# Ignore all files in the yamcs directory
+yamcs

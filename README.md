@@ -19,7 +19,7 @@ Este repositorio utiliza "ramas huérfanas" para separar los diferentes entornos
 * [`main`](https://github.com/albertojroma/YAMCS-UPV/tree/main): 📖 Documentación y guías en español (donde estás ahora).
 * [`myproject`](https://github.com/albertojroma/YAMCS-UPV/tree/myproject): 🚀 Proyecto base oficial de YAMCS (punto de partida limpio).
 * [`yamcs-training`](https://github.com/albertojroma/YAMCS-UPV/tree/training): 🎓 Rama dedicada a explicar la creación de satélites/misiones en YAMCS basado en material del proyecto AcubeSAT
-* [`yamcs-workshop`](https://github.com/albertojroma/YAMCS-UPV/tree/workshop): 🛠️ Entorno de taller basado en material del proyecto AcubeSAT
+* [`UniClOGS-Yamcs`](https://github.com/albertojroma/YAMCS-UPV/tree/UniClOGS-Yamcs): 🛠️ YAMCS en un proyecto real como UniClOGS. Principalmente es una guía de instalación
 
 ---
 
@@ -40,3 +40,5 @@ El [tutorial oficial](https://yamcs.org/getting-started) es la manera más fáci
 ## 4. Entrenamiento Práctico (Training)
 La rama [`yamcs-training`](https://github.com/albertojroma/YAMCS-UPV/tree/training) contiene nociones básicas para poder crear una misión en YAMCS.
 
+## 5. Entorno real
+La rama [`UniClOGS-Yamcs`](https://github.com/albertojroma/YAMCS-UPV/tree/UniClOGS-Yamcs) contiene un proyecto real de YAMCS para el proyecto UniClOGS. El objetivo es aprender mediante este proyecto a utilizar YAMCS en un proyecto real
