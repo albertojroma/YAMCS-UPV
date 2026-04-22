@@ -39,6 +39,8 @@ El proyecto UniClOGS tiene una herramienta externa en Python para enviar comando
 3. Lanzar la consola ejecutando: 
    `python3 -m cmd_shell`
 
+:eye: Se ve que la consola usa el mismo puerto que una de las instancias del proyecto (`oresat0_5` concretamente). Además, es difícil de iniciar, se debe iniciar primero el servidor con `mvn clean yamcs:debug` y rápidamente ejecutar `python3 -m cmd_shell` en otra consola hasta que funcione.
+
 ---
 
 ## (Opcional) La vía Docker ("Installation and Usage")
