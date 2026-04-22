@@ -34,6 +34,8 @@ Antes de instalar nada, es vital entender qué vamos a usar y con qué objetivo:
 ## 2. Preparación del Entorno
 En este [enlace](https://gitlab.com/acubesat/education/yamcs-workshop/-/blob/main/Prerequisites.md?ref_type=heads) se explican los requisitos y el procedimiento de instalación (Windows/Linux/macOS).
 
+Además, se recomienda leer las [documentación](docs/02-instalacion.md) sobre las herramientas recomandadas para trabajar en este proyecto cómodamente
+
 ## 3. Primeros pasos
 El [tutorial oficial](https://yamcs.org/getting-started) es la manera más fácil de comenzar.
 
