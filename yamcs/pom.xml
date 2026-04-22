@@ -1,0 +1,85 @@
+<project
+    xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.uniclogs</groupId>
+  <artifactId>uniclogs-yamcs</artifactId>
+  <version>0.1.1</version>
+  <packaging>jar</packaging>
+  <name>UniClOGS</name>
+  <url>https://uniclogs.org</url>
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <!--
+    Update this to the latest Yamcs release.
+    Check https://mvnrepository.com/artifact/org.yamcs/yamcs-core
+    -->
+    <yamcsVersion>5.11.2</yamcsVersion>
+  </properties>
+  <dependencies>
+    <!-- Yamcs core framework -->
+    <dependency>
+      <groupId>org.yamcs</groupId>
+      <artifactId>yamcs-core</artifactId>
+      <version>${yamcsVersion}</version>
+    </dependency>
+    <!-- Add this dependency to enable the web ui. -->
+    <dependency>
+      <groupId>org.yamcs</groupId>
+      <artifactId>yamcs-web</artifactId>
+      <version>${yamcsVersion}</version>
+    </dependency>
+    <!-- HMAC Generation Utils -->
+    <dependency>
+      <groupId>commons-codec</groupId>
+      <artifactId>commons-codec</artifactId>
+      <version>1.15</version>
+    </dependency>
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter</artifactId>
+      <version>5.12.0</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.10.1</version>
+        <configuration>
+          <release>17</release>
+          <source>17</source>
+          <target>17</target>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.yamcs</groupId>
+        <artifactId>yamcs-maven-plugin</artifactId>
+        <version>1.2.7</version>
+        <executions>
+          <!-- Tell Maven to bundle Yamcs into a tar.gz file when the 'mvn package' command is run -->
+          <execution>
+            <id>bundle-yamcs</id>
+            <phase>package</phase>
+            <goals>
+              <goal>bundle</goal>
+            </goals>
+            <configuration>
+              <formats>
+                <format>tar.gz</format>
+              </formats>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>3.5.2</version>
+      </plugin>
+    </plugins>
+  </build>
+</project>

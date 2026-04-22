@@ -1,0 +1,1102 @@
+<?xml version='1.0' encoding='utf-8'?>
+<SpaceSystem name="oresat0_5" xmlns="http://www.omg.org/spec/XTCE/20180204" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.omg.org/spec/XTCE/20180204 https://www.omg.org/spec/XTCE/20180204/SpaceSystem.xsd">
+  <Header validationStatus="Working" classification="NotClassified" version="0.7.3.dev31+g272cf4c" date="2024-08-24">
+    <AuthorSet>
+      <Author>PSAS (Portland State Aerospace Society)</Author>
+    </AuthorSet>
+  </Header>
+  <TelemetryMetaData>
+    <ParameterTypeSet>
+      <BinaryParameterType name="b128_type">
+        <UnitSet />
+        <BinaryDataEncoding bitOrder="leastSignificantBitFirst">
+          <SizeInBits>
+            <FixedValue>16</FixedValue>
+          </SizeInBits>
+        </BinaryDataEncoding>
+      </BinaryParameterType>
+      <AbsoluteTimeParameterType name="unix_time_type" shortDescription="Unix coarse timestamp">
+        <Encoding>
+          <IntegerDataEncoding byteOrder="leastSignificantByteFirst" sizeInBits="32" />
+        </Encoding>
+        <ReferenceTime>
+          <Epoch>1970-01-01T00:00:00.000</Epoch>
+        </ReferenceTime>
+      </AbsoluteTimeParameterType>
+      <IntegerParameterType name="uint32_type" signed="false">
+        <UnitSet />
+        <IntegerDataEncoding byteOrder="leastSignificantByteFirst" encoding="unsigned" sizeInBits="32" />
+      </IntegerParameterType>
+      <StringParameterType name="str24_type">
+        <StringDataEncoding encoding="UTF-8">
+          <SizeInBits>
+            <Fixed>
+              <FixedValue>24</FixedValue>
+            </Fixed>
+          </SizeInBits>
+        </StringDataEncoding>
+      </StringParameterType>
+      <EnumeratedParameterType name="uint8_c3_satellite_id_type">
+        <IntegerDataEncoding byteOrder="leastSignificantByteFirst" encoding="unsigned" sizeInBits="8" />
+        <EnumerationList>
+          <Enumeration value="1" label="oresat0" />
+          <Enumeration value="2" label="oresat0_5" />
+          <Enumeration value="3" label="oresat1" />
+        </EnumerationList>
+      </EnumeratedParameterType>
+      <IntegerParameterType name="uint8_type" signed="false">
+        <UnitSet />
+        <IntegerDataEncoding byteOrder="leastSignificantByteFirst" encoding="unsigned" sizeInBits="8" />
+      </IntegerParameterType>
+      <EnumeratedParameterType name="uint8_c3_status_type">
+        <IntegerDataEncoding byteOrder="leastSignificantByteFirst" encoding="unsigned" sizeInBits="8" />
+        <EnumerationList>
+          <Enumeration value="66" label="pre_deply" />
+          <Enumeration value="67" label="deploy" />
+          <Enumeration value="68" label="standby" />
+          <Enumeration value="69" label="beacon" />
+          <Enumeration value="70" label="edl" />
+        </EnumerationList>
+      </EnumeratedParameterType>
+      <IntegerParameterType name="uint32_s_type" signed="false">
+        <UnitSet>
+          <Unit>s</Unit>
+        </UnitSet>
+        <IntegerDataEncoding byteOrder="leastSignificantByteFirst" encoding="unsigned" sizeInBits="32" />
+      </IntegerParameterType>
+      <IntegerParameterType name="uint16_type" signed="false">
+        <UnitSet />
+        <IntegerDataEncoding byteOrder="leastSignificantByteFirst" encoding="unsigned" sizeInBits="16" />
+      </IntegerParameterType>
+      <IntegerParameterType name="uint8_percent_type" signed="false">
+        <UnitSet>
+          <Unit>%</Unit>
+        </UnitSet>
+        <IntegerDataEncoding byteOrder="leastSignificantByteFirst" encoding="unsigned" sizeInBits="8" />
+      </IntegerParameterType>
+      <IntegerParameterType name="uint32_B_type" signed="false">
+        <UnitSet>
+          <Unit>B</Unit>
+        </UnitSet>
+        <IntegerDataEncoding byteOrder="leastSignificantByteFirst" encoding="unsigned" sizeInBits="32" />
+      </IntegerParameterType>
+      <IntegerParameterType name="int8_dB_type" signed="true">
+        <UnitSet>
+          <Unit>dB</Unit>
+        </UnitSet>
+        <IntegerDataEncoding byteOrder="leastSignificantByteFirst" encoding="twosComplement" sizeInBits="8" />
+      </IntegerParameterType>
+      <EnumeratedParameterType name="uint8_adcs_manager_mode_type">
+        <IntegerDataEncoding byteOrder="leastSignificantByteFirst" encoding="unsigned" sizeInBits="8" />
+        <EnumerationList>
+          <Enumeration value="0" label="none" />
+          <Enumeration value="1" label="standby" />
+          <Enumeration value="2" label="hold" />
+          <Enumeration value="3" label="calibrate" />
+          <Enumeration value="4" label="spindown" />
+          <Enumeration value="5" label="detumble" />
+          <Enumeration value="6" label="bbq" />
+          <Enumeration value="7" label="point" />
+          <Enumeration value="8" label="manual" />
+        </EnumerationList>
+      </EnumeratedParameterType>
+      <IntegerParameterType name="uint16_mV_type" signed="false">
+        <UnitSet>
+          <Unit>mV</Unit>
+        </UnitSet>
+        <IntegerDataEncoding byteOrder="leastSignificantByteFirst" encoding="unsigned" sizeInBits="16" />
+      </IntegerParameterType>
+      <IntegerParameterType name="int8_C_type" signed="true">
+        <UnitSet>
+          <Unit>C</Unit>
+        </UnitSet>
+        <IntegerDataEncoding byteOrder="leastSignificantByteFirst" encoding="twosComplement" sizeInBits="8" />
+      </IntegerParameterType>
+      <IntegerParameterType name="int16_mA_type" signed="true">
+        <UnitSet>
+          <Unit>mA</Unit>
+        </UnitSet>
+        <IntegerDataEncoding byteOrder="leastSignificantByteFirst" encoding="twosComplement" sizeInBits="16" />
+      </IntegerParameterType>
+      <IntegerParameterType name="uint16_mAh_type" signed="false">
+        <UnitSet>
+          <Unit>mAh</Unit>
+        </UnitSet>
+        <IntegerDataEncoding byteOrder="leastSignificantByteFirst" encoding="unsigned" sizeInBits="16" />
+      </IntegerParameterType>
+      <IntegerParameterType name="uint16_mW_type" signed="false">
+        <UnitSet>
+          <Unit>mW</Unit>
+        </UnitSet>
+        <IntegerDataEncoding byteOrder="leastSignificantByteFirst" encoding="unsigned" sizeInBits="16" />
+      </IntegerParameterType>
+      <IntegerParameterType name="uint16_mJ_type" signed="false">
+        <UnitSet>
+          <Unit>mJ</Unit>
+        </UnitSet>
+        <IntegerDataEncoding byteOrder="leastSignificantByteFirst" encoding="unsigned" sizeInBits="16" />
+      </IntegerParameterType>
+      <EnumeratedParameterType name="uint8_star_tracker_1_status_type">
+        <IntegerDataEncoding byteOrder="leastSignificantByteFirst" encoding="unsigned" sizeInBits="8" />
+        <EnumerationList>
+          <Enumeration value="0" label="off" />
+          <Enumeration value="1" label="boot" />
+          <Enumeration value="2" label="standby" />
+          <Enumeration value="3" label="low_power" />
+          <Enumeration value="4" label="star_track" />
+          <Enumeration value="5" label="capture" />
+          <Enumeration value="255" label="error" />
+        </EnumerationList>
+      </EnumeratedParameterType>
+      <EnumeratedParameterType name="uint8_gps_status_type">
+        <IntegerDataEncoding byteOrder="leastSignificantByteFirst" encoding="unsigned" sizeInBits="8" />
+        <EnumerationList>
+          <Enumeration value="0" label="off" />
+          <Enumeration value="1" label="searching" />
+          <Enumeration value="2" label="locked" />
+          <Enumeration value="255" label="error" />
+        </EnumerationList>
+      </EnumeratedParameterType>
+      <EnumeratedParameterType name="uint8_gps_skytraq_fix_mode_type">
+        <IntegerDataEncoding byteOrder="leastSignificantByteFirst" encoding="unsigned" sizeInBits="8" />
+        <EnumerationList>
+          <Enumeration value="0" label="no_fix" />
+          <Enumeration value="1" label="2d" />
+          <Enumeration value="2" label="3d" />
+          <Enumeration value="3" label="3d_dgps" />
+        </EnumerationList>
+      </EnumeratedParameterType>
+      <IntegerParameterType name="int16_degps_type" signed="true">
+        <UnitSet>
+          <Unit>deg/s</Unit>
+        </UnitSet>
+        <IntegerDataEncoding byteOrder="leastSignificantByteFirst" encoding="twosComplement" sizeInBits="16" />
+      </IntegerParameterType>
+      <EnumeratedParameterType name="uint8_dxwifi_status_type">
+        <IntegerDataEncoding byteOrder="leastSignificantByteFirst" encoding="unsigned" sizeInBits="8" />
+        <EnumerationList>
+          <Enumeration value="0" label="off" />
+          <Enumeration value="1" label="boot" />
+          <Enumeration value="2" label="standby" />
+          <Enumeration value="3" label="film" />
+          <Enumeration value="4" label="transmit" />
+          <Enumeration value="5" label="purge" />
+          <Enumeration value="255" label="error" />
+        </EnumerationList>
+      </EnumeratedParameterType>
+      <EnumeratedParameterType name="uint8_cfc_processor_camera_status_type">
+        <IntegerDataEncoding byteOrder="leastSignificantByteFirst" encoding="unsigned" sizeInBits="8" />
+        <EnumerationList>
+          <Enumeration value="1" label="off" />
+          <Enumeration value="2" label="standby" />
+          <Enumeration value="3" label="capture" />
+          <Enumeration value="4" label="error" />
+        </EnumerationList>
+      </EnumeratedParameterType>
+      <BooleanParameterType name="bool_type" zeroStringValue="0" oneStringValue="1">
+        <IntegerDataEncoding byteOrder="leastSignificantByteFirst" encoding="unsigned" sizeInBits="8" />
+      </BooleanParameterType>
+      <EnumeratedParameterType name="edl_command_code_type">
+        <IntegerDataEncoding byteOrder="leastSignificantByteFirst" encoding="unsigned" sizeInBits="8" />
+        <EnumerationList>
+          <Enumeration value="0" label="tx_control" />
+          <Enumeration value="1" label="c3_soft_reset" />
+          <Enumeration value="2" label="c3_hard_reset" />
+          <Enumeration value="3" label="c3_factory_reset" />
+          <Enumeration value="4" label="co_node_enable" />
+          <Enumeration value="5" label="co_node_status" />
+          <Enumeration value="6" label="co_sdo_write" />
+          <Enumeration value="7" label="co_sync" />
+          <Enumeration value="8" label="opd_sysenable" />
+          <Enumeration value="9" label="opd_scan" />
+          <Enumeration value="10" label="opd_probe" />
+          <Enumeration value="11" label="opd_enable" />
+          <Enumeration value="12" label="opd_reset" />
+          <Enumeration value="13" label="opd_status" />
+          <Enumeration value="14" label="rtc_set_time" />
+          <Enumeration value="15" label="time_sync" />
+          <Enumeration value="16" label="beacon_ping" />
+          <Enumeration value="17" label="ping" />
+          <Enumeration value="18" label="rx_test" />
+          <Enumeration value="19" label="co_sdo_read" />
+        </EnumerationList>
+      </EnumeratedParameterType>
+      <BinaryParameterType name="bytes_hmac_type">
+        <UnitSet />
+        <BinaryDataEncoding bitOrder="leastSignificantBitFirst">
+          <SizeInBits>
+            <FixedValue>64</FixedValue>
+          </SizeInBits>
+        </BinaryDataEncoding>
+      </BinaryParameterType>
+      <IntegerParameterType name="uint4_type" signed="false">
+        <UnitSet />
+        <IntegerDataEncoding byteOrder="leastSignificantByteFirst" encoding="unsigned" sizeInBits="4" />
+      </IntegerParameterType>
+      <IntegerParameterType name="uint6_type" signed="false">
+        <UnitSet />
+        <IntegerDataEncoding byteOrder="leastSignificantByteFirst" encoding="unsigned" sizeInBits="6" />
+      </IntegerParameterType>
+      <IntegerParameterType name="uint2_type" signed="false">
+        <UnitSet />
+        <IntegerDataEncoding byteOrder="leastSignificantByteFirst" encoding="unsigned" sizeInBits="2" />
+      </IntegerParameterType>
+      <IntegerParameterType name="uint3_type" signed="false">
+        <UnitSet />
+        <IntegerDataEncoding byteOrder="leastSignificantByteFirst" encoding="unsigned" sizeInBits="3" />
+      </IntegerParameterType>
+      <IntegerParameterType name="uint5_type" signed="false">
+        <UnitSet />
+        <IntegerDataEncoding byteOrder="leastSignificantByteFirst" encoding="unsigned" sizeInBits="5" />
+      </IntegerParameterType>
+      <IntegerParameterType name="co_sdo_read_buffer_type" signed="false">
+        <UnitSet />
+        <IntegerDataEncoding byteOrder="leastSignificantByteFirst" encoding="unsigned" sizeInBits="32" />
+      </IntegerParameterType>
+      <BinaryParameterType name="bytes_type">
+        <UnitSet />
+        <BinaryDataEncoding bitOrder="leastSignificantBitFirst">
+          <SizeInBits>
+            <DynamicValue>
+              <ParameterInstanceRef parameterRef="co_sdo_read_buffer_size" />
+            </DynamicValue>
+          </SizeInBits>
+        </BinaryDataEncoding>
+      </BinaryParameterType>
+    </ParameterTypeSet>
+    <ParameterSet>
+      <Parameter name="ax25_header" parameterTypeRef="b128_type" shortDescription="AX.25 Header" />
+      <Parameter name="c3_beacon_start_chars" parameterTypeRef="str24_type" shortDescription="the aprs start characters" />
+      <Parameter name="c3_satellite_id" parameterTypeRef="uint8_c3_satellite_id_type" shortDescription="the unique oresat satellite id" />
+      <Parameter name="c3_beacon_revision" parameterTypeRef="uint8_type" shortDescription="the beacon revision number" />
+      <Parameter name="c3_status" parameterTypeRef="uint8_c3_status_type" />
+      <Parameter name="c3_mode" parameterTypeRef="uint8_type" shortDescription="the oresat system mode" />
+      <Parameter name="c3_system_uptime" parameterTypeRef="uint32_s_type" shortDescription="uptime" />
+      <Parameter name="c3_system_unix_time" parameterTypeRef="unix_time_type" shortDescription="unix time" />
+      <Parameter name="c3_system_power_cycles" parameterTypeRef="uint16_type" shortDescription="the number of power cycles" />
+      <Parameter name="c3_system_storage_percent" parameterTypeRef="uint8_percent_type" shortDescription="the current storage percent used" />
+      <Parameter name="c3_lband_rx_bytes" parameterTypeRef="uint32_B_type" shortDescription="lband received byte count" />
+      <Parameter name="c3_lband_rx_packets" parameterTypeRef="uint32_type" shortDescription="lband received packet count" />
+      <Parameter name="c3_lband_rssi" parameterTypeRef="int8_dB_type" shortDescription="lband rssi of last packet received after lna, filters, and digital channel filter" />
+      <Parameter name="c3_lband_synth_relock_count" parameterTypeRef="uint8_type" shortDescription="lband si41xx synthesizer relock count since boot" />
+      <Parameter name="c3_uhf_rx_bytes" parameterTypeRef="uint32_B_type" shortDescription="uhf received byte count" />
+      <Parameter name="c3_uhf_rx_packets" parameterTypeRef="uint32_type" shortDescription="uhf received packet count" />
+      <Parameter name="c3_uhf_rssi" parameterTypeRef="int8_dB_type" shortDescription="uhf rssi of last packet received after lna, filters, and digital channel filter" />
+      <Parameter name="c3_edl_sequence_count" parameterTypeRef="uint32_type" shortDescription="edl sequence count" />
+      <Parameter name="c3_edl_rejected_count" parameterTypeRef="uint32_type" shortDescription="edl sequence count" />
+      <Parameter name="c3_fread_cache_length" parameterTypeRef="uint8_type" shortDescription="number of files in fread cache" />
+      <Parameter name="c3_fwrite_cache_length" parameterTypeRef="uint8_type" shortDescription="number of files in fwrite cache" />
+      <Parameter name="c3_updater_cache_length" parameterTypeRef="uint8_type" shortDescription="number of updates cached" />
+      <Parameter name="c3_adcs_manager_mode" parameterTypeRef="uint8_adcs_manager_mode_type" shortDescription="requested adcs mission mode to follow" />
+      <Parameter name="battery_1_pack_1_vbatt" parameterTypeRef="uint16_mV_type" shortDescription="pack voltage" />
+      <Parameter name="battery_1_pack_1_vcell" parameterTypeRef="uint16_mV_type" shortDescription="lowest cell voltage" />
+      <Parameter name="battery_1_pack_1_vcell_max" parameterTypeRef="uint16_mV_type" shortDescription="max voltage for a cell" />
+      <Parameter name="battery_1_pack_1_vcell_min" parameterTypeRef="uint16_mV_type" shortDescription="min voltage for a cell" />
+      <Parameter name="battery_1_pack_1_vcell_1" parameterTypeRef="uint16_mV_type" shortDescription="cell 1 voltage" />
+      <Parameter name="battery_1_pack_1_vcell_2" parameterTypeRef="uint16_mV_type" shortDescription="cell 2 voltage" />
+      <Parameter name="battery_1_pack_1_vcell_avg" parameterTypeRef="uint16_mV_type" shortDescription="average voltage of both cells" />
+      <Parameter name="battery_1_pack_1_temperature" parameterTypeRef="int8_C_type" shortDescription="temperature of battery pack" />
+      <Parameter name="battery_1_pack_1_temperature_avg" parameterTypeRef="int8_C_type" shortDescription="average temperature of battery pack" />
+      <Parameter name="battery_1_pack_1_temperature_max" parameterTypeRef="int8_C_type" shortDescription="max temperature of battery pack" />
+      <Parameter name="battery_1_pack_1_temperature_min" parameterTypeRef="int8_C_type" shortDescription="min temperature of battery pack" />
+      <Parameter name="battery_1_pack_1_current" parameterTypeRef="int16_mA_type" shortDescription="pack current" />
+      <Parameter name="battery_1_pack_1_current_avg" parameterTypeRef="int16_mA_type" shortDescription="pack average current" />
+      <Parameter name="battery_1_pack_1_current_max" parameterTypeRef="int16_mA_type" shortDescription="pack max current" />
+      <Parameter name="battery_1_pack_1_current_min" parameterTypeRef="int16_mA_type" shortDescription="pack min current" />
+      <Parameter name="battery_1_pack_1_status" parameterTypeRef="uint8_type" />
+      <Parameter name="battery_1_pack_1_reported_state_of_charge" parameterTypeRef="uint8_percent_type" shortDescription="reported charge percent" />
+      <Parameter name="battery_1_pack_1_full_capacity" parameterTypeRef="uint16_mAh_type" shortDescription="capacity of battery pack" />
+      <Parameter name="battery_1_pack_1_reported_capacity" parameterTypeRef="uint16_mAh_type" shortDescription="reported capacity of battery pack" />
+      <Parameter name="battery_1_pack_2_vbatt" parameterTypeRef="uint16_mV_type" shortDescription="pack voltage" />
+      <Parameter name="battery_1_pack_2_vcell" parameterTypeRef="uint16_mV_type" shortDescription="lowest cell voltage" />
+      <Parameter name="battery_1_pack_2_vcell_max" parameterTypeRef="uint16_mV_type" shortDescription="max voltage for a cell" />
+      <Parameter name="battery_1_pack_2_vcell_min" parameterTypeRef="uint16_mV_type" shortDescription="min voltage for a cell" />
+      <Parameter name="battery_1_pack_2_vcell_1" parameterTypeRef="uint16_mV_type" shortDescription="cell 1 voltage" />
+      <Parameter name="battery_1_pack_2_vcell_2" parameterTypeRef="uint16_mV_type" shortDescription="cell 2 voltage" />
+      <Parameter name="battery_1_pack_2_vcell_avg" parameterTypeRef="uint16_mV_type" shortDescription="average voltage of both cells" />
+      <Parameter name="battery_1_pack_2_temperature" parameterTypeRef="int8_C_type" shortDescription="temperature of battery pack" />
+      <Parameter name="battery_1_pack_2_temperature_avg" parameterTypeRef="int8_C_type" shortDescription="average temperature of battery pack" />
+      <Parameter name="battery_1_pack_2_temperature_max" parameterTypeRef="int8_C_type" shortDescription="max temperature of battery pack" />
+      <Parameter name="battery_1_pack_2_temperature_min" parameterTypeRef="int8_C_type" shortDescription="min temperature of battery pack" />
+      <Parameter name="battery_1_pack_2_current" parameterTypeRef="int16_mA_type" shortDescription="pack current" />
+      <Parameter name="battery_1_pack_2_current_avg" parameterTypeRef="int16_mA_type" shortDescription="pack average current" />
+      <Parameter name="battery_1_pack_2_current_max" parameterTypeRef="int16_mA_type" shortDescription="pack max current" />
+      <Parameter name="battery_1_pack_2_current_min" parameterTypeRef="int16_mA_type" shortDescription="pack min current" />
+      <Parameter name="battery_1_pack_2_status" parameterTypeRef="uint8_type" />
+      <Parameter name="battery_1_pack_2_reported_state_of_charge" parameterTypeRef="uint8_percent_type" shortDescription="reported charge percent" />
+      <Parameter name="battery_1_pack_2_full_capacity" parameterTypeRef="uint16_mAh_type" shortDescription="capacity of battery pack" />
+      <Parameter name="battery_1_pack_2_reported_capacity" parameterTypeRef="uint16_mAh_type" shortDescription="reported capacity of battery pack" />
+      <Parameter name="solar_1_output_voltage_avg" parameterTypeRef="uint16_mV_type" shortDescription="average voltage" />
+      <Parameter name="solar_1_output_current_avg" parameterTypeRef="int16_mA_type" shortDescription="average current" />
+      <Parameter name="solar_1_output_power_avg" parameterTypeRef="uint16_mW_type" shortDescription="average power" />
+      <Parameter name="solar_1_output_voltage_max" parameterTypeRef="uint16_mV_type" shortDescription="max voltage" />
+      <Parameter name="solar_1_output_current_max" parameterTypeRef="int16_mA_type" shortDescription="max current" />
+      <Parameter name="solar_1_output_power_max" parameterTypeRef="uint16_mW_type" shortDescription="max power" />
+      <Parameter name="solar_1_output_energy" parameterTypeRef="uint16_mJ_type" shortDescription="storing energy" />
+      <Parameter name="solar_2_output_voltage_avg" parameterTypeRef="uint16_mV_type" shortDescription="average voltage" />
+      <Parameter name="solar_2_output_current_avg" parameterTypeRef="int16_mA_type" shortDescription="average current" />
+      <Parameter name="solar_2_output_power_avg" parameterTypeRef="uint16_mW_type" shortDescription="average power" />
+      <Parameter name="solar_2_output_voltage_max" parameterTypeRef="uint16_mV_type" shortDescription="max voltage" />
+      <Parameter name="solar_2_output_current_max" parameterTypeRef="int16_mA_type" shortDescription="max current" />
+      <Parameter name="solar_2_output_power_max" parameterTypeRef="uint16_mW_type" shortDescription="max power" />
+      <Parameter name="solar_2_output_energy" parameterTypeRef="uint16_mJ_type" shortDescription="storing energy" />
+      <Parameter name="solar_3_output_voltage_avg" parameterTypeRef="uint16_mV_type" shortDescription="average voltage" />
+      <Parameter name="solar_3_output_current_avg" parameterTypeRef="int16_mA_type" shortDescription="average current" />
+      <Parameter name="solar_3_output_power_avg" parameterTypeRef="uint16_mW_type" shortDescription="average power" />
+      <Parameter name="solar_3_output_voltage_max" parameterTypeRef="uint16_mV_type" shortDescription="max voltage" />
+      <Parameter name="solar_3_output_current_max" parameterTypeRef="int16_mA_type" shortDescription="max current" />
+      <Parameter name="solar_3_output_power_max" parameterTypeRef="uint16_mW_type" shortDescription="max power" />
+      <Parameter name="solar_3_output_energy" parameterTypeRef="uint16_mJ_type" shortDescription="storing energy" />
+      <Parameter name="solar_4_output_voltage_avg" parameterTypeRef="uint16_mV_type" shortDescription="average voltage" />
+      <Parameter name="solar_4_output_current_avg" parameterTypeRef="int16_mA_type" shortDescription="average current" />
+      <Parameter name="solar_4_output_power_avg" parameterTypeRef="uint16_mW_type" shortDescription="average power" />
+      <Parameter name="solar_4_output_voltage_max" parameterTypeRef="uint16_mV_type" shortDescription="max voltage" />
+      <Parameter name="solar_4_output_current_max" parameterTypeRef="int16_mA_type" shortDescription="max current" />
+      <Parameter name="solar_4_output_power_max" parameterTypeRef="uint16_mW_type" shortDescription="max power" />
+      <Parameter name="solar_4_output_energy" parameterTypeRef="uint16_mJ_type" shortDescription="storing energy" />
+      <Parameter name="solar_5_output_voltage_avg" parameterTypeRef="uint16_mV_type" shortDescription="average voltage" />
+      <Parameter name="solar_5_output_current_avg" parameterTypeRef="int16_mA_type" shortDescription="average current" />
+      <Parameter name="solar_5_output_power_avg" parameterTypeRef="uint16_mW_type" shortDescription="average power" />
+      <Parameter name="solar_5_output_voltage_max" parameterTypeRef="uint16_mV_type" shortDescription="max voltage" />
+      <Parameter name="solar_5_output_current_max" parameterTypeRef="int16_mA_type" shortDescription="max current" />
+      <Parameter name="solar_5_output_power_max" parameterTypeRef="uint16_mW_type" shortDescription="max power" />
+      <Parameter name="solar_5_output_energy" parameterTypeRef="uint16_mJ_type" shortDescription="storing energy" />
+      <Parameter name="solar_6_output_voltage_avg" parameterTypeRef="uint16_mV_type" shortDescription="average voltage" />
+      <Parameter name="solar_6_output_current_avg" parameterTypeRef="int16_mA_type" shortDescription="average current" />
+      <Parameter name="solar_6_output_power_avg" parameterTypeRef="uint16_mW_type" shortDescription="average power" />
+      <Parameter name="solar_6_output_voltage_max" parameterTypeRef="uint16_mV_type" shortDescription="max voltage" />
+      <Parameter name="solar_6_output_current_max" parameterTypeRef="int16_mA_type" shortDescription="max current" />
+      <Parameter name="solar_6_output_power_max" parameterTypeRef="uint16_mW_type" shortDescription="max power" />
+      <Parameter name="solar_6_output_energy" parameterTypeRef="uint16_mJ_type" shortDescription="storing energy" />
+      <Parameter name="star_tracker_1_system_storage_percent" parameterTypeRef="uint8_percent_type" shortDescription="the current storage percent used" />
+      <Parameter name="star_tracker_1_status" parameterTypeRef="uint8_star_tracker_1_status_type" />
+      <Parameter name="gps_system_storage_percent" parameterTypeRef="uint8_percent_type" shortDescription="the current storage percent used" />
+      <Parameter name="gps_status" parameterTypeRef="uint8_gps_status_type" />
+      <Parameter name="gps_skytraq_number_of_sv" parameterTypeRef="uint8_type" shortDescription="number of gps satellites locked onto" />
+      <Parameter name="gps_skytraq_fix_mode" parameterTypeRef="uint8_gps_skytraq_fix_mode_type" />
+      <Parameter name="adcs_gyroscope_roll_rate" parameterTypeRef="int16_degps_type" shortDescription="z-axis rate" />
+      <Parameter name="adcs_gyroscope_pitch_rate" parameterTypeRef="int16_degps_type" shortDescription="x-axis rate" />
+      <Parameter name="adcs_gyroscope_yaw_rate" parameterTypeRef="int16_degps_type" shortDescription="y-axis rate" />
+      <Parameter name="dxwifi_system_storage_percent" parameterTypeRef="uint8_percent_type" shortDescription="the current storage percent used" />
+      <Parameter name="dxwifi_status" parameterTypeRef="uint8_dxwifi_status_type" shortDescription="the dxwifi status" />
+      <Parameter name="dxwifi_radio_temperature" parameterTypeRef="int8_C_type" shortDescription="the temperature of the radio" />
+      <Parameter name="cfc_processor_system_storage_percent" parameterTypeRef="uint8_percent_type" shortDescription="the current storage percent used" />
+      <Parameter name="cfc_processor_camera_status" parameterTypeRef="uint8_cfc_processor_camera_status_type" />
+      <Parameter name="cfc_processor_camera_temperature" parameterTypeRef="int8_C_type" shortDescription="the camera temperature" />
+      <Parameter name="cfc_processor_tec_status" parameterTypeRef="bool_type" shortDescription="the tec controller status" />
+      <Parameter name="crc32" parameterTypeRef="uint32_type" shortDescription="beacon crc32" />
+      <Parameter name="edl_command_code" parameterTypeRef="edl_command_code_type" />
+      <Parameter name="hmac" parameterTypeRef="bytes_hmac_type" />
+      <Parameter name="uslp_fecf" parameterTypeRef="uint32_type" />
+      <Parameter name="uslp_version_number" parameterTypeRef="uint4_type" />
+      <Parameter name="uslp_spacecraft_id" parameterTypeRef="uint16_type" />
+      <Parameter name="uslp_src_dest" parameterTypeRef="bool_type" />
+      <Parameter name="uslp_virtual_channel_id" parameterTypeRef="uint6_type" />
+      <Parameter name="uslp_map_id" parameterTypeRef="uint4_type" />
+      <Parameter name="uslp_eof_flag" parameterTypeRef="bool_type" />
+      <Parameter name="uslp_frame_length" parameterTypeRef="uint16_type" />
+      <Parameter name="uslp_bypass_sequence_control_flag" parameterTypeRef="bool_type" />
+      <Parameter name="uslp_protocol_control_command_flag" parameterTypeRef="bool_type" />
+      <Parameter name="uslp_reserved" parameterTypeRef="uint2_type" />
+      <Parameter name="uslp_operation_control_field_flag" parameterTypeRef="bool_type" />
+      <Parameter name="uslp_vc_frame_count_length" parameterTypeRef="uint3_type" />
+      <Parameter name="uslp_sequence_number" parameterTypeRef="uint32_type" />
+      <Parameter name="uslp_tfdz_contruction_rules" parameterTypeRef="uint3_type" />
+      <Parameter name="uslp_protocol_id" parameterTypeRef="uint5_type" />
+      <Parameter name="tx_control_status" parameterTypeRef="bool_type" shortDescription="tx status" />
+      <Parameter name="co_node_enable_status" parameterTypeRef="uint8_type" shortDescription="node status" />
+      <Parameter name="co_node_status_status" parameterTypeRef="uint8_type" shortDescription="node status" />
+      <Parameter name="co_sdo_write_error_code" parameterTypeRef="uint32_type" shortDescription="SDO error code (0 is no error)" />
+      <Parameter name="co_sync_sent" parameterTypeRef="bool_type" shortDescription="the CANopen SYNC message was sent successfully" />
+      <Parameter name="opd_sysenable_status" parameterTypeRef="bool_type" shortDescription="OPD subsystem enable status" />
+      <Parameter name="opd_scan_nodes_found" parameterTypeRef="uint8_type" shortDescription="the number of nodes found" />
+      <Parameter name="opd_probe_found" parameterTypeRef="bool_type" shortDescription="true if the node was found or false if not" />
+      <Parameter name="opd_enable_status" parameterTypeRef="uint8_type" shortDescription="OPD node status" />
+      <Parameter name="opd_reset_status" parameterTypeRef="uint8_type" shortDescription="OPD node status" />
+      <Parameter name="opd_status_status" parameterTypeRef="uint8_type" shortDescription="OPD node status" />
+      <Parameter name="time_sync_sent" parameterTypeRef="bool_type" shortDescription="time sync was sent" />
+      <Parameter name="ping_value" parameterTypeRef="uint32_type" shortDescription="the parameter value" />
+      <Parameter name="co_sdo_read_error_code" parameterTypeRef="uint32_type" shortDescription="SDO error code (0 is no error)" />
+      <Parameter name="co_sdo_read_buffer_size" parameterTypeRef="co_sdo_read_buffer_type" />
+      <Parameter name="co_sdo_read_buffer" parameterTypeRef="bytes_type" shortDescription="data buffer" />
+    </ParameterSet>
+    <ContainerSet>
+      <SequenceContainer name="beacon">
+        <EntryList>
+          <ParameterRefEntry parameterRef="ax25_header" />
+          <ParameterRefEntry parameterRef="ax25_header" />
+          <ParameterRefEntry parameterRef="c3_beacon_start_chars" />
+          <ParameterRefEntry parameterRef="c3_satellite_id" />
+          <ParameterRefEntry parameterRef="c3_beacon_revision" />
+          <ParameterRefEntry parameterRef="c3_status" />
+          <ParameterRefEntry parameterRef="c3_mode" />
+          <ParameterRefEntry parameterRef="c3_system_uptime" />
+          <ParameterRefEntry parameterRef="c3_system_unix_time" />
+          <ParameterRefEntry parameterRef="c3_system_power_cycles" />
+          <ParameterRefEntry parameterRef="c3_system_storage_percent" />
+          <ParameterRefEntry parameterRef="c3_lband_rx_bytes" />
+          <ParameterRefEntry parameterRef="c3_lband_rx_packets" />
+          <ParameterRefEntry parameterRef="c3_lband_rssi" />
+          <ParameterRefEntry parameterRef="c3_lband_synth_relock_count" />
+          <ParameterRefEntry parameterRef="c3_uhf_rx_bytes" />
+          <ParameterRefEntry parameterRef="c3_uhf_rx_packets" />
+          <ParameterRefEntry parameterRef="c3_uhf_rssi" />
+          <ParameterRefEntry parameterRef="c3_edl_sequence_count" />
+          <ParameterRefEntry parameterRef="c3_edl_rejected_count" />
+          <ParameterRefEntry parameterRef="c3_fread_cache_length" />
+          <ParameterRefEntry parameterRef="c3_fwrite_cache_length" />
+          <ParameterRefEntry parameterRef="c3_updater_cache_length" />
+          <ParameterRefEntry parameterRef="c3_adcs_manager_mode" />
+          <ParameterRefEntry parameterRef="battery_1_pack_1_vbatt" />
+          <ParameterRefEntry parameterRef="battery_1_pack_1_vcell" />
+          <ParameterRefEntry parameterRef="battery_1_pack_1_vcell_max" />
+          <ParameterRefEntry parameterRef="battery_1_pack_1_vcell_min" />
+          <ParameterRefEntry parameterRef="battery_1_pack_1_vcell_1" />
+          <ParameterRefEntry parameterRef="battery_1_pack_1_vcell_2" />
+          <ParameterRefEntry parameterRef="battery_1_pack_1_vcell_avg" />
+          <ParameterRefEntry parameterRef="battery_1_pack_1_temperature" />
+          <ParameterRefEntry parameterRef="battery_1_pack_1_temperature_avg" />
+          <ParameterRefEntry parameterRef="battery_1_pack_1_temperature_max" />
+          <ParameterRefEntry parameterRef="battery_1_pack_1_temperature_min" />
+          <ParameterRefEntry parameterRef="battery_1_pack_1_current" />
+          <ParameterRefEntry parameterRef="battery_1_pack_1_current_avg" />
+          <ParameterRefEntry parameterRef="battery_1_pack_1_current_max" />
+          <ParameterRefEntry parameterRef="battery_1_pack_1_current_min" />
+          <ParameterRefEntry parameterRef="battery_1_pack_1_status" />
+          <ParameterRefEntry parameterRef="battery_1_pack_1_reported_state_of_charge" />
+          <ParameterRefEntry parameterRef="battery_1_pack_1_full_capacity" />
+          <ParameterRefEntry parameterRef="battery_1_pack_1_reported_capacity" />
+          <ParameterRefEntry parameterRef="battery_1_pack_2_vbatt" />
+          <ParameterRefEntry parameterRef="battery_1_pack_2_vcell" />
+          <ParameterRefEntry parameterRef="battery_1_pack_2_vcell_max" />
+          <ParameterRefEntry parameterRef="battery_1_pack_2_vcell_min" />
+          <ParameterRefEntry parameterRef="battery_1_pack_2_vcell_1" />
+          <ParameterRefEntry parameterRef="battery_1_pack_2_vcell_2" />
+          <ParameterRefEntry parameterRef="battery_1_pack_2_vcell_avg" />
+          <ParameterRefEntry parameterRef="battery_1_pack_2_temperature" />
+          <ParameterRefEntry parameterRef="battery_1_pack_2_temperature_avg" />
+          <ParameterRefEntry parameterRef="battery_1_pack_2_temperature_max" />
+          <ParameterRefEntry parameterRef="battery_1_pack_2_temperature_min" />
+          <ParameterRefEntry parameterRef="battery_1_pack_2_current" />
+          <ParameterRefEntry parameterRef="battery_1_pack_2_current_avg" />
+          <ParameterRefEntry parameterRef="battery_1_pack_2_current_max" />
+          <ParameterRefEntry parameterRef="battery_1_pack_2_current_min" />
+          <ParameterRefEntry parameterRef="battery_1_pack_2_status" />
+          <ParameterRefEntry parameterRef="battery_1_pack_2_reported_state_of_charge" />
+          <ParameterRefEntry parameterRef="battery_1_pack_2_full_capacity" />
+          <ParameterRefEntry parameterRef="battery_1_pack_2_reported_capacity" />
+          <ParameterRefEntry parameterRef="solar_1_output_voltage_avg" />
+          <ParameterRefEntry parameterRef="solar_1_output_current_avg" />
+          <ParameterRefEntry parameterRef="solar_1_output_power_avg" />
+          <ParameterRefEntry parameterRef="solar_1_output_voltage_max" />
+          <ParameterRefEntry parameterRef="solar_1_output_current_max" />
+          <ParameterRefEntry parameterRef="solar_1_output_power_max" />
+          <ParameterRefEntry parameterRef="solar_1_output_energy" />
+          <ParameterRefEntry parameterRef="solar_2_output_voltage_avg" />
+          <ParameterRefEntry parameterRef="solar_2_output_current_avg" />
+          <ParameterRefEntry parameterRef="solar_2_output_power_avg" />
+          <ParameterRefEntry parameterRef="solar_2_output_voltage_max" />
+          <ParameterRefEntry parameterRef="solar_2_output_current_max" />
+          <ParameterRefEntry parameterRef="solar_2_output_power_max" />
+          <ParameterRefEntry parameterRef="solar_2_output_energy" />
+          <ParameterRefEntry parameterRef="solar_3_output_voltage_avg" />
+          <ParameterRefEntry parameterRef="solar_3_output_current_avg" />
+          <ParameterRefEntry parameterRef="solar_3_output_power_avg" />
+          <ParameterRefEntry parameterRef="solar_3_output_voltage_max" />
+          <ParameterRefEntry parameterRef="solar_3_output_current_max" />
+          <ParameterRefEntry parameterRef="solar_3_output_power_max" />
+          <ParameterRefEntry parameterRef="solar_3_output_energy" />
+          <ParameterRefEntry parameterRef="solar_4_output_voltage_avg" />
+          <ParameterRefEntry parameterRef="solar_4_output_current_avg" />
+          <ParameterRefEntry parameterRef="solar_4_output_power_avg" />
+          <ParameterRefEntry parameterRef="solar_4_output_voltage_max" />
+          <ParameterRefEntry parameterRef="solar_4_output_current_max" />
+          <ParameterRefEntry parameterRef="solar_4_output_power_max" />
+          <ParameterRefEntry parameterRef="solar_4_output_energy" />
+          <ParameterRefEntry parameterRef="solar_5_output_voltage_avg" />
+          <ParameterRefEntry parameterRef="solar_5_output_current_avg" />
+          <ParameterRefEntry parameterRef="solar_5_output_power_avg" />
+          <ParameterRefEntry parameterRef="solar_5_output_voltage_max" />
+          <ParameterRefEntry parameterRef="solar_5_output_current_max" />
+          <ParameterRefEntry parameterRef="solar_5_output_power_max" />
+          <ParameterRefEntry parameterRef="solar_5_output_energy" />
+          <ParameterRefEntry parameterRef="solar_6_output_voltage_avg" />
+          <ParameterRefEntry parameterRef="solar_6_output_current_avg" />
+          <ParameterRefEntry parameterRef="solar_6_output_power_avg" />
+          <ParameterRefEntry parameterRef="solar_6_output_voltage_max" />
+          <ParameterRefEntry parameterRef="solar_6_output_current_max" />
+          <ParameterRefEntry parameterRef="solar_6_output_power_max" />
+          <ParameterRefEntry parameterRef="solar_6_output_energy" />
+          <ParameterRefEntry parameterRef="star_tracker_1_system_storage_percent" />
+          <ParameterRefEntry parameterRef="star_tracker_1_status" />
+          <ParameterRefEntry parameterRef="gps_system_storage_percent" />
+          <ParameterRefEntry parameterRef="gps_status" />
+          <ParameterRefEntry parameterRef="gps_skytraq_number_of_sv" />
+          <ParameterRefEntry parameterRef="gps_skytraq_fix_mode" />
+          <ParameterRefEntry parameterRef="adcs_gyroscope_roll_rate" />
+          <ParameterRefEntry parameterRef="adcs_gyroscope_pitch_rate" />
+          <ParameterRefEntry parameterRef="adcs_gyroscope_yaw_rate" />
+          <ParameterRefEntry parameterRef="dxwifi_system_storage_percent" />
+          <ParameterRefEntry parameterRef="dxwifi_status" />
+          <ParameterRefEntry parameterRef="dxwifi_radio_temperature" />
+          <ParameterRefEntry parameterRef="cfc_processor_system_storage_percent" />
+          <ParameterRefEntry parameterRef="cfc_processor_camera_status" />
+          <ParameterRefEntry parameterRef="cfc_processor_camera_temperature" />
+          <ParameterRefEntry parameterRef="cfc_processor_tec_status" />
+          <ParameterRefEntry parameterRef="crc32" />
+        </EntryList>
+      </SequenceContainer>
+      <SequenceContainer name="edl_responses">
+        <EntryList>
+          <ParameterRefEntry parameterRef="edl_command_code" />
+          <ContainerRefEntry containerRef="tx_control_response">
+            <IncludeCondition>
+              <Comparison parameterRef="edl_command_code" value="0" />
+            </IncludeCondition>
+          </ContainerRefEntry>
+          <ContainerRefEntry containerRef="co_node_enable_response">
+            <IncludeCondition>
+              <Comparison parameterRef="edl_command_code" value="4" />
+            </IncludeCondition>
+          </ContainerRefEntry>
+          <ContainerRefEntry containerRef="co_node_status_response">
+            <IncludeCondition>
+              <Comparison parameterRef="edl_command_code" value="5" />
+            </IncludeCondition>
+          </ContainerRefEntry>
+          <ContainerRefEntry containerRef="co_sdo_write_response">
+            <IncludeCondition>
+              <Comparison parameterRef="edl_command_code" value="6" />
+            </IncludeCondition>
+          </ContainerRefEntry>
+          <ContainerRefEntry containerRef="co_sync_response">
+            <IncludeCondition>
+              <Comparison parameterRef="edl_command_code" value="7" />
+            </IncludeCondition>
+          </ContainerRefEntry>
+          <ContainerRefEntry containerRef="opd_sysenable_response">
+            <IncludeCondition>
+              <Comparison parameterRef="edl_command_code" value="8" />
+            </IncludeCondition>
+          </ContainerRefEntry>
+          <ContainerRefEntry containerRef="opd_scan_response">
+            <IncludeCondition>
+              <Comparison parameterRef="edl_command_code" value="9" />
+            </IncludeCondition>
+          </ContainerRefEntry>
+          <ContainerRefEntry containerRef="opd_probe_response">
+            <IncludeCondition>
+              <Comparison parameterRef="edl_command_code" value="10" />
+            </IncludeCondition>
+          </ContainerRefEntry>
+          <ContainerRefEntry containerRef="opd_enable_response">
+            <IncludeCondition>
+              <Comparison parameterRef="edl_command_code" value="11" />
+            </IncludeCondition>
+          </ContainerRefEntry>
+          <ContainerRefEntry containerRef="opd_reset_response">
+            <IncludeCondition>
+              <Comparison parameterRef="edl_command_code" value="12" />
+            </IncludeCondition>
+          </ContainerRefEntry>
+          <ContainerRefEntry containerRef="opd_status_response">
+            <IncludeCondition>
+              <Comparison parameterRef="edl_command_code" value="13" />
+            </IncludeCondition>
+          </ContainerRefEntry>
+          <ContainerRefEntry containerRef="time_sync_response">
+            <IncludeCondition>
+              <Comparison parameterRef="edl_command_code" value="15" />
+            </IncludeCondition>
+          </ContainerRefEntry>
+          <ContainerRefEntry containerRef="ping_response">
+            <IncludeCondition>
+              <Comparison parameterRef="edl_command_code" value="17" />
+            </IncludeCondition>
+          </ContainerRefEntry>
+          <ContainerRefEntry containerRef="co_sdo_read_response">
+            <IncludeCondition>
+              <Comparison parameterRef="edl_command_code" value="19" />
+            </IncludeCondition>
+          </ContainerRefEntry>
+        </EntryList>
+      </SequenceContainer>
+      <SequenceContainer name="uslp_header" abstract="true">
+        <EntryList>
+          <ParameterRefEntry parameterRef="uslp_version_number" />
+          <ParameterRefEntry parameterRef="uslp_spacecraft_id" />
+          <ParameterRefEntry parameterRef="uslp_src_dest" />
+          <ParameterRefEntry parameterRef="uslp_virtual_channel_id" />
+          <ParameterRefEntry parameterRef="uslp_map_id" />
+          <ParameterRefEntry parameterRef="uslp_eof_flag" />
+          <ParameterRefEntry parameterRef="uslp_frame_length" />
+          <ParameterRefEntry parameterRef="uslp_bypass_sequence_control_flag" />
+          <ParameterRefEntry parameterRef="uslp_protocol_control_command_flag" />
+          <ParameterRefEntry parameterRef="uslp_reserved" />
+          <ParameterRefEntry parameterRef="uslp_operation_control_field_flag" />
+          <ParameterRefEntry parameterRef="uslp_vc_frame_count_length" />
+          <ParameterRefEntry parameterRef="uslp_sequence_number" />
+          <ParameterRefEntry parameterRef="uslp_tfdz_contruction_rules" />
+          <ParameterRefEntry parameterRef="uslp_protocol_id" />
+          
+          <!--child containers go here-->
+          <ParameterRefEntry parameterRef="hmac">
+            <LocationInContainerInBits>
+              <FixedValue>272</FixedValue>
+            </LocationInContainerInBits>
+          </ParameterRefEntry>
+
+          <ParameterRefEntry parameterRef="uslp_fecf">
+            <LocationInContainerInBits>
+              <FixedValue>16</FixedValue>
+            </LocationInContainerInBits>
+          </ParameterRefEntry>
+        </EntryList>
+      </SequenceContainer>
+      <SequenceContainer name="tx_control_response">
+        <EntryList>
+          <ParameterRefEntry parameterRef="tx_control_status" />
+        </EntryList>
+        <BaseContainer containerRef="uslp_header" />
+      </SequenceContainer>
+      <SequenceContainer name="co_node_enable_response">
+        <EntryList>
+          <ParameterRefEntry parameterRef="co_node_enable_status" />
+        </EntryList>
+        <BaseContainer containerRef="uslp_header" />
+      </SequenceContainer>
+      <SequenceContainer name="co_node_status_response">
+        <EntryList>
+          <ParameterRefEntry parameterRef="co_node_status_status" />
+        </EntryList>
+        <BaseContainer containerRef="uslp_header" />
+      </SequenceContainer>
+      <SequenceContainer name="co_sdo_write_response">
+        <EntryList>
+          <ParameterRefEntry parameterRef="co_sdo_write_error_code" />
+        </EntryList>
+        <BaseContainer containerRef="uslp_header" />
+      </SequenceContainer>
+      <SequenceContainer name="co_sync_response">
+        <EntryList>
+          <ParameterRefEntry parameterRef="co_sync_sent" />
+        </EntryList>
+        <BaseContainer containerRef="uslp_header" />
+      </SequenceContainer>
+      <SequenceContainer name="opd_sysenable_response">
+        <EntryList>
+          <ParameterRefEntry parameterRef="opd_sysenable_status" />
+        </EntryList>
+        <BaseContainer containerRef="uslp_header" />
+      </SequenceContainer>
+      <SequenceContainer name="opd_scan_response">
+        <EntryList>
+          <ParameterRefEntry parameterRef="opd_scan_nodes_found" />
+        </EntryList>
+        <BaseContainer containerRef="uslp_header" />
+      </SequenceContainer>
+      <SequenceContainer name="opd_probe_response">
+        <EntryList>
+          <ParameterRefEntry parameterRef="opd_probe_found" />
+        </EntryList>
+        <BaseContainer containerRef="uslp_header" />
+      </SequenceContainer>
+      <SequenceContainer name="opd_enable_response">
+        <EntryList>
+          <ParameterRefEntry parameterRef="opd_enable_status" />
+        </EntryList>
+        <BaseContainer containerRef="uslp_header" />
+      </SequenceContainer>
+      <SequenceContainer name="opd_reset_response">
+        <EntryList>
+          <ParameterRefEntry parameterRef="opd_reset_status" />
+        </EntryList>
+        <BaseContainer containerRef="uslp_header" />
+      </SequenceContainer>
+      <SequenceContainer name="opd_status_response">
+        <EntryList>
+          <ParameterRefEntry parameterRef="opd_status_status" />
+        </EntryList>
+        <BaseContainer containerRef="uslp_header" />
+      </SequenceContainer>
+      <SequenceContainer name="time_sync_response">
+        <EntryList>
+          <ParameterRefEntry parameterRef="time_sync_sent" />
+        </EntryList>
+        <BaseContainer containerRef="uslp_header" />
+      </SequenceContainer>
+      <SequenceContainer name="ping_response">
+        <EntryList>
+          <ParameterRefEntry parameterRef="ping_value" />
+        </EntryList>
+        <BaseContainer containerRef="uslp_header" />
+      </SequenceContainer>
+      <SequenceContainer name="co_sdo_read_response">
+        <EntryList>
+          <ParameterRefEntry parameterRef="co_sdo_read_error_code" />
+          <ParameterRefEntry parameterRef="co_sdo_read_buffer_size" />
+          <ParameterRefEntry parameterRef="co_sdo_read_buffer" />
+        </EntryList>
+        <BaseContainer containerRef="uslp_header" />
+      </SequenceContainer>
+    </ContainerSet>
+  </TelemetryMetaData>
+  <CommandMetaData>
+    <ArgumentTypeSet>
+      <EnumeratedArgumentType name="node_id_type">
+        <UnitSet />
+        <IntegerDataEncoding sizeInBits="8" encoding="unsigned" />
+        <EnumerationList>
+          <Enumeration value="1" label="C3" />
+          <Enumeration value="4" label="Battery 1" />
+          <Enumeration value="12" label="Solar 1" />
+          <Enumeration value="16" label="Solar 2" />
+          <Enumeration value="20" label="Solar 3" />
+          <Enumeration value="24" label="Solar 4" />
+          <Enumeration value="28" label="Solar 5" />
+          <Enumeration value="32" label="Solar 6" />
+          <Enumeration value="56" label="ADCS" />
+          <Enumeration value="60" label="Reaction Wheel 1" />
+          <Enumeration value="64" label="Reaction Wheel 2" />
+          <Enumeration value="68" label="Reaction Wheel 3" />
+          <Enumeration value="72" label="Reaction Wheel 4" />
+          <Enumeration value="52" label="GPS" />
+          <Enumeration value="44" label="Star Tracker 1" />
+          <Enumeration value="76" label="DxWiFi" />
+          <Enumeration value="80" label="CFC Processor" />
+          <Enumeration value="84" label="Diode Test" />
+        </EnumerationList>
+      </EnumeratedArgumentType>
+      <EnumeratedArgumentType name="opd_addr_type">
+        <UnitSet />
+        <IntegerDataEncoding sizeInBits="8" encoding="unsigned" />
+        <EnumerationList>
+          <Enumeration value="24" label="Battery 1" />
+          <Enumeration value="26" label="ADCS" />
+          <Enumeration value="32" label="Reaction Wheel 1" />
+          <Enumeration value="33" label="Reaction Wheel 2" />
+          <Enumeration value="34" label="Reaction Wheel 3" />
+          <Enumeration value="35" label="Reaction Wheel 4" />
+          <Enumeration value="25" label="GPS" />
+          <Enumeration value="28" label="Star Tracker 1" />
+          <Enumeration value="27" label="DxWiFi" />
+          <Enumeration value="29" label="CFC Processor" />
+          <Enumeration value="17" label="Diode Test" />
+        </EnumerationList>
+      </EnumeratedArgumentType>
+      <BooleanArgumentType name="bool_type" zeroStringValue="disable" oneStringValue="enable">
+        <UnitSet />
+        <IntegerDataEncoding sizeInBits="8" encoding="unsigned" />
+      </BooleanArgumentType>
+      <IntegerArgumentType name="uint16_type">
+        <UnitSet />
+        <IntegerDataEncoding sizeInBits="16" encoding="unsigned" />
+      </IntegerArgumentType>
+      <IntegerArgumentType name="uint8_type">
+        <UnitSet />
+        <IntegerDataEncoding sizeInBits="8" encoding="unsigned" />
+      </IntegerArgumentType>
+      <IntegerArgumentType name="uint32_type">
+        <UnitSet />
+        <IntegerDataEncoding sizeInBits="32" encoding="unsigned" />
+      </IntegerArgumentType>
+      <BinaryArgumentType name="bytes_type">
+        <UnitSet />
+        <BinaryDataEncoding bitOrder="mostSignificantBitFirst">
+          <SizeInBits>
+            <DynamicValue>
+              <ArgumentInstanceRef argumentRef="buffer_size" />
+            </DynamicValue>
+          </SizeInBits>
+        </BinaryDataEncoding>
+      </BinaryArgumentType>
+    </ArgumentTypeSet>
+    <MetaCommandSet>
+      <MetaCommand name="uslp_header" abstract="true">
+        <CommandContainer name="uslp_header">
+          <EntryList>
+            <FixedValueEntry name="uslp_version_number" binaryValue="0C" sizeInBits="4" />
+            <FixedValueEntry name="uslp_spacecraft_id" binaryValue="4F53" sizeInBits="16" />
+            <FixedValueEntry name="uslp_src_dest" binaryValue="00" sizeInBits="1" />
+            <FixedValueEntry name="uslp_virtual_channel_id" binaryValue="00" sizeInBits="6" />
+            <FixedValueEntry name="uslp_map_id" binaryValue="00" sizeInBits="4" />
+            <FixedValueEntry name="uslp_eof_flag" binaryValue="00" sizeInBits="1" />
+            <FixedValueEntry name="uslp_frame_length" binaryValue="0000" sizeInBits="16" />
+            <FixedValueEntry name="uslp_bypass_sequence_control_flag" binaryValue="00" sizeInBits="1" />
+            <FixedValueEntry name="uslp_protocol_control_command_flag" binaryValue="00" sizeInBits="1" />
+            <FixedValueEntry name="uslp_reserved" binaryValue="00" sizeInBits="2" />
+            <FixedValueEntry name="uslp_operation_control_field_flag" binaryValue="00" sizeInBits="1" />
+            <FixedValueEntry name="uslp_vc_frame_count_length" binaryValue="00" sizeInBits="3" />
+            <FixedValueEntry name="uslp_sequence_number" binaryValue="00000000" sizeInBits="32" />
+            <FixedValueEntry name="uslp_tfdz_contruction_rules" binaryValue="07" sizeInBits="3" />
+            <FixedValueEntry name="uslp_protocol_id" binaryValue="05" sizeInBits="5" />
+          </EntryList>
+        </CommandContainer>
+      </MetaCommand>
+      <MetaCommand name="tx_control" shortDescription="enable / disable tx">
+        <ArgumentList>
+          <Argument name="enable" argumentTypeRef="bool_type" />
+        </ArgumentList>
+        <CommandContainer name="tx_control_request">
+          <EntryList>
+            <FixedValueEntry binaryValue="00" sizeInBits="8" />
+            <ArgumentRefEntry argumentRef="enable" />
+            <FixedValueEntry name="hmac" binaryValue="0000000000000000000000000000000000000000000000000000000000000000" sizeInBits="256" />
+            <FixedValueEntry name="uslp_fecf" binaryValue="0000" sizeInBits="16" />
+          </EntryList>
+          <BaseContainer containerRef="uslp_header" />
+        </CommandContainer>
+      </MetaCommand>
+      <MetaCommand name="c3_soft_reset" shortDescription="soft reset the c3 (reboot c3 daemon)">
+        <CommandContainer name="c3_soft_reset_request">
+          <EntryList>
+            <FixedValueEntry binaryValue="01" sizeInBits="8" />
+            <FixedValueEntry name="hmac" binaryValue="0000000000000000000000000000000000000000000000000000000000000000" sizeInBits="256" />
+            <FixedValueEntry name="uslp_fecf" binaryValue="0000" sizeInBits="16" />
+          </EntryList>
+          <BaseContainer containerRef="uslp_header" />
+        </CommandContainer>
+      </MetaCommand>
+      <MetaCommand name="c3_hard_reset" shortDescription="hard reset the c3 (reboot system)">
+        <CommandContainer name="c3_hard_reset_request">
+          <EntryList>
+            <FixedValueEntry binaryValue="02" sizeInBits="8" />
+            <FixedValueEntry name="hmac" binaryValue="0000000000000000000000000000000000000000000000000000000000000000" sizeInBits="256" />
+            <FixedValueEntry name="uslp_fecf" binaryValue="0000" sizeInBits="16" />
+          </EntryList>
+          <BaseContainer containerRef="uslp_header" />
+        </CommandContainer>
+      </MetaCommand>
+      <MetaCommand name="c3_factory_reset" shortDescription="factory reset the c3 (clear FRAM, reset RTC, and reboot system)">
+        <CommandContainer name="c3_factory_reset_request">
+          <EntryList>
+            <FixedValueEntry binaryValue="03" sizeInBits="8" />
+            <FixedValueEntry name="hmac" binaryValue="0000000000000000000000000000000000000000000000000000000000000000" sizeInBits="256" />
+            <FixedValueEntry name="uslp_fecf" binaryValue="0000" sizeInBits="16" />
+          </EntryList>
+          <BaseContainer containerRef="uslp_header" />
+        </CommandContainer>
+      </MetaCommand>
+      <MetaCommand name="co_node_enable" shortDescription="enable a CANopen node">
+        <ArgumentList>
+          <Argument name="node_id" argumentTypeRef="node_id_type" />
+          <Argument name="enable" argumentTypeRef="bool_type" />
+        </ArgumentList>
+        <CommandContainer name="co_node_enable_request">
+          <EntryList>
+            <FixedValueEntry binaryValue="04" sizeInBits="8" />
+            <ArgumentRefEntry argumentRef="node_id" />
+            <ArgumentRefEntry argumentRef="enable" />
+            <FixedValueEntry name="hmac" binaryValue="0000000000000000000000000000000000000000000000000000000000000000" sizeInBits="256" />
+            <FixedValueEntry name="uslp_fecf" binaryValue="0000" sizeInBits="16" />
+          </EntryList>
+          <BaseContainer containerRef="uslp_header" />
+        </CommandContainer>
+      </MetaCommand>
+      <MetaCommand name="co_node_status" shortDescription="get the status of a CANopen node">
+        <ArgumentList>
+          <Argument name="node_id" argumentTypeRef="node_id_type" />
+        </ArgumentList>
+        <CommandContainer name="co_node_status_request">
+          <EntryList>
+            <FixedValueEntry binaryValue="05" sizeInBits="8" />
+            <ArgumentRefEntry argumentRef="node_id" />
+            <FixedValueEntry name="hmac" binaryValue="0000000000000000000000000000000000000000000000000000000000000000" sizeInBits="256" />
+            <FixedValueEntry name="uslp_fecf" binaryValue="0000" sizeInBits="16" />
+          </EntryList>
+          <BaseContainer containerRef="uslp_header" />
+        </CommandContainer>
+      </MetaCommand>
+      <MetaCommand name="co_sdo_write" shortDescription="write a value to a node's OD over the CAN bus using a CANopen SDO message">
+        <ArgumentList>
+          <Argument name="node_id" argumentTypeRef="node_id_type" />
+          <Argument name="index" argumentTypeRef="uint16_type" />
+          <Argument name="subindex" argumentTypeRef="uint8_type" />
+          <Argument name="buffer_size" argumentTypeRef="uint32_type" />
+          <Argument name="buffer" argumentTypeRef="bytes_type" />
+        </ArgumentList>
+        <CommandContainer name="co_sdo_write_request">
+          <EntryList>
+            <FixedValueEntry binaryValue="06" sizeInBits="8" />
+            <ArgumentRefEntry argumentRef="node_id" />
+            <ArgumentRefEntry argumentRef="index" />
+            <ArgumentRefEntry argumentRef="subindex" />
+            <ArgumentRefEntry argumentRef="buffer_size" />
+            <ArgumentRefEntry argumentRef="buffer" />
+            <FixedValueEntry name="hmac" binaryValue="0000000000000000000000000000000000000000000000000000000000000000" sizeInBits="256" />
+            <FixedValueEntry name="uslp_fecf" binaryValue="0000" sizeInBits="16" />
+          </EntryList>
+          <BaseContainer containerRef="uslp_header" />
+        </CommandContainer>
+      </MetaCommand>
+      <MetaCommand name="co_sync" shortDescription="send a CANopen SYNC message on the CAN bus">
+        <CommandContainer name="co_sync_request">
+          <EntryList>
+            <FixedValueEntry binaryValue="07" sizeInBits="8" />
+            <FixedValueEntry name="hmac" binaryValue="0000000000000000000000000000000000000000000000000000000000000000" sizeInBits="256" />
+            <FixedValueEntry name="uslp_fecf" binaryValue="0000" sizeInBits="16" />
+          </EntryList>
+          <BaseContainer containerRef="uslp_header" />
+        </CommandContainer>
+      </MetaCommand>
+      <MetaCommand name="opd_sysenable" shortDescription="enable the OPD subsystem">
+        <ArgumentList>
+          <Argument name="enable" argumentTypeRef="bool_type" />
+        </ArgumentList>
+        <CommandContainer name="opd_sysenable_request">
+          <EntryList>
+            <FixedValueEntry binaryValue="08" sizeInBits="8" />
+            <ArgumentRefEntry argumentRef="enable" />
+            <FixedValueEntry name="hmac" binaryValue="0000000000000000000000000000000000000000000000000000000000000000" sizeInBits="256" />
+            <FixedValueEntry name="uslp_fecf" binaryValue="0000" sizeInBits="16" />
+          </EntryList>
+          <BaseContainer containerRef="uslp_header" />
+        </CommandContainer>
+      </MetaCommand>
+      <MetaCommand name="opd_scan" shortDescription="scan for all nodes on the OPD">
+        <CommandContainer name="opd_scan_request">
+          <EntryList>
+            <FixedValueEntry binaryValue="09" sizeInBits="8" />
+            <FixedValueEntry name="hmac" binaryValue="0000000000000000000000000000000000000000000000000000000000000000" sizeInBits="256" />
+            <FixedValueEntry name="uslp_fecf" binaryValue="0000" sizeInBits="16" />
+          </EntryList>
+          <BaseContainer containerRef="uslp_header" />
+        </CommandContainer>
+      </MetaCommand>
+      <MetaCommand name="opd_probe" shortDescription="probe for a node on the OPD">
+        <ArgumentList>
+          <Argument name="opd_addr" argumentTypeRef="opd_addr_type" />
+        </ArgumentList>
+        <CommandContainer name="opd_probe_request">
+          <EntryList>
+            <FixedValueEntry binaryValue="0A" sizeInBits="8" />
+            <ArgumentRefEntry argumentRef="opd_addr" />
+            <FixedValueEntry name="hmac" binaryValue="0000000000000000000000000000000000000000000000000000000000000000" sizeInBits="256" />
+            <FixedValueEntry name="uslp_fecf" binaryValue="0000" sizeInBits="16" />
+          </EntryList>
+          <BaseContainer containerRef="uslp_header" />
+        </CommandContainer>
+      </MetaCommand>
+      <MetaCommand name="opd_enable" shortDescription="enable / disable a node on the OPD">
+        <ArgumentList>
+          <Argument name="opd_addr" argumentTypeRef="opd_addr_type" />
+          <Argument name="enable" argumentTypeRef="bool_type" />
+        </ArgumentList>
+        <CommandContainer name="opd_enable_request">
+          <EntryList>
+            <FixedValueEntry binaryValue="0B" sizeInBits="8" />
+            <ArgumentRefEntry argumentRef="opd_addr" />
+            <ArgumentRefEntry argumentRef="enable" />
+            <FixedValueEntry name="hmac" binaryValue="0000000000000000000000000000000000000000000000000000000000000000" sizeInBits="256" />
+            <FixedValueEntry name="uslp_fecf" binaryValue="0000" sizeInBits="16" />
+          </EntryList>
+          <BaseContainer containerRef="uslp_header" />
+        </CommandContainer>
+      </MetaCommand>
+      <MetaCommand name="opd_reset" shortDescription="reset a node on the OPD">
+        <ArgumentList>
+          <Argument name="opd_addr" argumentTypeRef="opd_addr_type" />
+        </ArgumentList>
+        <CommandContainer name="opd_reset_request">
+          <EntryList>
+            <FixedValueEntry binaryValue="0C" sizeInBits="8" />
+            <ArgumentRefEntry argumentRef="opd_addr" />
+            <FixedValueEntry name="hmac" binaryValue="0000000000000000000000000000000000000000000000000000000000000000" sizeInBits="256" />
+            <FixedValueEntry name="uslp_fecf" binaryValue="0000" sizeInBits="16" />
+          </EntryList>
+          <BaseContainer containerRef="uslp_header" />
+        </CommandContainer>
+      </MetaCommand>
+      <MetaCommand name="opd_status" shortDescription="get the status of a node on the OPD">
+        <ArgumentList>
+          <Argument name="opd_addr" argumentTypeRef="opd_addr_type" />
+        </ArgumentList>
+        <CommandContainer name="opd_status_request">
+          <EntryList>
+            <FixedValueEntry binaryValue="0D" sizeInBits="8" />
+            <ArgumentRefEntry argumentRef="opd_addr" />
+            <FixedValueEntry name="hmac" binaryValue="0000000000000000000000000000000000000000000000000000000000000000" sizeInBits="256" />
+            <FixedValueEntry name="uslp_fecf" binaryValue="0000" sizeInBits="16" />
+          </EntryList>
+          <BaseContainer containerRef="uslp_header" />
+        </CommandContainer>
+      </MetaCommand>
+      <MetaCommand name="rtc_set_time" shortDescription="set the RTC time">
+        <ArgumentList>
+          <Argument name="time" argumentTypeRef="uint32_type" />
+        </ArgumentList>
+        <CommandContainer name="rtc_set_time_request">
+          <EntryList>
+            <FixedValueEntry binaryValue="0E" sizeInBits="8" />
+            <ArgumentRefEntry argumentRef="time" />
+            <FixedValueEntry name="hmac" binaryValue="0000000000000000000000000000000000000000000000000000000000000000" sizeInBits="256" />
+            <FixedValueEntry name="uslp_fecf" binaryValue="0000" sizeInBits="16" />
+          </EntryList>
+          <BaseContainer containerRef="uslp_header" />
+        </CommandContainer>
+      </MetaCommand>
+      <MetaCommand name="time_sync" shortDescription="c3 will send OreSat's time sync TPDO over the CAN bus (all nodes that are powered on and care about time will sync to it)">
+        <CommandContainer name="time_sync_request">
+          <EntryList>
+            <FixedValueEntry binaryValue="0F" sizeInBits="8" />
+            <FixedValueEntry name="hmac" binaryValue="0000000000000000000000000000000000000000000000000000000000000000" sizeInBits="256" />
+            <FixedValueEntry name="uslp_fecf" binaryValue="0000" sizeInBits="16" />
+          </EntryList>
+          <BaseContainer containerRef="uslp_header" />
+        </CommandContainer>
+      </MetaCommand>
+      <MetaCommand name="beacon_ping" shortDescription="c3 will response with a beacon regardless of tx state">
+        <CommandContainer name="beacon_ping_request">
+          <EntryList>
+            <FixedValueEntry binaryValue="10" sizeInBits="8" />
+            <FixedValueEntry name="hmac" binaryValue="0000000000000000000000000000000000000000000000000000000000000000" sizeInBits="256" />
+            <FixedValueEntry name="uslp_fecf" binaryValue="0000" sizeInBits="16" />
+          </EntryList>
+          <BaseContainer containerRef="uslp_header" />
+        </CommandContainer>
+      </MetaCommand>
+      <MetaCommand name="ping" shortDescription="a basic ping to the c3">
+        <ArgumentList>
+          <Argument name="value" argumentTypeRef="uint32_type" />
+        </ArgumentList>
+        <CommandContainer name="ping_request">
+          <EntryList>
+            <FixedValueEntry binaryValue="11" sizeInBits="8" />
+            <ArgumentRefEntry argumentRef="value" />
+            <FixedValueEntry name="hmac" binaryValue="0000000000000000000000000000000000000000000000000000000000000000" sizeInBits="256" />
+            <FixedValueEntry name="uslp_fecf" binaryValue="0000" sizeInBits="16" />
+          </EntryList>
+          <BaseContainer containerRef="uslp_header" />
+        </CommandContainer>
+      </MetaCommand>
+      <MetaCommand name="rx_test" shortDescription="empty command for c3 Rx testing">
+        <CommandContainer name="rx_test_request">
+          <EntryList>
+            <FixedValueEntry binaryValue="12" sizeInBits="8" />
+            <FixedValueEntry name="hmac" binaryValue="0000000000000000000000000000000000000000000000000000000000000000" sizeInBits="256" />
+            <FixedValueEntry name="uslp_fecf" binaryValue="0000" sizeInBits="16" />
+          </EntryList>
+          <BaseContainer containerRef="uslp_header" />
+        </CommandContainer>
+      </MetaCommand>
+      <MetaCommand name="co_sdo_read" shortDescription="read a value from a node's OD over the CAN bus using a CANopen SDO message">
+        <ArgumentList>
+          <Argument name="node_id" argumentTypeRef="node_id_type" />
+          <Argument name="index" argumentTypeRef="uint16_type" />
+          <Argument name="subindex" argumentTypeRef="uint8_type" />
+        </ArgumentList>
+        <CommandContainer name="co_sdo_read_request">
+          <EntryList>
+            <FixedValueEntry binaryValue="13" sizeInBits="8" />
+            <ArgumentRefEntry argumentRef="node_id" />
+            <ArgumentRefEntry argumentRef="index" />
+            <ArgumentRefEntry argumentRef="subindex" />
+            <FixedValueEntry name="hmac" binaryValue="0000000000000000000000000000000000000000000000000000000000000000" sizeInBits="256" />
+            <FixedValueEntry name="uslp_fecf" binaryValue="0000" sizeInBits="16" />
+          </EntryList>
+          <BaseContainer containerRef="uslp_header" />
+        </CommandContainer>
+      </MetaCommand>
+    </MetaCommandSet>
+  </CommandMetaData>
+</SpaceSystem>
